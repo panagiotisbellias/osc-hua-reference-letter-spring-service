@@ -8,4 +8,4 @@ git clone https://github.com/panagiotisbellias/reference-letter-service.git
 git checkout -b spring-boot
 ```
 
-# Add content according to tsadimas' [https://github.com/tsadimas/spring-boot-jpa-rest.git](spring boot sample project)
+# Add content according to tsadimas' (https://github.com/tsadimas/spring-boot-jpa-rest.git)[spring boot sample project]

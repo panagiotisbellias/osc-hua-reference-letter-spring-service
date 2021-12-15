@@ -8,5 +8,6 @@ git clone https://github.com/panagiotisbellias/reference-letter-service.git
 git checkout -b spring-boot
 ```
 
-# Add content according to tsadimas' 
-[spring boot sample project](https://github.com/tsadimas/spring-boot-jpa-rest.git)
+## Application Properties
+
+Change values to fit your own in src/main/resources/application.properties

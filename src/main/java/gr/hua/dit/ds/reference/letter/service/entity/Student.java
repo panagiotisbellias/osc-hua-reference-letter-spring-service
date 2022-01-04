@@ -1,4 +1,4 @@
-package project.springboot.entity;
+package gr.hua.dit.ds.reference.letter.service.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

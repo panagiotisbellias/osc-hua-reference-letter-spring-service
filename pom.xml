@@ -8,10 +8,10 @@
 		<version>2.6.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>project</groupId>
-	<artifactId>springboot</artifactId>
+	<groupId>gr.hua.dit.ds</groupId>
+	<artifactId>reference-letter-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springboot</name>
+	<name>reference-letter-service</name>
 	<description>Project for DS</description>
 	<properties>
 		<java.version>11</java.version>

@@ -1,4 +1,4 @@
-package project.springboot;
+package gr.hua.dit.ds.reference.letter.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

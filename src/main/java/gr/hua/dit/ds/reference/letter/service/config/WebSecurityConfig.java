@@ -1,4 +1,4 @@
-package project.springboot.config;
+package gr.hua.dit.ds.reference.letter.service.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

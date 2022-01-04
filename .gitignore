@@ -32,3 +32,6 @@ hs_err_pid*
 
 # IntelliJ
 .idea
+
+# application properties file
+application.properties

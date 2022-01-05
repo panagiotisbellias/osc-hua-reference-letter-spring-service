@@ -5,9 +5,13 @@
 Go to a directory of your choice and do
 ```bash
 git clone https://github.com/panagiotisbellias/reference-letter-service.git
-git checkout -b spring-boot
 ```
 
 ## Application Properties
 
-Change values to fit your own in src/main/resources/application.properties
+Create file application.properties in src/main/resources and follow this template entering your own values
+```bash
+
+
+management.endpoints.web.exposure.include=*
+```

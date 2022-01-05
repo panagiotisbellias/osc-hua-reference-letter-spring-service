@@ -11,7 +11,11 @@ git clone https://github.com/panagiotisbellias/reference-letter-service.git
 
 Create file application.properties in src/main/resources and follow this template entering your own values
 ```bash
+spring.datasource.url=jdbc:postgresql://localhost/<DB-NAME>
+spring.datasource.username=<DB-USER>
+spring.datasource.password=<DB-PASSWORD>
 
+spring.data.rest.base-path=/api
 
 management.endpoints.web.exposure.include=*
 ```

@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <!-- reference our style sheet -->
     <link type="text/css" rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/main.css" />
+          href="../css/main.css" />
 </head>
 <body>
 <div id="wrapper">
@@ -25,7 +25,8 @@
                 <th>Carrier Name</th>
                 <th>Carrier Email</th>
             </tr>
-            <!-- loop over and print our customers -->
+            <!-- loop over and print our customers --> <!-- Correct it. Cause: No JSP, but Thymeleaf
+             Possible solutions: a)turn to jsp, b) find corresponding forEach in Thymeleaf (if decided) -->
             <c:forEach var="referenceLetterRequest" items="${referenceLetterRequests}">
 
                 <tr>

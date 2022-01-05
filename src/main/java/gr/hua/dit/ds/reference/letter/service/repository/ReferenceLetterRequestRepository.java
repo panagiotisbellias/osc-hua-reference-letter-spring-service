@@ -5,5 +5,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @RepositoryRestResource(path="requests")
-public interface RequestRepository extends JpaRepository<ReferenceLetterRequest, Integer>{
+public interface ReferenceLetterRequestRepository extends JpaRepository<ReferenceLetterRequest, Integer>{
 }

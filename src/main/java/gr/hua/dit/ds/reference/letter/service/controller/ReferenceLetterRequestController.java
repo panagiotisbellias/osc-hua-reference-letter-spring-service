@@ -1,30 +1,91 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import gr.hua.dit.ds.reference.letter.service.entity.ReferenceLetterRequest;
 import gr.hua.dit.ds.reference.letter.service.repository.ReferenceLetterRequestRepository;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
+import java.util.*;
 
+@RestController
+@RequestMapping("/app")
 public class ReferenceLetterRequestController {
 
     @Autowired
     private ReferenceLetterRequestRepository referenceLetterRequestRepository;
 
-    @RequestMapping("/new_application")
-    public String newApplication() {
-        return "newApplication";
+    @GetMapping("/requests")
+    public List<ReferenceLetterRequest> retrieveAllRequests() {
+        return referenceLetterRequestRepository.findAll();
     }
 
-    @GetMapping("/my_applications")
-    public String myApplications(Model model) {
-        List<ReferenceLetterRequest> referenceLetterRequests = referenceLetterRequestRepository.findAll();
-        model.addAttribute("referenceLetterRequests", referenceLetterRequests);
-        return "myApplications";
+    /* !FILTER ALL BY THE ID STUDENT HAS TO TAKE ONLY HIS REQUESTS
+    @GetMapping("/my_requests/{id_student}")
+    public List<ReferenceLetterRequest> retrieveMyRequests(//Model model
+        @PathVariable int id_student) {
+        Optional<ReferenceLetterRequest> referenceLetterRequestList = referenceLetterRequestRepository.findById(id_student);
+
+        if (referenceLetterRequestList.isEmpty())
+            throw new ReferenceLetterRequestNotFoundException("id-student-" + id_student);
+
+        return referenceLetterRequestList.get();
+        //List<ReferenceLetterRequest> referenceLetterRequests = referenceLetterRequestRepository.findAll();
+        // model.addAttribute("referenceLetterRequests", referenceLetterRequests);
+        // return "myApplications";
+    }*/
+
+    @GetMapping("/requests/{id}")
+    public ReferenceLetterRequest retrieveRequest(@PathVariable int id) {
+        Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
+
+        if (referenceLetterRequest.isEmpty())
+            throw new ReferenceLetterRequestNotFoundException("id-" + id);
+
+        return referenceLetterRequest.get();
     }
+
+    @DeleteMapping("/requests/{id}")
+    public void deleteRequest(@PathVariable int id) {
+        referenceLetterRequestRepository.deleteById(id);
+    }
+
+    @PostMapping("/requests")
+    public ResponseEntity<Object> createRequest(@RequestBody ReferenceLetterRequest referenceLetterRequest) {
+        ReferenceLetterRequest savedRequest = referenceLetterRequestRepository.save(referenceLetterRequest);
+        System.out.println("reference letter request id " + savedRequest.getId());
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedRequest.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+        // return "newApplication";
+    }
+
+    @PutMapping("/requests/{id}")
+    public ResponseEntity<Object> updateRequest(@RequestBody ReferenceLetterRequest referenceLetterRequest, @PathVariable int id) {
+
+        Optional<ReferenceLetterRequest> referenceLetterRequestOptional = referenceLetterRequestRepository.findById(id);
+
+        if (referenceLetterRequestOptional.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        referenceLetterRequest.setId(id);
+
+        referenceLetterRequestRepository.save(referenceLetterRequest);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
+    // SAME AS retrieveMyRequests, WE HAVE TO TAKE THE REQUESTS ACCORDING TO TEACHER'S ID AND pending=true
+    // MAYBE db schema changes
+    // @RequestMapping("/see_pending")
+    // public String seePending() {
+       // return "seePending";
+    // }
 
 }

@@ -11,17 +11,18 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
+@RequestMapping("/teachers")
 public class TeacherController {
 
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @GetMapping("/teachers")
+    @GetMapping("/")
     public List<Teacher> retrieveAllTeachers() {
         return teacherRepository.findAll();
     }
 
-    @GetMapping("/teachers/{id}")
+    @GetMapping("/{id}")
     public Teacher retrieveTeacher(@PathVariable int id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
 
@@ -31,12 +32,12 @@ public class TeacherController {
         return teacher.get();
     }
 
-    @DeleteMapping("/teachers/{id}")
+    @DeleteMapping("/{id}")
     public void deleteTeacher(@PathVariable int id) {
         teacherRepository.deleteById(id);
     }
 
-    @PostMapping("/teachers")
+    @PostMapping("/")
     public ResponseEntity<Object> createTeacher(@RequestBody Teacher teacher) {
         Teacher savedTeacher = teacherRepository.save(teacher);
         System.out.println("teacher id " + savedTeacher.getId());
@@ -47,7 +48,7 @@ public class TeacherController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/teachers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateTeacher(@RequestBody Teacher teacher, @PathVariable int id) {
 
         Optional<Teacher> teacherOptional = teacherRepository.findById(id);

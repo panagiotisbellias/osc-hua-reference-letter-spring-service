@@ -13,17 +13,18 @@ import gr.hua.dit.ds.reference.letter.service.entity.Student;
 import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
 
-    @GetMapping("/students")
+    @GetMapping("/")
     public List<Student> retrieveAllStudents() {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/students/{id}")
+    @GetMapping("/{id}")
     public Student retrieveStudent(@PathVariable int id) {
         Optional<Student> student = studentRepository.findById(id);
 
@@ -33,12 +34,12 @@ public class StudentController {
         return student.get();
     }
 
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable int id) {
         studentRepository.deleteById(id);
     }
 
-    @PostMapping("/students")
+    @PostMapping("/")
     public ResponseEntity<Object> createStudent(@RequestBody Student student) {
         Student savedStudent = studentRepository.save(student);
         System.out.println("student id " + savedStudent.getId());
@@ -51,7 +52,7 @@ public class StudentController {
 
     }
 
-    @PutMapping("/students/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateStudent(@RequestBody Student student, @PathVariable int id) {
 
         Optional<Student> studentOptional = studentRepository.findById(id);

@@ -12,13 +12,13 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/app/requests")
 public class ReferenceLetterRequestController {
 
     @Autowired
     private ReferenceLetterRequestRepository referenceLetterRequestRepository;
 
-    @GetMapping("/requests")
+    @GetMapping("/")
     public List<ReferenceLetterRequest> retrieveAllRequests() {
         return referenceLetterRequestRepository.findAll();
     }
@@ -38,7 +38,7 @@ public class ReferenceLetterRequestController {
         // return "myApplications";
     }*/
 
-    @GetMapping("/requests/{id}")
+    @GetMapping("/{id}")
     public ReferenceLetterRequest retrieveRequest(@PathVariable int id) {
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
 
@@ -48,12 +48,12 @@ public class ReferenceLetterRequestController {
         return referenceLetterRequest.get();
     }
 
-    @DeleteMapping("/requests/{id}")
+    @DeleteMapping("/{id}")
     public void deleteRequest(@PathVariable int id) {
         referenceLetterRequestRepository.deleteById(id);
     }
 
-    @PostMapping("/requests")
+    @PostMapping("/")
     public ResponseEntity<Object> createRequest(@RequestBody ReferenceLetterRequest referenceLetterRequest) {
         ReferenceLetterRequest savedRequest = referenceLetterRequestRepository.save(referenceLetterRequest);
         System.out.println("reference letter request id " + savedRequest.getId());
@@ -65,7 +65,7 @@ public class ReferenceLetterRequestController {
         // return "newApplication";
     }
 
-    @PutMapping("/requests/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateRequest(@RequestBody ReferenceLetterRequest referenceLetterRequest, @PathVariable int id) {
 
         Optional<ReferenceLetterRequest> referenceLetterRequestOptional = referenceLetterRequestRepository.findById(id);

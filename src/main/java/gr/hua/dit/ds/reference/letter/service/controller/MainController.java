@@ -4,11 +4,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/app")
 public class MainController {
 
-    @RequestMapping("/app")
+    @RequestMapping("/")
     public String homePage() {
         return "main";
+    }
+
+    @RequestMapping("/admin_panel")
+    public String seeUsers() {
+        return "seeUsers";
     }
 
     @RequestMapping("/about")

@@ -7,7 +7,7 @@
 CREATE TABLE IF NOT EXISTS users ( -- possible issue
     username varchar(50) NOT NULL,
     password varchar(100) NOT NULL,
-    enabled tinyint NOT NULL, -- possible issue
+    enabled smallint NOT NULL, -- possible issue
     PRIMARY KEY (username)
 );
 
@@ -20,7 +20,7 @@ INSERT INTO users VALUES
    ('stratos', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
    ('nikitas', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
    ('argiris', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
-   ('root', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1);
+   ('root', '$2a$12$bWiD/oOdJKADNJlJu0O96u9mQOFHj3n3Cw94CRTayOGer8GEflkeW', 1);
 
 --
 -- Table structure for table `authorities`
@@ -29,7 +29,7 @@ INSERT INTO users VALUES
 CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
     username varchar(50) NOT NULL,
     authority varchar(50) NOT NULL,
-    UNIQUE KEY ix_auth_username (username,authority),
+    UNIQUE (username,authority),
     CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users (username)
 );
 
@@ -39,6 +39,6 @@ CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
 INSERT INTO authorities VALUES
     ('root', 'ROLE_ADMIN'),
     ('panagiotis', 'ROLE_STUDENT'),
-    ('panagiotis', 'ROLE_STUDENT'),
-    ('panagiotis', 'ROLE_STUDENT'),
+    ('stratos', 'ROLE_STUDENT'),
+    ('nikitas', 'ROLE_STUDENT'),
     ('argiris', 'ROLE_TEACHER');

@@ -37,7 +37,7 @@ CREATE TABLE teachers (
                           full_name varchar(45) NOT NULL,
                           email varchar(45) DEFAULT NULL,
                           courses_id int DEFAULT NULL,
-                          certificates_id int DEFAULT NULL,
+                          certificates_id int NOT NULL,
                           PRIMARY KEY (id)
 );
 
@@ -45,11 +45,11 @@ CREATE TABLE teachers (
 -- Initial values for testing
 --
 INSERT INTO teachers VALUES
-                         (1,'tsadimas','tsadimas@hua.gr',1),
-                         (2,'varlamis','varlamis@hua.gr',2),
-                         (3,'diou','cdiou@hua.gr',3),
-                         (4,'cleobar','cleobar@hua.gr',4),
-                         (5,'violos','violos@hua.gr',5);
+                         (1,'tsadimas','tsadimas@hua.gr',1,1),
+                         (2,'varlamis','varlamis@hua.gr',2,2),
+                         (3,'diou','cdiou@hua.gr',3,3),
+                         (4,'cleobar','cleobar@hua.gr',4,4),
+                         (5,'violos','violos@hua.gr',5,5);
 
 --
 -- Table structure for table `courses` and `certificates`

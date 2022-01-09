@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
 -- Initial values for testing
 --
 INSERT INTO authorities VALUES
-    ('root', 'ROLE_ADMIN'),
-    ('panagiotis', 'ROLE_STUDENT'),
-    ('stratos', 'ROLE_STUDENT'),
-    ('nikitas', 'ROLE_STUDENT'),
-    ('argiris', 'ROLE_TEACHER');
+    ('root', 'ROLE_ADMIN', 'ROLE_USER'),
+    ('panagiotis', 'ROLE_STUDENT', 'ROLE_USER'),
+    ('stratos', 'ROLE_STUDENT', 'ROLE_USER'),
+    ('nikitas', 'ROLE_STUDENT', 'ROLE_USER'),
+    ('argiris', 'ROLE_TEACHER', 'ROLE_USER');

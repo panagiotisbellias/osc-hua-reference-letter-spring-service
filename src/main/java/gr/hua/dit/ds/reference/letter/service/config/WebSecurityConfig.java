@@ -26,9 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception { // Sample Security in Path Segments
         http.httpBasic().and().authorizeRequests()
-                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers("/**").hasRole("USER")
+                .antMatchers("/app/admin_panel", "**/students", "/**/teachers").hasRole("ADMIN") // Admin
+                .antMatchers("/**/students").hasRole("STUDENT") // Student
+                .antMatchers("/**/teachers").hasRole("TEACHER") // Teacher
                 .and().csrf().disable().headers().frameOptions().disable()
                 .and().formLogin().permitAll().and().logout().permitAll();
     }

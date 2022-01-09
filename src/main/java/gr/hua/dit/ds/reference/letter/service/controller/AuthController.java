@@ -6,24 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuthController {
 
-    @RequestMapping("/signup")
-    public String signUpPage() {
-        return "signUp";
-    }
-
     @RequestMapping("/signup/student")
     public String signUpStudent() {
-        return "signUpStudent";
+        return "";
     }
 
     @RequestMapping("/signup/teacher")
     public String signUpTeacher() {
-        return "signUpTeacher";
+        return "";
     }
 
     @RequestMapping("/profile")
     public String profile() {
-        return "profile";
+        return "";
     }
 
 }

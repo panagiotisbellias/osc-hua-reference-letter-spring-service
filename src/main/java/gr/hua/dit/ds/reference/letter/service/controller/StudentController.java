@@ -5,6 +5,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -14,6 +15,7 @@ import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
 
 @RestController
 @RequestMapping("/students")
+@Secured({"ROLE_ADMIN", "ROLE_STUDENT"})
 public class StudentController {
 
     @Autowired

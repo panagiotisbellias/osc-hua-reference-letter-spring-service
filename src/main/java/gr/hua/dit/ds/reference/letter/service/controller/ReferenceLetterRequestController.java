@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
-@RequestMapping("/app/requests")
+@RequestMapping("/reference_letter_requests")
 public class ReferenceLetterRequestController {
 
     @Autowired

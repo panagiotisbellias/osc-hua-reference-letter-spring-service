@@ -1,9 +1,6 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "reference_letter_requests")

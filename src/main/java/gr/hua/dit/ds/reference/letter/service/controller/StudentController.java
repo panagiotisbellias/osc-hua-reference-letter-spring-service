@@ -9,7 +9,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import gr.hua.dit.ds.reference.letter.service.entity.Student;
 import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
 
@@ -46,7 +45,6 @@ public class StudentController {
         Student savedStudent = studentRepository.save(student);
         System.out.println("student id " + savedStudent.getId());
 
-
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedStudent.getId()).toUri();
 
@@ -56,14 +54,11 @@ public class StudentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateStudent(@RequestBody Student student, @PathVariable int id) {
-
         Optional<Student> studentOptional = studentRepository.findById(id);
 
         if (studentOptional.isEmpty())
             return ResponseEntity.notFound().build();
-
         student.setId(id);
-
         studentRepository.save(student);
 
         return ResponseEntity.noContent().build();

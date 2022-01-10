@@ -57,9 +57,7 @@ public class TeacherController {
 
         if (teacherOptional.isEmpty())
             return ResponseEntity.notFound().build();
-
         teacher.setId(id);
-
         teacherRepository.save(teacher);
 
         return ResponseEntity.noContent().build();

@@ -72,9 +72,7 @@ public class ReferenceLetterRequestController {
 
         if (referenceLetterRequestOptional.isEmpty())
             return ResponseEntity.notFound().build();
-
         referenceLetterRequest.setId(id);
-
         referenceLetterRequestRepository.save(referenceLetterRequest);
 
         return ResponseEntity.noContent().build();

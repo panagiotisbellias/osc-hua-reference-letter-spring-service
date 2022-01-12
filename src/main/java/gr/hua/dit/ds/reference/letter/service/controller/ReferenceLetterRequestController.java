@@ -73,6 +73,7 @@ public class ReferenceLetterRequestController {
         if (referenceLetterRequestOptional.isEmpty())
             return ResponseEntity.notFound().build();
         referenceLetterRequest.setId(id);
+        // set last_update date to current
         referenceLetterRequestRepository.save(referenceLetterRequest);
 
         return ResponseEntity.noContent().build();

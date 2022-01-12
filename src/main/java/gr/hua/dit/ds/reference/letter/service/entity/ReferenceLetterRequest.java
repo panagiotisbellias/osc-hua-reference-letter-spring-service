@@ -1,6 +1,9 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
+import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "reference_letter_requests")
@@ -22,15 +25,19 @@ public class ReferenceLetterRequest {
     @Column(name = "carrier_email")
     private String carrierEmail;
 
+    @Column(name = "last_update")
+    private Date lastUpdate;
+
     public ReferenceLetterRequest() {
     }
 
-    public ReferenceLetterRequest(int id, int idTeacher, int idStudent, String carrierName, String carrierEmail) {
+    public ReferenceLetterRequest(int id, int idTeacher, int idStudent, String carrierName, String carrierEmail, Date lastUpdate) {
         this.id = id;
         this.idTeacher = idTeacher;
         this.idStudent = idStudent;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
+        this.lastUpdate = lastUpdate;
     }
 
     public int getId() {
@@ -73,6 +80,14 @@ public class ReferenceLetterRequest {
         this.carrierEmail = carrierEmail;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     @Override
     public String toString() {
         return "ReferenceLetterRequest{" +
@@ -81,6 +96,7 @@ public class ReferenceLetterRequest {
                 ", idStudent=" + idStudent +
                 ", carrierName='" + carrierName + '\'' +
                 ", carrierEmail='" + carrierEmail + '\'' +
+                ", lastUpdate=" + DateUtils.formatDate(lastUpdate) +
                 '}';
     }
 }

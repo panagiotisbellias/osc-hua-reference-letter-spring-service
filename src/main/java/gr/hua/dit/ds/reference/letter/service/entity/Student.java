@@ -1,6 +1,9 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
+import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "students")
@@ -25,16 +28,21 @@ public class Student {
     @Column(name = "url_grading_file")
     private String urlGradingFile;
 
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
+
     public Student() {
     }
 
-    public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile) {
+    public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile,
+                   Date dateOfBirth) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.school = school;
         this.uniId = uniId;
         this.urlGradingFile = urlGradingFile;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getId() {
@@ -85,6 +93,14 @@ public class Student {
         this.urlGradingFile = urlGradingFile;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -94,6 +110,7 @@ public class Student {
                 ", school='" + school + '\'' +
                 ", uniId='" + uniId + '\'' +
                 ", urlGradingFile='" + urlGradingFile + '\'' +
+                ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) +
                 '}';
     }
 }

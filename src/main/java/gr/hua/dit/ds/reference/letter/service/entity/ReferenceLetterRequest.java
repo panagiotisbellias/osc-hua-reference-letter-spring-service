@@ -31,7 +31,8 @@ public class ReferenceLetterRequest {
     public ReferenceLetterRequest() {
     }
 
-    public ReferenceLetterRequest(int id, int idTeacher, int idStudent, String carrierName, String carrierEmail, Date lastUpdate) {
+    public ReferenceLetterRequest(int id, int idTeacher, int idStudent, String carrierName,
+                                  String carrierEmail, Date lastUpdate) {
         this.id = id;
         this.idTeacher = idTeacher;
         this.idStudent = idStudent;

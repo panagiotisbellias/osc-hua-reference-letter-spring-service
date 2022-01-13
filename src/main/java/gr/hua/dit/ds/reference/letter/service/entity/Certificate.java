@@ -71,7 +71,7 @@ public class Certificate {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", university='" + university + '\'' +
-                ", dateOfBirth=" + DateUtils.formatDate(dateTaken) +
+                ", dateTaken=" + DateUtils.formatDate(dateTaken) +
                 '}';
     }
 }

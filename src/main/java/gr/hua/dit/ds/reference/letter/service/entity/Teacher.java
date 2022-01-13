@@ -10,6 +10,7 @@ import java.util.Date;
 public class Teacher {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -19,25 +20,26 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "courses_id")
-    private int coursesId;
+    /* Must be corrected to One To Many */
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="courses_id")
+    private Course courses;
 
-    @Column(name = "certificates_id")
-    private int certificatesId;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="certificates_id")
+    private Certificate certificates;
 
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     public Teacher() {
     }
 
-    public Teacher(int id, String fullName, String email, int coursesId, int certificatesId,
-                   Date dateOfBirth) {
+    public Teacher(int id, String fullName, String email, Date dateOfBirth) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
-        this.coursesId = coursesId;
-        this.certificatesId = certificatesId;
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -65,20 +67,20 @@ public class Teacher {
         this.email = email;
     }
 
-    public int getCoursesId() {
-        return coursesId;
+    public Course getCourses() {
+        return courses;
     }
 
-    public void setCoursesId(int coursesId) {
-        this.coursesId = coursesId;
+    public void setCourses(Course courses) {
+        this.courses = courses;
     }
 
-    public int getCertificatesId() {
-        return certificatesId;
+    public Certificate getCertificates() {
+        return certificates;
     }
 
-    public void setCertificatesId(int certificatesId) {
-        this.certificatesId = certificatesId;
+    public void setCertificate(Certificate certificate) {
+        this.certificates = certificate;
     }
 
     public Date getDateOfBirth() {
@@ -95,8 +97,8 @@ public class Teacher {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
-                ", coursesId=" + coursesId +
-                ", certificatesId=" + certificatesId +
+                ", courses=" + courses + '\'' +
+                ", certificates=" + certificates + '\'' +
                 ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) +
                 '}';
     }

@@ -13,11 +13,13 @@ public class ReferenceLetterRequest {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "id_teacher")
-    private int idTeacher;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="id_teacher")
+    private Teacher teacher;
 
-    @Column(name = "id_student")
-    private int idStudent;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="id_student")
+    private Student student;
 
     @Column(name = "carrier_name")
     private String carrierName;
@@ -26,16 +28,14 @@ public class ReferenceLetterRequest {
     private String carrierEmail;
 
     @Column(name = "last_update")
+    @Temporal(TemporalType.DATE)
     private Date lastUpdate;
 
     public ReferenceLetterRequest() {
     }
 
-    public ReferenceLetterRequest(int id, int idTeacher, int idStudent, String carrierName,
-                                  String carrierEmail, Date lastUpdate) {
+    public ReferenceLetterRequest(int id, String carrierName, String carrierEmail, Date lastUpdate) {
         this.id = id;
-        this.idTeacher = idTeacher;
-        this.idStudent = idStudent;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
         this.lastUpdate = lastUpdate;
@@ -49,20 +49,20 @@ public class ReferenceLetterRequest {
         this.id = id;
     }
 
-    public int getIdTeacher() {
-        return idTeacher;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setIdTeacher(int idTeacher) {
-        this.idTeacher = idTeacher;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    public int getIdStudent() {
-        return idStudent;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setIdStudent(int idStudent) {
-        this.idStudent = idStudent;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public String getCarrierName() {
@@ -93,8 +93,8 @@ public class ReferenceLetterRequest {
     public String toString() {
         return "ReferenceLetterRequest{" +
                 "id=" + id +
-                ", idTeacher=" + idTeacher +
-                ", idStudent=" + idStudent +
+                ", teacher=" + teacher + '\'' +
+                ", student=" + student + '\'' +
                 ", carrierName='" + carrierName + '\'' +
                 ", carrierEmail='" + carrierEmail + '\'' +
                 ", lastUpdate=" + DateUtils.formatDate(lastUpdate) +

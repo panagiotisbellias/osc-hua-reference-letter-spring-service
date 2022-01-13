@@ -10,6 +10,7 @@ import java.util.Date;
 public class Certificate {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -18,6 +19,11 @@ public class Certificate {
 
     @Column(name = "university")
     private String university;
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="teacher_id")
+    private Teacher teacher;
 
     @Column(name="date_taken")
     @Temporal(TemporalType.DATE)

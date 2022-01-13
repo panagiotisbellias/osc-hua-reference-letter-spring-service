@@ -10,6 +10,7 @@ import java.util.Date;
 public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -29,6 +30,7 @@ public class Student {
     private String urlGradingFile;
 
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     public Student() {

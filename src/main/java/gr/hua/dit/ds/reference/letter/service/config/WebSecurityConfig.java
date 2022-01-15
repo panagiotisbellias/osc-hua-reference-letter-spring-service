@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and().authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .anyRequest().authenticated()
                 .antMatchers("/actuator/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and().csrf().disable().headers().frameOptions().disable()
                 .and().formLogin().permitAll()
                 .defaultSuccessUrl("/admin_panel", true)

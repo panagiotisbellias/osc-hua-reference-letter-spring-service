@@ -17,7 +17,7 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Authorities> authorities = new HashSet<>();
 
     public String getUsername() {

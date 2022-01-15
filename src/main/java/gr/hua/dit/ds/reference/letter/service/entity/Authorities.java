@@ -10,7 +10,7 @@ public class Authorities {
     @Column(name = "authority")
     private String authority;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "username")
     private User user;
 

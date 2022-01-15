@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@angular/core": "^13.1.2",
+    "@angular/platform-browser-dynamic": "^13.1.2"
+  }
+}

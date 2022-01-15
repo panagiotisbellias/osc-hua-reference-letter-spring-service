@@ -12,7 +12,10 @@ CREATE TABLE courses (
  id int NOT NULL,
  title varchar(45) DEFAULT NULL,
  university varchar(45) DEFAULT NULL,
- PRIMARY KEY (id)
+ teacher_id int DEFAULT NULL,
+ PRIMARY KEY (id),
+ CONSTRAINT fk_teachers FOREIGN KEY(teacher_id) REFERENCES teachers(id)
+ ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE certificates (
@@ -20,25 +23,28 @@ CREATE TABLE certificates (
   title varchar(45) DEFAULT NULL,
   university varchar(45) DEFAULT NULL,
   date_taken date NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY (id)
+  teacher_id int DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_teachers FOREIGN KEY(teacher_id) REFERENCES teachers(id)
+  ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 --
 -- Initial values for testing
 --
 INSERT INTO courses VALUES
-    (1,'devops','HUA'),
-    (2,'hci','HUA'),
-    (3,'investment valuation','HUA'),
-    (4,'javaII', 'HUA'),
-    (5,'distributed systems','HUA');
+    (1,'devops','HUA', 1),
+    (2,'hci','HUA', 2),
+    (3,'investment valuation','HUA', 3),
+    (4,'javaII', 'HUA', 4),
+    (5,'distributed systems','HUA', 5);
 
 INSERT INTO certificates VALUES
- (1,'devops-master','HUA'),
- (2,'humanity','EKPA'),
- (3,'investments','OPA'),
- (4,'javaprogramming', 'HUA'),
- (5,'data-mining','HUA');
+ (1,'devops-master','HUA', 1),
+ (2,'humanity','EKPA', 2),
+ (3,'investments','OPA', 3),
+ (4,'javaprogramming', 'HUA', 4),
+ (5,'data-mining','HUA', 5);
 
 --
 -- Table structure for table `teachers`
@@ -50,12 +56,12 @@ CREATE TABLE teachers (
   id int NOT NULL,
   full_name varchar(45) NOT NULL,
   email varchar(45) DEFAULT NULL,
-  courses_id int DEFAULT NULL,
-  certificates_id int NOT NULL,
+  -- courses_id int DEFAULT NULL,
+  -- certificates_id int NOT NULL,
   date_of_birth date NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_courses FOREIGN KEY(courses_id) REFERENCES courses(id),
-  CONSTRAINT fk_certs FOREIGN KEY(certificates_id) REFERENCES certificates(id),
+  PRIMARY KEY (id) --,
+  -- CONSTRAINT fk_courses FOREIGN KEY(courses_id) REFERENCES courses(id),
+  -- CONSTRAINT fk_certs FOREIGN KEY(certificates_id) REFERENCES certificates(id),
 );
 
 --

@@ -3,7 +3,9 @@ package gr.hua.dit.ds.reference.letter.service.entity;
 import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "teachers")
@@ -20,14 +22,13 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    /* Must be corrected to One To Many */
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="courses_id")
-    private Course courses;
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="teacher_id")
+    private List<Course> courses;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="certificates_id")
-    private Certificate certificates;
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name="teacher_id")
+    private List<Certificate> certificates;
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
@@ -67,19 +68,19 @@ public class Teacher {
         this.email = email;
     }
 
-    public Course getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Course courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 
-    public Certificate getCertificates() {
+    public List<Certificate> getCertificates() {
         return certificates;
     }
 
-    public void setCertificate(Certificate certificate) {
+    public void setCertificate(List<Certificate> certificate) {
         this.certificates = certificate;
     }
 
@@ -97,9 +98,22 @@ public class Teacher {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
-                ", courses=" + courses + '\'' +
-                ", certificates=" + certificates + '\'' +
                 ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) +
                 '}';
     }
+
+    public void addCourse(Course acourse){
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(acourse);
+    }
+
+    public void addCertificate(Certificate acertificate){
+        if (certificates == null) {
+            certificates = new ArrayList<>();
+        }
+        certificates.add(acertificate);
+    }
+
 }

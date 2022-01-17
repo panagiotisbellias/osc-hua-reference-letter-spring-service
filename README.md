@@ -61,8 +61,11 @@ Simple, hah?
 You have to do the following so the spring application can connect with the database properly.  
 Create file application.properties in src/main/resources and follow this template entering your own values.
 ```bash
-spring.datasource.url=jdbc:postgresql://localhost/<DB-NAME>
+# JDBC URL of the database
+spring.datasource.url=jdbc:postgresql://localhost/ref_letters_db
+# Login username of the database
 spring.datasource.username=<DB-USER>
+# Login password of the database
 spring.datasource.password=<DB-PASSWORD>
 
 spring.jpa.hibernate.ddl-auto=update
@@ -70,14 +73,42 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL81Dialect
 
-spring.data.rest.base-path=/api
+# Default user name
+spring.security.user.name=<DEFAULT-USER>
+# Password for user
+spring.security.user.password=<DEFAULT-PASSWORD>
 
+info.app.name=Reference Letter Service
+info.app.description=Backend service for reference letter management in the context of 'Distributed Systems' course at HUA DIT
+info.app.version=1.0.0
+
+# HTTP server port
+server.port=8080
+# Context path of the application
+server.servlet.context-path=/reference-letters
+# Default HTTP session time out
+server.servlet.session.timeout=15m
+
+# Endpoints to include by name or wildcard
 management.endpoints.web.exposure.include=*
+# Endpoints to exclude by name or wildcard
+management.endpoints.web.exposure.exclude=health,info,beans,mapping
+# Base path for actuator endpoints
+management.endpoints.web.base-path=/actuator
+
+# Log levels severity mapping
+logging.level.org.springframework=DEBUG
+logging.level.org.hibernate=TRACE
+logging.level.com.luv2code=INFO
+# Log file name
+logging.file.name=reference-letter-service.log
+spring.data.rest.base-path=/api
 ```
 
 ## Run Locally
 Use some IDE like IntelliJ or Eclipse. Otherwise, generate and run the .jar file using these commands
 ```bash
 mvn install
-java -jar target/reference-letter-service-0.0.1-SNAPSHOT.jar
+mvnw package; java -jar target/reference-letter-service-0.0.1-SNAPSHOT.jar
+mvmw spring-boot:run
 ```

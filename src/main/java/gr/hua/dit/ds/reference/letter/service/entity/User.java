@@ -17,7 +17,10 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    private String entity;
+    //private String entity;
+
+    @OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+    private Teacher teacher;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Authorities> authorities = new HashSet<>();
@@ -56,12 +59,12 @@ public class User {
     public void setAuthorities(Set<Authorities> authorities) {
         this.authorities = authorities;
     }
-
+/*
     public String getEntity() {
         return entity;
     }
 
     public void setEntity(String entity) {
         this.entity = entity;
-    }
+    }*/
 }

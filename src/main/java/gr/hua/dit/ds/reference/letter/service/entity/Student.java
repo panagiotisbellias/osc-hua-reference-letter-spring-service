@@ -33,11 +33,15 @@ public class Student {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="users_username")
+    private User user;
+
     public Student() {
     }
 
     public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile,
-                   Date dateOfBirth) {
+                   Date dateOfBirth, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -45,6 +49,7 @@ public class Student {
         this.uniId = uniId;
         this.urlGradingFile = urlGradingFile;
         this.dateOfBirth = dateOfBirth;
+        this.user = user;
     }
 
     public int getId() {
@@ -101,6 +106,14 @@ public class Student {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

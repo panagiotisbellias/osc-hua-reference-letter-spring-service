@@ -3,8 +3,9 @@
 --
 -- Table structure for table `users`
 --
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE IF NOT EXISTS users ( -- possible issue
+CREATE TABLE users ( -- possible issue
     username varchar(50) NOT NULL,
     password varchar(100) NOT NULL,
     enabled smallint NOT NULL, -- possible issue
@@ -14,18 +15,15 @@ CREATE TABLE IF NOT EXISTS users ( -- possible issue
 --
 -- Initial values for testing
 --
-
 INSERT INTO users VALUES
-   ('panagiotis', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
-   ('stratos', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
-   ('nikitas', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
-   ('argiris', '$2a$04$DR/f..s1siWJc8Xg3eJgpeB28a4V6kYpnkMPeOuq4rLQ42mJUYFGC', 1),
-   ('root', '$2a$12$bWiD/oOdJKADNJlJu0O96u9mQOFHj3n3Cw94CRTayOGer8GEflkeW', 1);
+   ('panagiotis', '$2a$12$jdOzN2OEzGZTxR1fEj0LReWVdTsi0zkELNdvPcPOfBW1S.5MtUNlS', 1), --panagiotis123
+   ('stratos', '$2a$12$5k82OEFceH680YjVK5mucO/hqnztgWjzm7qyc7jMtYnYxfkKhmIW.', 1), --stratos123
+   ('nikitas', '$2a$12$IvOBE9OMSDHtcQIEbKNeou92ID3nVvknRmnqFUKrD4Z6RwdffMzI2', 1), --nikitas123
+   ('root', '$2a$12$BcO9G1DrN2QEsgoMkppoXugAps3FFIvPPQ7MXd0L3C2.asJxZ/bsi', 1); --root123
 
 --
 -- Table structure for table `authorities`
 --
-
 CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
     username varchar(50) NOT NULL,
     authority varchar(50) NOT NULL,
@@ -38,7 +36,6 @@ CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
 --
 INSERT INTO authorities VALUES
     ('root', 'ROLE_ADMIN'),
-    ('panagiotis', 'ROLE_STUDENT'),
+    ('panagiotis', 'ROLE_TEACHER'),
     ('stratos', 'ROLE_STUDENT'),
-    ('nikitas', 'ROLE_STUDENT'),
-    ('argiris', 'ROLE_TEACHER');
+    ('nikitas', 'ROLE_STUDENT');

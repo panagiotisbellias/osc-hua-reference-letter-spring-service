@@ -34,14 +34,19 @@ public class Teacher {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="users_username")
+    private User user;
+
     public Teacher() {
     }
 
-    public Teacher(int id, String fullName, String email, Date dateOfBirth) {
+    public Teacher(int id, String fullName, String email, Date dateOfBirth, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.user = user;
     }
 
     public int getId() {
@@ -90,6 +95,14 @@ public class Teacher {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -1,4 +1,4 @@
-CREATE DATABASE ref_letters_db;
+--CREATE DATABASE ref_letters_db;
 \c ref_letters_db
 
 --
@@ -22,8 +22,8 @@ CREATE TABLE certificates (
   id int NOT NULL,
   title varchar(45) DEFAULT NULL,
   university varchar(45) DEFAULT NULL,
-  date_taken date NOT NULL DEFAULT CURRENT_DATE,
   teacher_id int DEFAULT NULL,
+  date_taken date NOT NULL DEFAULT CURRENT_DATE,
   PRIMARY KEY (id),
   CONSTRAINT fk_teachers FOREIGN KEY(teacher_id) REFERENCES teachers(id)
   ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -33,18 +33,10 @@ CREATE TABLE certificates (
 -- Initial values for testing
 --
 INSERT INTO courses VALUES
-    (1,'devops','HUA', 1),
-    (2,'hci','HUA', 2),
-    (3,'investment valuation','HUA', 3),
-    (4,'javaII', 'HUA', 4),
-    (5,'distributed systems','HUA', 5);
+    (1,'devops','HUA', 1);
 
 INSERT INTO certificates VALUES
- (1,'devops-master','HUA', 1),
- (2,'humanity','EKPA', 2),
- (3,'investments','OPA', 3),
- (4,'javaprogramming', 'HUA', 4),
- (5,'data-mining','HUA', 5);
+ (1,'devops-master','HUA', 1);
 
 --
 -- Table structure for table `teachers`
@@ -56,23 +48,18 @@ CREATE TABLE teachers (
   id int NOT NULL,
   full_name varchar(45) NOT NULL,
   email varchar(45) DEFAULT NULL,
-  -- courses_id int DEFAULT NULL,
-  -- certificates_id int NOT NULL,
+  users_username varchar(50) NOT NULL,
   date_of_birth date NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY (id) --,
-  -- CONSTRAINT fk_courses FOREIGN KEY(courses_id) REFERENCES courses(id),
-  -- CONSTRAINT fk_certs FOREIGN KEY(certificates_id) REFERENCES certificates(id),
+  PRIMARY KEY (id),
+  CONSTRAINT fk_users FOREIGN KEY(users_username) REFERENCES users(username)
+      ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 --
 -- Initial values for testing
 --
 INSERT INTO teachers VALUES
-     (1,'tsadimas','tsadimas@hua.gr',1,1),
-     (2,'varlamis','varlamis@hua.gr',2,2),
-     (3,'diou','cdiou@hua.gr',3,3),
-     (4,'cleobar','cleobar@hua.gr',4,4),
-     (5,'violos','violos@hua.gr',5,5);
+     (1,'panagiotis','it21871@hua.gr','panagiotis','2017-04-30');
 
 --
 -- Table structure for table `students`
@@ -87,17 +74,20 @@ CREATE TABLE students (
   email varchar(45) DEFAULT NULL,
   school varchar(90) DEFAULT NULL,
   url_grading_file varchar(45) DEFAULT NULL,
+  users_username varchar(50) NOT NULL,
   date_of_birth date NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT fk_users FOREIGN KEY(users_username) REFERENCES users(username)
+      ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 --
 -- Initial values for testing
 --
 INSERT INTO students VALUES
- (1,'Panagiotis Bellias','it21871','it21871@hua.gr','School of Digital Technology Harokopio University of Athens', 'www.google.com'),
- (2,'Nikitas Thermos','it21828','it21828@hua.gr','School of Digital Technology Harokopio University of Athens', 'www.google.com'),
- (3,'Efstratios Kouzeleas','it21846','it21846@hua.gr','School of Digital Technology Harokopio University of Athens', 'www.google.com');
+ (1,'Nikitas Thermos','it21828','it21828@hua.gr','School of Digital Technology Harokopio University of Athens', 'www.google.com', 'nikitas'),
+ (2,'Efstratios Kouzeleas','it21846','it21846@hua.gr','School of Digital Technology Harokopio University of Athens',
+  'www.google.com', 'stratos');
 
 --
 -- Table structure for table `reference_letter_requests`
@@ -122,7 +112,4 @@ CREATE TABLE reference_letter_requests (
 --
 INSERT INTO reference_letter_requests VALUES
   (1,1,1,'carrier1','carrier1@gmail.com'),
-  (2,2,2,'carrier2','carrier2@gmail.com'),
-  (3,3,3,'carrier3','carrier3@gmail.com'),
-  (4,4,4,'carrier4','carrier4@gmail.com'),
-  (5,5,5,'carrier5','carrier5@gmail.com');
+  (2,1,2,'carrier2','carrier2@gmail.com');

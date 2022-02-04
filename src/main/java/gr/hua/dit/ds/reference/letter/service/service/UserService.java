@@ -32,8 +32,8 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public User findUserById(int id) {
-        return userRepository.findById(id)
+    public User findUserById(String username) {
+        return userRepository.findById(username)
                 .orElseThrow(() -> new NullPointerException("user not found"));
     }
 

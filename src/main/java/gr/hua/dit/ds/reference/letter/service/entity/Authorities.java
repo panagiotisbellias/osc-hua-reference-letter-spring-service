@@ -19,6 +19,10 @@ public class Authorities {
         this.user = user;
     }
 
+    public Authorities() {
+
+    }
+
     public String getAuthority() {
         return authority;
     }

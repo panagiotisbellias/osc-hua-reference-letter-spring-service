@@ -14,19 +14,48 @@
     <h2 class="mb-5">New Student</h2>
     <div class="row">
         <div class="col-md-6">
-            <form action="#" th:action="@{/addstudent}" th:object="${student}" method="post">
+            <form action="#" th:action="@{/auth/addstudent}" th:object="${student}" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="username" class="col-form-label">username</label>
-                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="username">
-                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+                        <input type="text" th:field="*{user.username}" class="form-control" id="username" placeholder="username">
+                        <span th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}" class="text-danger"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="password" class="col-form-label">Password</label>
-                        <input type="password" th:field="*{password}" class="form-control" id="email" placeholder="password">
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+                        <input type="password" th:field="*{user.password}" class="form-control" id="password" placeholder="password">
+                        <span th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}" class="text-danger"></span>
                     </div>
-                    <!-- .. more for students - this is for testing -->
+                    <div class="form-group col-md-6">
+                        <label for="fullName" class="col-form-label">Full Name</label>
+                        <input type="text" th:field="*{fullName}" class="form-control" id="fullName" placeholder="full name">
+                        <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="text" th:field="*{email}" class="form-control" id="email" placeholder="email address">
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="school" class="col-form-label">School</label>
+                        <input type="text" th:field="*{school}" class="form-control" id="school" placeholder="school">
+                        <span th:if="${#fields.hasErrors('school')}" th:errors="*{school}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="uniId" class="col-form-label">Uni ID</label>
+                        <input type="text" th:field="*{uniId}" class="form-control" id="uniId" placeholder="uni id">
+                        <span th:if="${#fields.hasErrors('uniId')}" th:errors="*{uniId}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="urlGradingFile" class="col-form-label">URL Grading File</label>
+                        <input type="text" th:field="*{urlGradingFile}" class="form-control" id="urlGradingFile" placeholder="url grading file">
+                        <span th:if="${#fields.hasErrors('urlGradingFile')}" th:errors="*{urlGradingFile}" class="text-danger"></span>
+                    </div> <!--
+                    <div class="form-group col-md-6">
+                        <label for="dateOfBirth" class="col-form-label">Date Of Birth</label>
+                        <input type="text" th:field="*{dateOfBirth}" class="form-control" id="dateOfBirth" placeholder="date of birth">
+                        <span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" class="text-danger"></span>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-md-6 mt-5">

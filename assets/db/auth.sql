@@ -1,3 +1,4 @@
+CREATE DATABASE ref_letters_db;
 \c ref_letters_db
 
 --
@@ -25,9 +26,10 @@ INSERT INTO users VALUES
 -- Table structure for table `authorities`
 --
 CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
+    id int NOT NULL,
     username varchar(50) NOT NULL,
     authority varchar(50) NOT NULL,
-    UNIQUE (username,authority),
+    PRIMARY KEY(id),
     CONSTRAINT fk_authorities_users FOREIGN KEY (username) REFERENCES users (username)
 );
 
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS authorities ( -- possible issue
 -- Initial values for testing
 --
 INSERT INTO authorities VALUES
-    ('root', 'ROLE_ADMIN'),
-    ('panagiotis', 'ROLE_TEACHER'),
-    ('stratos', 'ROLE_STUDENT'),
-    ('nikitas', 'ROLE_STUDENT');
+    (1, 'root', 'ROLE_ADMIN'),
+    (2, 'panagiotis', 'ROLE_TEACHER'),
+    (3, 'stratos', 'ROLE_STUDENT'),
+    (4, 'nikitas', 'ROLE_STUDENT');

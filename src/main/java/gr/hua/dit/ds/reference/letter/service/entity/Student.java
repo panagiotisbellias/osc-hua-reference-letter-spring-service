@@ -1,6 +1,7 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
 import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class Student {
     @Column(name = "url_grading_file")
     private String urlGradingFile;
 
+    @Nullable
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;

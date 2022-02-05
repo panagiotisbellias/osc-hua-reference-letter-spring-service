@@ -1,6 +1,7 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
 import gr.hua.dit.ds.reference.letter.service.entity.*;
+import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
 import gr.hua.dit.ds.reference.letter.service.service.StudentService;
 import gr.hua.dit.ds.reference.letter.service.service.TeacherService;
 import gr.hua.dit.ds.reference.letter.service.service.UserService;
@@ -20,28 +21,33 @@ public class AuthenticationController {
     UserService userService;
 
     @Autowired
-    StudentService studentService;
+    StudentRepository studentRepository;
+    //StudentService studentService;
 
     @Autowired
     TeacherService teacherService;
 
     @PostMapping("/adduser")
-    public String addUser(@Valid User user, BindingResult result, Model model) {
+    public String addUser(@Valid User user, @Valid String authority, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-user";
         }
 
-        userService.registerUser(user, null);
+        userService.registerUser(user, authority);
         return "redirect:/index";
     }
 
     @PostMapping("/addstudent")
-    public String addStudent(@Valid Student student, @Valid User user, BindingResult result, Model model) {
+    public String addStudent(@Valid Student student, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-student";
         }
 
-        studentService.registerStudent(user, student);
+        User user = student.getUser();
+        userService.registerUser(user, "ROLE_STUDENT");
+        Student newStudent = student;
+        studentRepository.save(newStudent);
+        //studentService.registerStudent(user, student);
         return "redirect:/index";
     }
 

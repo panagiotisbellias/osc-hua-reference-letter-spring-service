@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=pass123
       - POSTGRES_DB=ref_letters_db
     volumes:
-      - ./assets/db:/docker-entrypoint-initdb.d
+      # - ./assets/db:/docker-entrypoint-initdb.d
       - dj_postgres_data:/var/lib/postgresql/data/
 
 volumes:

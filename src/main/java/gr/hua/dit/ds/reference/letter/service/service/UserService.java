@@ -21,19 +21,19 @@ public class UserService implements UserDetailsService {
     @Autowired
     private AuthRepository authRepository;
 
-    public void registerUser(User user, @Nullable String authority) {
+    public void registerUser(User user, String authority) {
 
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         newUser.setEnabled(1); // enabled
-        Authorities auth1 = new Authorities("ROLE_USER", newUser);
+
+        Authorities auth = new Authorities(authority, newUser);
+        newUser.addAuthority(auth);
+
         userRepository.save(newUser);
-        authRepository.save(auth1);
-        if (authority != null) {
-            Authorities auth2 = new Authorities(authority, newUser);
-            authRepository.save(auth2);
-        }
+        authRepository.save(auth);
+
     }
 
     @Override

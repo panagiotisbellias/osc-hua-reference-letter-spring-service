@@ -1,18 +1,24 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "authorities")
 public class Authorities {
 
-    @Id
     @Column(name = "authority")
     private String authority;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "username")
     private User user;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     public Authorities(String authority, User user) {
         this.authority = authority;
@@ -39,5 +45,16 @@ public class Authorities {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return authority;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

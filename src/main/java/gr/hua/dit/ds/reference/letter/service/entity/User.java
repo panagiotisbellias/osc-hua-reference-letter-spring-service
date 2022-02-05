@@ -17,11 +17,20 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private int enabled;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Collection<Authorities> authorities = new HashSet<>();
 
     public User() {
     }
+
+    /*
+    public User(String username, String password, int enabled, Collection<Authorities> authorities) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.authorities = authorities;
+    }
+    */
 
     public String getUsername() {
         return username;
@@ -47,12 +56,22 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Collection<Authorities> getAuthorities() {
-        return authorities;
+    public Collection<Authorities> getAuthorities() {return authorities;    }
+
+    public void setAuthorities(Collection<Authorities> authorities) {
+        this.authorities = authorities;
     }
 
-    public void setAuthorities(Collection<Authorities>  authorities) {
-        this.authorities = authorities;
+    public void addAuthority(Authorities authority) {
+        this.authorities.add(authority);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", authorities=" + authorities +
+                '}';
     }
 
 }

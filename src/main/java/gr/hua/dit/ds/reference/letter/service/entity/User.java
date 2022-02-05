@@ -15,10 +15,10 @@ public class User {
     private String password;
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
+    private int enabled;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Authorities> authorities = new HashSet<>();
+    private Collection<Authorities> authorities = new HashSet<>();
 
     public User() {
     }
@@ -39,19 +39,19 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
+    public int getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 
-    public Set<Authorities> getAuthorities() {
+    public Collection<Authorities> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Authorities> authorities) {
+    public void setAuthorities(Collection<Authorities>  authorities) {
         this.authorities = authorities;
     }
 

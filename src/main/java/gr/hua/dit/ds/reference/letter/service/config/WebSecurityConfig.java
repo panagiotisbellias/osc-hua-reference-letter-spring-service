@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().csrf().disable().headers().frameOptions().disable()
                 .and().formLogin().permitAll()
-                .defaultSuccessUrl("/admin_panel", true)
+                //.defaultSuccessUrl("/admin_panel", true)
                 .and().logout().permitAll();
     }
 

@@ -3,6 +3,7 @@ package gr.hua.dit.ds.reference.letter.service.config;
 import gr.hua.dit.ds.reference.letter.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.*;
@@ -44,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers("/api/users").hasRole("ADMIN")
                 //.antMatchers("/api/students").hasAnyRole("ADMIN","USER")
+                .antMatchers("/api/auth/**").permitAll() // REST API
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
@@ -61,6 +63,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/addstudent");
         web.ignoring().antMatchers("/addteacher");
         web.ignoring().antMatchers("/api/students");
+    }
+
+    // REST API
+    //@Autowired
+    //private UserService userDetailsService;
+
+    // REST API
+    /*
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }*/
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean

@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/users").hasRole("ADMIN")
+                //.antMatchers("/api/users").hasRole("ADMIN")
                 //.antMatchers("/api/students").hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()
@@ -55,7 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
         web.ignoring().antMatchers("/signup");
+        web.ignoring().antMatchers("/signup/student");
+        web.ignoring().antMatchers("/signup/teacher");
         web.ignoring().antMatchers("/adduser");
+        web.ignoring().antMatchers("/addstudent");
+        web.ignoring().antMatchers("/addteacher");
         web.ignoring().antMatchers("/api/students");
     }
 

@@ -46,8 +46,8 @@ public class UserController {
         }
 
         User user = student.getUser();
-        // TODO: Save properly the student in the Repository
         userService.registerUser(user, "ROLE_STUDENT");
+        userService.registerStudent(student);
         return "redirect:/index";
     }
 
@@ -63,11 +63,11 @@ public class UserController {
         }
 
         User user = teacher.getUser();
-        // TODO: Save properly the student in the Repository
         userService.registerUser(user, "ROLE_TEACHER");
+        userService.registerTeacher(teacher);
         return "redirect:/index";
     }
 
-    // TODO: Testing templates for student and teacher
+    // TODO: Finish testing template for teacher
 
 }

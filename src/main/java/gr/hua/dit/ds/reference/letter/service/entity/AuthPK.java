@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class AuthPK implements Serializable {
-    private String username;
+    private String user;
     private String authority;
 
     public AuthPK() {
     }
 
-    public AuthPK(String username, String authority) {
-        this.username = username;
+    public AuthPK(String user , String authority) {
+        this.user = user;
         this.authority = authority;
     }
 
@@ -20,11 +20,11 @@ public class AuthPK implements Serializable {
         if (this == o) return true;
         if (!(o instanceof AuthPK)) return false;
         AuthPK authPK = (AuthPK) o;
-        return Objects.equals(username, authPK.username) && Objects.equals(authority, authPK.authority);
+        return Objects.equals(user, authPK.user) && Objects.equals(authority, authPK.authority);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, authority);
+        return Objects.hash(user, authority);
     }
 }

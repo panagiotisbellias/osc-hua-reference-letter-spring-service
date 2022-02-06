@@ -45,8 +45,7 @@ when you are in the root directory of project, where yaml file is located.
 
 In case, database isn't initialized automatically through docker-compose, you can execute the commands below while database is available.
 ```bash
-psql -h localhost -U postgres -p 5432 < assets/db/auth.sql
-psql -h localhost -U postgres -p 5432 < assets/db/postgresql-init.sql
+psql -h localhost -U postgres -p 5432 < assets/db/schema.sql
 ```
 
 When you want to stop the postgresql container you can do

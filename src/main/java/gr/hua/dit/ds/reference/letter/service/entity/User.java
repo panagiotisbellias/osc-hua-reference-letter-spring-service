@@ -20,18 +20,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private Collection<Authorities> authorities = new HashSet<>();
 
-    public User() {
-    }
-
-    /*
-    public User(String username, String password, int enabled, Collection<Authorities> authorities) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.authorities = authorities;
-    }
-    */
-
     public String getUsername() {
         return username;
     }

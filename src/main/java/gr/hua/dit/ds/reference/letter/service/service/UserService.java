@@ -5,12 +5,13 @@ import gr.hua.dit.ds.reference.letter.service.entity.User;
 import gr.hua.dit.ds.reference.letter.service.repository.AuthRepository;
 import gr.hua.dit.ds.reference.letter.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -38,7 +39,13 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        throw new UsernameNotFoundException(String.format("Username[%s] not found", username));
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()){
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),  user.get().getAuthorities());
+        }else{
+            throw new UsernameNotFoundException(String.format("Username[%s] not found", username));
+        }
+
     }
 
 }

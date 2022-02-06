@@ -23,15 +23,11 @@ public class UserEventHandler {
     private AuthRepository authRepository;
 
     @HandleBeforeCreate
-    public void handleUserCreate(User user, @Nullable String authority) {
+    public void handleUserCreate(User user, String authority) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Authorities auth1 = new Authorities("ROLE_USER", user);
+        Authorities auth = new Authorities(authority, user);
         userRepository.save(user);
-        authRepository.save(auth1);
-        if (authority != null) {
-            Authorities auth2 = new Authorities(authority, user);
-            authRepository.save(auth2);
-        }
+        authRepository.save(auth);
     }
 
     @HandleBeforeSave

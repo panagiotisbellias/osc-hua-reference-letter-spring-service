@@ -1,7 +1,5 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
-import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,7 +8,6 @@ import java.util.Date;
 public class Certificate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -20,18 +17,13 @@ public class Certificate {
     @Column(name = "university")
     private String university;
 
-    @Column(name="date_taken")
-    @Temporal(TemporalType.DATE)
-    private Date dateTaken;
-
     public Certificate() {
     }
 
-    public Certificate(int id, String title, String university, Date dateTaken) {
+    public Certificate(int id, String title, String university) {
         this.id = id;
         this.title = title;
         this.university = university;
-        this.dateTaken = dateTaken;
     }
 
     public int getId() {
@@ -58,21 +50,12 @@ public class Certificate {
         this.university = university;
     }
 
-    public Date getDateTaken() {
-        return dateTaken;
-    }
-
-    public void setDateTaken(Date dateTaken) {
-        this.dateTaken = dateTaken;
-    }
-
     @Override
     public String toString() {
         return "Certificate{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", university='" + university + '\'' +
-                ", dateTaken=" + DateUtils.formatDate(dateTaken) +
+                ", university='" + university +
                 '}';
     }
 }

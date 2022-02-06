@@ -1,10 +1,7 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
-import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,7 +9,6 @@ import java.util.List;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -30,10 +26,6 @@ public class Teacher {
     @JoinColumn(name="teacher_id")
     private List<Certificate> certificates;
 
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="users_username")
     private User user;
@@ -41,11 +33,10 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String fullName, String email, Date dateOfBirth, User user) {
+    public Teacher(int id, String fullName, String email, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
-        this.dateOfBirth = dateOfBirth;
         this.user = user;
     }
 
@@ -89,14 +80,6 @@ public class Teacher {
         this.certificates = certificate;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public User getUser() {
         return user;
     }
@@ -110,8 +93,7 @@ public class Teacher {
         return "Teacher{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) +
+                ", email='" + email +
                 '}';
     }
 

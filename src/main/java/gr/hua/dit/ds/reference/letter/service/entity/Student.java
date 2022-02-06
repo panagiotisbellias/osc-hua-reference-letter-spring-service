@@ -1,17 +1,12 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
-import gr.hua.dit.ds.reference.letter.service.entity.hibernate.DateUtils;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "students")
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -30,11 +25,6 @@ public class Student {
     @Column(name = "url_grading_file")
     private String urlGradingFile;
 
-    @Nullable
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="users_username")
     private User user;
@@ -43,14 +33,13 @@ public class Student {
     }
 
     public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile,
-                   Date dateOfBirth, User user) {
+                   User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.school = school;
         this.uniId = uniId;
         this.urlGradingFile = urlGradingFile;
-        this.dateOfBirth = dateOfBirth;
         this.user = user;
     }
 
@@ -102,14 +91,6 @@ public class Student {
         this.urlGradingFile = urlGradingFile;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public User getUser() {
         return user;
     }
@@ -126,8 +107,7 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", school='" + school + '\'' +
                 ", uniId='" + uniId + '\'' +
-                ", urlGradingFile='" + urlGradingFile + '\'' +
-                ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) +
+                ", urlGradingFile='" + urlGradingFile +
                 '}';
     }
 }

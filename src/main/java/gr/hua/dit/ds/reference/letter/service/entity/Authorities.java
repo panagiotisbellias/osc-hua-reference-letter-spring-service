@@ -6,19 +6,17 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "authorities")
-public class Authorities {
+@IdClass(AuthPK.class)
+public class Authorities implements GrantedAuthority {
 
+    @Id
     @Column(name = "authority")
     private String authority;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
 
     public Authorities(String authority, User user) {
         this.authority = authority;
@@ -50,11 +48,4 @@ public class Authorities {
         return authority;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

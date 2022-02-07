@@ -1,21 +1,21 @@
 package gr.hua.dit.ds.reference.letter.service.payload;
 
 // REST API
-public class SignUpDto {
+public class SignUpTeacherDto {
 
     private String username;
     private String password;
     private String fullName;
     private String email;
 
-    public SignUpDto(String username, String password, String fullName, String email) {
+    public SignUpTeacherDto(String username, String password, String fullName, String email) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
     }
 
-    public SignUpDto() {
+    public SignUpTeacherDto() {
     }
 
     public String getUsername() {

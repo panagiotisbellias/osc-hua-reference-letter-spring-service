@@ -3,7 +3,6 @@ package gr.hua.dit.ds.reference.letter.service.repository;
 import gr.hua.dit.ds.reference.letter.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.*;
-import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

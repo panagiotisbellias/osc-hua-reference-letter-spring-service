@@ -48,7 +48,7 @@ INSERT INTO authorities VALUES
 DROP TABLE IF EXISTS teachers;
 
 CREATE TABLE teachers (
-                          id int NOT NULL,
+                          id SERIAL,
                           full_name varchar(45) NOT NULL,
                           email varchar(45) DEFAULT NULL,
                           users_username varchar(50) NOT NULL,
@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS certificates;
 
 CREATE TABLE courses (
-                         id int NOT NULL,
+                         id  SERIAL,
                          title varchar(45) DEFAULT NULL,
                          university varchar(45) DEFAULT NULL,
                          teacher_id int DEFAULT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE courses (
 );
 
 CREATE TABLE certificates (
-                              id int NOT NULL,
+                              id SERIAL,
                               title varchar(45) DEFAULT NULL,
                               university varchar(45) DEFAULT NULL,
                               teacher_id int DEFAULT NULL,
@@ -106,7 +106,7 @@ INSERT INTO certificates VALUES
 DROP TABLE IF EXISTS students;
 
 CREATE TABLE students (
-                          id int NOT NULL,
+                          id SERIAL,
                           full_name varchar(45) NOT NULL,
                           uni_id varchar(20) NOT NULL,
                           email varchar(45) DEFAULT NULL,
@@ -133,7 +133,7 @@ INSERT INTO students VALUES
 DROP TABLE IF EXISTS reference_letter_requests;
 
 CREATE TABLE reference_letter_requests (
-                                           id int NOT NULL,
+                                           id  SERIAL,
                                            id_teacher int NOT NULL,
                                            id_student int NOT NULL,
                                            carrier_name varchar(45) NOT NULL,

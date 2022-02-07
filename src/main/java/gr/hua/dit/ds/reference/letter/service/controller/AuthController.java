@@ -1,7 +1,7 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
 import gr.hua.dit.ds.reference.letter.service.entity.*;
-import gr.hua.dit.ds.reference.letter.service.payload.LoginDto;
+import gr.hua.dit.ds.reference.letter.service.payload.*;
 import gr.hua.dit.ds.reference.letter.service.repository.*;
 import gr.hua.dit.ds.reference.letter.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +37,23 @@ public class AuthController {
     }
 
     @PostMapping("/signup/student")
-    public ResponseEntity<?> registerStudent(@RequestBody Student student) {
+    public ResponseEntity<?> registerStudent(@RequestBody SignUpStudentDto signUpStudentDto) {
 
-        if(userRepository.existsByUsername(student.getUser().getUsername())){
+        if(userRepository.existsByUsername(signUpStudentDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
-        User user = student.getUser();
+        User user = new User();
+        user.setUsername(signUpStudentDto.getUsername());
+        user.setPassword(signUpStudentDto.getPassword());
         userService.registerUser(user, "ROLE_STUDENT");
+        Student student = new Student();
+        student.setFullName(signUpStudentDto.getFullName());
+        student.setEmail(signUpStudentDto.getEmail());
+        student.setSchool(signUpStudentDto.getSchool());
+        student.setUniId(signUpStudentDto.getUniId());
+        student.setUrlGradingFile(signUpStudentDto.getUrlGradingFile());
+        student.setUser(user);
         userService.registerStudent(student);
 
         return new ResponseEntity<>("Student registered successfully", HttpStatus.OK);

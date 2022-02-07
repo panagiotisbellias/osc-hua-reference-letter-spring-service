@@ -11,7 +11,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 // REST API
 @RestController
@@ -23,6 +26,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Autowired
     private UserService userService;
@@ -59,7 +65,8 @@ public class AuthController {
         return new ResponseEntity<>("Student registered successfully", HttpStatus.OK);
     }
 
-    @PostMapping("/signup/teacher")
+    @PostMapping("/signup/teacher") /* TODO: fix teacher sign up,
+    using SignUpTeacherDto and add properly his attributes */
     public ResponseEntity<?> registerTeacher(@RequestBody Teacher teacher) {
 
         if(userRepository.existsByUsername(teacher.getUser().getUsername())){
@@ -72,18 +79,25 @@ public class AuthController {
         return new ResponseEntity<>("Teacher registered successfully", HttpStatus.OK);
     }
 
+    // TODO: Implement the method so as to find out if he is student or teacher and
+    // return all personal info in a object
     @GetMapping("/profile")
-    public void getUsersData(){
-        // TODO: return user's data
+    public Object getUsersData(Authentication authentication){
+
+        String username = authentication.getName();
+        return new Student();
     }
 
     @PostMapping("/profile")
-    public void updateUsersData(@Nullable @RequestBody Student student, @Nullable @RequestBody Teacher teacher){
-        // TODO: update user's data according to arguments
+    public void updateUsersData(@Nullable @RequestBody SignUpStudentDto signUpStudentDto,
+                                @Nullable @RequestBody Teacher teacher, Authentication authentication){
+        Object user = getUsersData(authentication);
+        // TODO: check and update user's data according to arguments
     }
 
     @DeleteMapping("/profile")
-    public void deleteUserAccount(){
+    public void deleteUserAccount(Authentication authentication){
+        Object user = getUsersData(authentication);
         // TODO: delete user's account
     }
 

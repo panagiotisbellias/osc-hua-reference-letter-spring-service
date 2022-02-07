@@ -6,4 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path="students")
 public interface StudentRepository extends JpaRepository<Student, Integer>{
+
 }

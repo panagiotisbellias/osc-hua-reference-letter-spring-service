@@ -31,23 +31,6 @@ public class UserController {
         return "redirect:/index";
     }
 
-    @GetMapping("/signup/student")
-    public String showStudentSignUpForm(Student student) {
-        return "add-student";
-    }
-
-    @PostMapping("/addstudent")
-    public String addStudent(@Valid Student student, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-student";
-        }
-
-        User user = student.getUser();
-        userService.registerUser(user, "ROLE_STUDENT");
-        userService.registerStudent(student);
-        return "redirect:/index";
-    }
-
     @GetMapping("/signup/teacher")
     public String showTeacherSignUpForm(Teacher teacher) {
         return "add-teacher";

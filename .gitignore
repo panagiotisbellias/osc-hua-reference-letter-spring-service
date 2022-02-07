@@ -38,3 +38,6 @@ application.properties
 
 # angular dependencies
 src/main/resources/frontend/node_modules/
+
+# log files
+reference-letter-service.log.*

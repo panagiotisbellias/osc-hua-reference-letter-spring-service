@@ -102,6 +102,8 @@ logging.level.com.luv2code=INFO
 # Log file name
 logging.file.name=reference-letter-service.log
 spring.data.rest.base-path=/api
+
+spring.main.allow-circular-references=true
 ```
 
 ## Run Locally

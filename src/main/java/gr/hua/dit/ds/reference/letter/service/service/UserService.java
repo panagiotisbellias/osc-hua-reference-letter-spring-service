@@ -1,18 +1,12 @@
 package gr.hua.dit.ds.reference.letter.service.service;
 
-import gr.hua.dit.ds.reference.letter.service.entity.Authorities;
-import gr.hua.dit.ds.reference.letter.service.entity.Student;
-import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
-import gr.hua.dit.ds.reference.letter.service.entity.User;
-import gr.hua.dit.ds.reference.letter.service.repository.AuthRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.TeacherRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.UserRepository;
+import gr.hua.dit.ds.reference.letter.service.entity.*;
+import gr.hua.dit.ds.reference.letter.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +21,9 @@ public class UserService implements UserDetailsService {
     private AuthRepository authRepository;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private StudentRepository studentRepository;
 
     @Autowired
@@ -36,7 +33,7 @@ public class UserService implements UserDetailsService {
 
         User newUser = new User();
         newUser.setUsername(user.getUsername());
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setEnabled(1); // enabled
 
         Authorities auth = new Authorities(authority, newUser);

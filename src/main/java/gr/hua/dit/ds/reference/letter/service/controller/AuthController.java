@@ -11,7 +11,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 // REST API
@@ -26,12 +25,6 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
-    private AuthRepository authRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserService userService;
 
     @PostMapping("/signin")
@@ -44,18 +37,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup/student")
-    public ResponseEntity<?> registerStudent(@RequestBody Student student //, @RequestBody SignUpDto signUpDto
-                             ) {
+    public ResponseEntity<?> registerStudent(@RequestBody Student student) {
 
-        // TODO add check for username or email exists in a DB
-        /* TODO like this
-        if(userRepository.existsByUsername(signUpDto.getUsername())){
+        if(userRepository.existsByUsername(student.getUser().getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
-        if(userRepository.existsByEmail(signUpDto.getEmail())){
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
-        }
-        */
 
         User user = student.getUser();
         userService.registerUser(user, "ROLE_STUDENT");
@@ -65,18 +51,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup/teacher")
-    public ResponseEntity<?> registerTeacher(@RequestBody Teacher teacher //, @RequestBody SignUpDto signUpDto
-                            ) {
+    public ResponseEntity<?> registerTeacher(@RequestBody Teacher teacher) {
 
-        // TODO add check for username or email exists in a DB
-        /* TODO like this
-        if(userRepository.existsByUsername(signUpDto.getUsername())){
+        if(userRepository.existsByUsername(teacher.getUser().getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
-        if(userRepository.existsByEmail(signUpDto.getEmail())){
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
-        }
-        */
 
         User user = teacher.getUser();
         userService.registerUser(user, "ROLE_TEACHER");

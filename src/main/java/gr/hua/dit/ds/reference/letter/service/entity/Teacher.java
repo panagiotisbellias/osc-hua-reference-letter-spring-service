@@ -76,7 +76,7 @@ public class Teacher {
         return certificates;
     }
 
-    public void setCertificate(List<Certificate> certificate) {
+    public void setCertificates(List<Certificate> certificate) {
         this.certificates = certificate;
     }
 

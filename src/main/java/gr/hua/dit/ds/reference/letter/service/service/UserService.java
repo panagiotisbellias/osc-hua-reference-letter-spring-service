@@ -63,8 +63,9 @@ public class UserService implements UserDetailsService {
         Teacher newTeacher = new Teacher();
         newTeacher.setFullName(teacher.getFullName());
         newTeacher.setEmail(teacher.getEmail());
-        // TODO: Add courses
-        // TODO: Add certificates
+        newTeacher.setCourses(teacher.getCourses());
+        newTeacher.setCertificates(teacher.getCertificates());
+
         newTeacher.setUser(teacher.getUser());
 
         teacherRepository.save(newTeacher);

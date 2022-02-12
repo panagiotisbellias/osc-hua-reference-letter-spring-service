@@ -12,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Optional;
+
 /**
  * REST API Authentication Controller
  *
@@ -33,6 +36,12 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Autowired
     private CourseRepository courseRepository;
@@ -143,20 +152,89 @@ public class AuthController {
         return new ResponseEntity<>("Teacher registered successfully", HttpStatus.OK); // inform user
     }
 
-    // TODO: Implement the method so as to find out if he is student or teacher and
-    // return all personal info in a object
+    /**
+     * Get User's Data Method
+     * With this method we are able to retrieve user's information, calling the Authentication bean
+     * @param authentication is an object to take information for the current session
+     *                       using the Authentication autowired bean
+     * @return an object, which can contain either student's information or teacher's information
+     * @todo test it with postman (or frontend)
+     */
     @GetMapping("/profile")
-    public Object getUsersData(Authentication authentication){
+    public ProfileDto getUsersData(Authentication authentication){
 
+        // take username from authentication bean
         String username = authentication.getName();
-        return new Student();
+
+        // Create profile object
+        ProfileDto profileDto = new ProfileDto();
+
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty())
+            return new ProfileDto();
+
+        /* Set its attributes accordingly after taking the data */
+        Collection<Authorities> authorities = user.get().getAuthorities();
+        if (authorities.contains(new Authorities("ROLE_STUDENT", user.get()))){
+            Student student = studentRepository.findStudentByUser(user.get());
+            profileDto.setUsername(username);
+            profileDto.setFullName(student.getFullName());
+            profileDto.setEmail(student.getEmail());
+            profileDto.setSchool(student.getSchool());
+            profileDto.setUniId(student.getUniId());
+            profileDto.setUrlGradingFile(student.getUrlGradingFile());
+        } else if (authorities.contains(new Authorities("ROLE_TEACHER", user.get()))) {
+            Teacher teacher = teacherRepository.findTeacherByUser(user.get());
+            profileDto.setUsername(username);
+            profileDto.setFullName(teacher.getFullName());
+            profileDto.setEmail(teacher.getEmail());
+            for (Course course : teacher.getCourses()) {
+                CourseDto courseDto = new CourseDto();
+                courseDto.setTitle(course.getTitle());
+                courseDto.setUniversity(course.getUniversity());
+                profileDto.addCourse(courseDto);
+            }
+            for (Certificate certificate : teacher.getCertificates()) {
+                CertificateDto certificateDto = new CertificateDto();
+                certificateDto.setTitle(certificate.getTitle());
+                certificateDto.setUniversity(certificate.getUniversity());
+                profileDto.addCertificate(certificateDto);
+            }
+
+        } else {
+            // Error!
+            return new ProfileDto();
+        }
+
+        return profileDto;
     }
 
+    /**
+     * Update User's Data Method
+     * With this method we are able to update user's information, using these parameters
+     * @param profileDto an object, which can contain either student's information or teacher's information
+     * @param authentication is an object to take information for the current session
+     *                       using the Authentication autowired bean
+     * @todo check and update user's data according to arguments, test it with postman (or frontend)
+     */
     @PostMapping("/profile")
-    public void updateUsersData(@Nullable @RequestBody SignUpStudentDto signUpStudentDto,
-                                @Nullable @RequestBody Teacher teacher, Authentication authentication){
-        Object user = getUsersData(authentication);
-        // TODO: check and update user's data according to arguments
+    public ResponseEntity<?> updateUsersData(@RequestBody ProfileDto profileDto, Authentication authentication){
+        ProfileDto profile = getUsersData(authentication);
+
+        if (!profile.equals(profileDto)){
+            if (profileDto.getCourses() == null && profileDto.getCertificates() == null){
+                // make a new student object according to the given values
+                // and update it to the db using the correct repository
+
+            } else {
+                // make a new teacher object according to the given values
+                // and update it to the db using the correct repository
+
+            }
+        }
+
+        return new ResponseEntity<>("Profile Update is under construction! Please wait",
+                HttpStatus.OK); // inform user
     }
 
     @DeleteMapping("/profile")

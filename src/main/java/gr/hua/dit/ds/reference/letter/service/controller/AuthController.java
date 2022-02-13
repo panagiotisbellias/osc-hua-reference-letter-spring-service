@@ -6,14 +6,12 @@ import gr.hua.dit.ds.reference.letter.service.repository.*;
 import gr.hua.dit.ds.reference.letter.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST API Authentication Controller
@@ -27,6 +25,7 @@ import java.util.Optional;
  * @since 2022-02-09
  * @version 1.0
  */
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

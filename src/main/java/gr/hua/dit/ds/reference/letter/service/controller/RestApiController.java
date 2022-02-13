@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 // REST API
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/app/reference_letter_requests")
 public class RestApiController {

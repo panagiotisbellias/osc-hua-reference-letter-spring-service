@@ -8,7 +8,7 @@ public class Student {
 
     @Id
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -32,7 +32,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String fullName, String email, String school, String uniId, String urlGradingFile,
+    public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile,
                    User user) {
         this.id = id;
         this.fullName = fullName;
@@ -43,11 +43,11 @@ public class Student {
         this.user = user;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

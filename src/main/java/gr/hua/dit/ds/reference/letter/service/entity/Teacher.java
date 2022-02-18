@@ -10,7 +10,7 @@ public class Teacher {
 
     @Id
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -18,11 +18,11 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
     @JoinColumn(name="teacher_id")
     private List<Course> courses;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
     @JoinColumn(name="teacher_id")
     private List<Certificate> certificates;
 
@@ -33,18 +33,18 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(Long id, String fullName, String email, User user) {
+    public Teacher(int id, String fullName, String email, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.user = user;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

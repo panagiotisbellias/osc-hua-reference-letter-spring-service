@@ -9,9 +9,8 @@ import java.util.List;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -19,11 +18,11 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="teacher_id")
     private List<Course> courses;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="teacher_id")
     private List<Certificate> certificates;
 
@@ -34,18 +33,18 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String fullName, String email, User user) {
+    public Teacher(Long id, String fullName, String email, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

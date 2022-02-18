@@ -1,8 +1,6 @@
 package gr.hua.dit.ds.reference.letter.service.service;
 
 import gr.hua.dit.ds.reference.letter.service.entity.*;
-import gr.hua.dit.ds.reference.letter.service.payload.CertificateDto;
-import gr.hua.dit.ds.reference.letter.service.payload.CourseDto;
 import gr.hua.dit.ds.reference.letter.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,12 +28,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private TeacherRepository teacherRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private CertificateRepository certificateRepository;
 
     public void registerUser(User user, String authority) {
 
@@ -77,9 +69,6 @@ public class UserService implements UserDetailsService {
         newTeacher.setUser(teacher.getUser());
 
         teacherRepository.save(newTeacher);
-
-        courseRepository.saveAll(newTeacher.getCourses());
-        certificateRepository.saveAll(newTeacher.getCertificates());
 
     }
 

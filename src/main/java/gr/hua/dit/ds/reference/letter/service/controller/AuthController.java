@@ -42,7 +42,11 @@ public class AuthController {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private CourseRepository courseRepository;
 
+    @Autowired
+    private CertificateRepository certificateRepository;
 
     @Autowired
     private UserService userService;
@@ -107,7 +111,7 @@ public class AuthController {
      * @param signUpTeacherDto is an object which represents the JSON object passed through the api and
      *                         includes all the teacher's details
      * @return a message that informs teacher that everything went good and he/she has signed up successfully
-     * @todo one-to-many, add also many-to-one to courses and certificates, test it with postman (or frontend)
+     * @todo test it with postman (or frontend)
      */
     @PostMapping("/signup/teacher")
     public ResponseEntity<?> registerTeacher(@RequestBody SignUpTeacherDto signUpTeacherDto) {
@@ -132,16 +136,17 @@ public class AuthController {
             Course course = new Course();
             course.setTitle(courseDto.getTitle());
             course.setUniversity(courseDto.getUniversity());
+            courseRepository.save(course);
             teacher.addCourse(course);
         }
         for (CertificateDto certificateDto : signUpTeacherDto.getCertificates()) {
             Certificate certificate = new Certificate();
             certificate.setTitle(certificateDto.getTitle());
             certificate.setUniversity(certificateDto.getUniversity());
+            certificateRepository.save(certificate);
             teacher.addCertificate(certificate);
         }
 
-        teacher.setUser(user);
         userService.registerTeacher(teacher); // call user service to register the teacher to the system
         return new ResponseEntity<>("Teacher registered successfully", HttpStatus.OK); // inform user
     }
@@ -159,23 +164,18 @@ public class AuthController {
 
         // take username from authentication bean
         String username = authentication.getName();
-        System.out.println("USERNAME: " + username);
 
         // Create profile object
         ProfileDto profileDto = new ProfileDto();
 
         Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            System.out.println("USERNAME 2: " + username);
+        if (user.isEmpty())
             return new ProfileDto();
-        }
 
         /* Set its attributes accordingly after taking the data */
         Collection<Authorities> authorities = user.get().getAuthorities();
-        /* Check HERE, if turns False. We could leave authorities and do check for null directly to students*/
         if (authorities.contains(new Authorities("ROLE_STUDENT", user.get()))){
-            System.out.println("USERNAME 3: " + user.get().getUsername());
-            Student student = studentRepository.findStudentByUser(user.get().getUsername());
+            Student student = studentRepository.findStudentByUser(user.get());
             profileDto.setUsername(username);
             profileDto.setFullName(student.getFullName());
             profileDto.setEmail(student.getEmail());

@@ -7,9 +7,8 @@ import javax.persistence.*;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -33,7 +32,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int id, String fullName, String email, String school, String uniId, String urlGradingFile,
+    public Student(Long id, String fullName, String email, String school, String uniId, String urlGradingFile,
                    User user) {
         this.id = id;
         this.fullName = fullName;
@@ -44,11 +43,11 @@ public class Student {
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

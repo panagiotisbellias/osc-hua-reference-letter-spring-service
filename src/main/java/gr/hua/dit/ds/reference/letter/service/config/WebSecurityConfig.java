@@ -60,6 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/signup/teacher");
         web.ignoring().antMatchers("/adduser");
         web.ignoring().antMatchers("/addteacher");
+        web.ignoring().antMatchers("/edit_student");
+        web.ignoring().antMatchers("/create_student");
+        web.ignoring().antMatchers("/students");
+        web.ignoring().antMatchers("/teachers");
+        web.ignoring().antMatchers("/edit_teacher");
+        web.ignoring().antMatchers("/create_teacher");
     }
 
     // REST API

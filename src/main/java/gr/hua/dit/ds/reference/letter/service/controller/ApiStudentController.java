@@ -1,17 +1,31 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
 import gr.hua.dit.ds.reference.letter.service.entity.ReferenceLetterRequest;
+import gr.hua.dit.ds.reference.letter.service.entity.Student;
+import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
+import gr.hua.dit.ds.reference.letter.service.payload.ProfileDto;
 import gr.hua.dit.ds.reference.letter.service.payload.ReferenceLetterRequestDto;
 import gr.hua.dit.ds.reference.letter.service.repository.ReferenceLetterRequestRepository;
+import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
+import gr.hua.dit.ds.reference.letter.service.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-// REST API
+/**
+ * REST API Student Controller
+ *
+ * The REST API Student Controller provides operations for users of type 'Student'
+ *
+ * @author Panagiotis Bellias
+ * @since 2022-02-18
+ * @version 1.0
+ */
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @Secured("ROLE_STUDENT")
@@ -21,13 +35,30 @@ public class ApiStudentController {
     @Autowired
     private ReferenceLetterRequestRepository referenceLetterRequestRepository;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
+
+    /**
+     * Create Reference Letter Request Method
+     * With this method students are able to create a new reference letter request
+     * @param referenceLetterRequest, a dto object to represent the data student wants for its new request.
+     * @param authentication, is an object to take information for the current session
+     *      *                       using the Authentication autowired bean
+     * @return the instance of this new reference letter request
+     * @todo add the other attributes, possibly change the db schema and test it with postman and frontend
+     */
     @PostMapping("/")
     public ReferenceLetterRequest createRLrequest(@Validated
-                                                  @RequestBody ReferenceLetterRequestDto referenceLetterRequest) {
-        // TODO: --> do matches for the rest data
+            @RequestBody ReferenceLetterRequestDto referenceLetterRequest, Authentication authentication) {
         ReferenceLetterRequest rl = new ReferenceLetterRequest();
-        //rl.setStudent();
-        //rl.setTeacher();
+        String username = authentication.getName();
+        Student student = studentRepository.findStudentByUser(username);
+        rl.setStudent(student);
+        Teacher teacher = teacherRepository.getById(referenceLetterRequest.getTeacherId());
+        rl.setTeacher(teacher);
         rl.setCarrierName(referenceLetterRequest.getCarrierName());
         rl.setCarrierEmail(referenceLetterRequest.getCarrierEmail());
         return referenceLetterRequestRepository.save(rl);

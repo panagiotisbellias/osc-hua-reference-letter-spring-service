@@ -14,16 +14,16 @@ import java.util.*;
 // REST API
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@Secured("ROLE_STUDENT")
 @RequestMapping("/api/app/reference_letter_requests")
-public class RestApiController {
+public class ApiStudentController {
 
     @Autowired
     private ReferenceLetterRequestRepository referenceLetterRequestRepository;
 
-    @Secured("ROLE_STUDENT")
     @PostMapping("/")
     public ReferenceLetterRequest createRLrequest(@Validated
-                                                      @RequestBody ReferenceLetterRequestDto referenceLetterRequest){
+                                                  @RequestBody ReferenceLetterRequestDto referenceLetterRequest) {
         // TODO: --> do matches for the rest data
         ReferenceLetterRequest rl = new ReferenceLetterRequest();
         //rl.setStudent();
@@ -33,11 +33,10 @@ public class RestApiController {
         return referenceLetterRequestRepository.save(rl);
     }
 
-    @Secured("ROLE_STUDENT")
     @GetMapping("/")
-    public ArrayList<ReferenceLetterRequestDto> getRLrequests(){
+    public ArrayList<ReferenceLetterRequestDto> getRLrequests() {
         // TODO: view his own rl requests and find the rest info doing matches with students, teachers
-        ArrayList<ReferenceLetterRequest> list =  (ArrayList<ReferenceLetterRequest>) referenceLetterRequestRepository.findAll();
+        ArrayList<ReferenceLetterRequest> list = (ArrayList<ReferenceLetterRequest>) referenceLetterRequestRepository.findAll();
         ArrayList<ReferenceLetterRequestDto> result = new ArrayList<>();
 
         for (ReferenceLetterRequest rl : list) {
@@ -50,13 +49,12 @@ public class RestApiController {
         return result;
     }
 
-    @Secured("ROLE_STUDENT")
     @GetMapping("/{id}")
-    public ResponseEntity<ReferenceLetterRequestDto> getMoreInfo(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<ReferenceLetterRequestDto> getMoreInfo(@PathVariable(value = "id") Integer id) {
         // TODO: view more about a rl request, fix it to see basic details for involved student and teacher
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
 
-        if(referenceLetterRequest.isPresent()) {
+        if (referenceLetterRequest.isPresent()) {
             ReferenceLetterRequestDto referenceLetterRequestDto = new ReferenceLetterRequestDto();
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
@@ -66,40 +64,13 @@ public class RestApiController {
         }
     }
 
-    @Secured("ROLE_STUDENT")
     @PutMapping("/{id}")
-    public void updateRLrequest(@RequestBody ReferenceLetterRequest referenceLetterRequest){
+    public void updateRLrequest(@RequestBody ReferenceLetterRequest referenceLetterRequest) {
         // TODO: update a rl request
     }
 
-    @Secured("ROLE_STUDENT")
     @DeleteMapping("/{id}")
-    public void deleteRLrequest(){
+    public void deleteRLrequest() {
         // TODO: delete a rl request
     }
-
-    @Secured("ROLE_TEACHER")
-    @GetMapping("/pending")
-    public void viewPendingRLrequests(){
-        // TODO: view his pending rl requests
-    }
-
-    @Secured("ROLE_TEACHER")
-    @GetMapping("/pending/{id}")
-    public void viewMoreAboutPendingRLrequest(){
-        // TODO: view more about his pending rl request
-    }
-
-    @Secured("ROLE_TEACHER")
-    @PostMapping("/pending/{id}")
-    public void approveRLrequest(){
-        // TODO: approve a rl request
-    }
-
-    @Secured("ROLE_TEACHER")
-    @DeleteMapping("/pending/{id}")
-    public void declineRLrequest(){
-        // TODO: decline a rl request
-    }
-
 }

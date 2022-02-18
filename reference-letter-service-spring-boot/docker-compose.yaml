@@ -1,0 +1,16 @@
+version: "2.2"
+
+services:
+  db:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass123
+      - POSTGRES_DB=ref_letters_db
+    volumes:
+      - dj_postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  dj_postgres_data:

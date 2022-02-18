@@ -43,12 +43,6 @@ public class AuthController {
     private TeacherRepository teacherRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private CertificateRepository certificateRepository;
-
-    @Autowired
     private UserService userService;
 
     /**
@@ -187,7 +181,7 @@ public class AuthController {
             profileDto.setUniId(student.getUniId());
             profileDto.setUrlGradingFile(student.getUrlGradingFile());
         } else if (authorities.contains(new Authorities("ROLE_TEACHER", user.get()))) {
-            Teacher teacher = teacherRepository.findTeacherByUser(user.get());
+            Teacher teacher = teacherRepository.findTeacherByUser(user.get().getUsername());
             profileDto.setUsername(username);
             profileDto.setFullName(teacher.getFullName());
             profileDto.setEmail(teacher.getEmail());
@@ -218,26 +212,59 @@ public class AuthController {
      * @param profileDto an object, which can contain either student's information or teacher's information
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
-     * @todo check and update user's data according to arguments, test it with postman (or frontend)
+     * @todo update teacher's courses/certificates, test it with postman (or frontend), possible issue with db
      */
-    @PostMapping("/profile")
+    @PutMapping("/profile")
     public ResponseEntity<?> updateUsersData(@RequestBody ProfileDto profileDto, Authentication authentication){
         ProfileDto profile = getUsersData(authentication);
+        if (profile.equals(profileDto))
+            return new ResponseEntity<>("No changes! All Set!",
+                    HttpStatus.OK); // inform user
 
-        if (!profile.equals(profileDto)){
-            if (profileDto.getCourses() == null && profileDto.getCertificates() == null){
-                // make a new student object according to the given values
-                // and update it to the db using the correct repository
+        Optional<User> userFromDB = userRepository.findByUsername(profile.getUsername());
+        if (userFromDB.isEmpty())
+            return new ResponseEntity<>("No user found with that username",
+                    HttpStatus.BAD_REQUEST); // inform user
 
-            } else {
-                // make a new teacher object according to the given values
-                // and update it to the db using the correct repository
-
-            }
+        User user = userFromDB.get();
+        // user area
+        if (!profile.getUsername().equals(profileDto.getUsername())) {
+            user.setUsername(profileDto.getUsername());
+            userRepository.save(user);
         }
 
-        return new ResponseEntity<>("Profile Update is under construction! Please wait",
-                HttpStatus.OK); // inform user
+        Student student = studentRepository.findStudentByUser(profile.getUsername());
+        Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
+        if (student != null) {
+            // student area
+            student.setUser(user);
+            student.setFullName(profileDto.getFullName());
+            student.setEmail(profileDto.getEmail());
+            student.setSchool(profileDto.getSchool());
+            student.setUniId(profileDto.getUniId());
+            student.setUrlGradingFile(profileDto.getUrlGradingFile());
+            studentRepository.save(student);
+
+            return new ResponseEntity<>("Student profile updated",
+                    HttpStatus.OK); // inform user
+        } else {
+            // teacher area
+            teacher.setUser(user);
+            teacher.setFullName(profileDto.getFullName());
+            teacher.setEmail(profileDto.getEmail());
+            /* TODO: Update courses and certificates at once
+            List<Course> courses = new ArrayList<>();
+            for (CourseDto courseDto: profileDto.getCourses()){
+                Course course = new Course();
+
+            }
+            teacher.setCourses(profileDto.getCourses());
+            */
+            teacherRepository.save(teacher);
+            return new ResponseEntity<>("Teacher profile updated",
+                    HttpStatus.OK); // inform user
+        }
+
     }
 
     @DeleteMapping("/profile")

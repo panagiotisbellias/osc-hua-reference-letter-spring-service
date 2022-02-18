@@ -1,13 +1,13 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "certificates")
 public class Certificate {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 

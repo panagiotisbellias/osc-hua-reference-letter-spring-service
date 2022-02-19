@@ -158,7 +158,7 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return an object, which can contain either student's information or teacher's information
-     * @todo test it with postman (or frontend)
+     * @todo test it with frontend
      */
     @GetMapping("/profile")
     public ProfileDto getUsersData(Authentication authentication){
@@ -219,7 +219,7 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return a message to inform user about his/her requests
-     * @todo update teacher's courses/certificates, test it with postman (or frontend), possible issue with db
+     * @todo update teacher's courses/certificates, test it with frontend, possible issue with db
      */
     @PutMapping("/profile")
     public ResponseEntity<?> updateUsersData(@RequestBody ProfileDto profileDto, Authentication authentication){
@@ -280,7 +280,7 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return a message to inform user about his/her requests
-     * @todo test it with postman or frontend
+     * @todo correct db issues, test it with postman or frontend
      */
     @DeleteMapping("/profile")
     public ResponseEntity<?> deleteUserAccount(Authentication authentication){

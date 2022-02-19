@@ -50,6 +50,13 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public void deleteUser(User user) {
+
+        authRepository.deleteAll(user.getAuthorities());
+        userRepository.delete(user);
+
+    }
+
     public void registerStudent(Student student) {
 
         Student newStudent = new Student();

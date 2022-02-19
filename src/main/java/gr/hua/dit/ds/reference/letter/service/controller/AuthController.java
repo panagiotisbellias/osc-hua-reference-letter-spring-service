@@ -43,6 +43,12 @@ public class AuthController {
     private TeacherRepository teacherRepository;
 
     @Autowired
+    private CertificateRepository certificateRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
     private UserService userService;
 
     /**
@@ -214,6 +220,7 @@ public class AuthController {
      * @param profileDto an object, which can contain either student's information or teacher's information
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
+     * @return a message to inform user about his/her requests
      * @todo update teacher's courses/certificates, test it with postman (or frontend), possible issue with db
      */
     @PutMapping("/profile")
@@ -269,10 +276,43 @@ public class AuthController {
 
     }
 
+    /**
+     * Delete User's Account Method
+     * With this method we are able to delete user's information, using these parameters
+     * @param authentication is an object to take information for the current session
+     *                       using the Authentication autowired bean
+     * @return a message to inform user about his/her requests
+     * @todo test it with postman or frontend
+     */
     @DeleteMapping("/profile")
-    public void deleteUserAccount(Authentication authentication){
-        Object user = getUsersData(authentication);
-        // TODO: delete user's account
+    public ResponseEntity<?> deleteUserAccount(Authentication authentication){
+        ProfileDto profile = getUsersData(authentication);
+        Optional<User> user = userRepository.findByUsername(profile.getUsername());
+        if (user.isEmpty())
+            return new ResponseEntity<>("User Not Found!",
+                    HttpStatus.NOT_FOUND); // inform user
+        Student student = studentRepository.findStudentByUser(profile.getUsername());
+        Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
+        if (teacher != null){
+            // User is teacher
+            certificateRepository.deleteAll(teacher.getCertificates());
+            courseRepository.deleteAll(teacher.getCourses());
+            teacherRepository.delete(teacher);
+            userService.deleteUser(user.get());
+            return new ResponseEntity<>("Your teacher account has been deleted!",
+                    HttpStatus.OK); // inform user
+        } else if (student != null) {
+            // User is student
+            studentRepository.delete(student);
+            userService.deleteUser(user.get());
+            return new ResponseEntity<>("Your student account has been deleted!",
+                    HttpStatus.OK); // inform user
+        } else {
+            // ERROR!
+            return new ResponseEntity<>("No user details found! Admin?",
+                    HttpStatus.BAD_REQUEST); // inform user
+        }
+
     }
 
 }

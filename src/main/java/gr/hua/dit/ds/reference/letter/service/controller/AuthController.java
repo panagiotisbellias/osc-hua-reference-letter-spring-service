@@ -172,24 +172,22 @@ public class AuthController {
 
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
-            System.out.println("USERNAME 2: " + username);
+            System.out.println("USERNAME 404: " + username);
             return new ProfileDto();
         }
 
-        /* Set its attributes accordingly after taking the data */
-        Collection<Authorities> authorities = user.get().getAuthorities();
         /* Check HERE, if turns False. We could leave authorities and do check for null directly to students*/
-        if (authorities.contains(new Authorities("ROLE_STUDENT", user.get()))){
+        Student student = studentRepository.findStudentByUser(user.get().getUsername());
+        Teacher teacher = teacherRepository.findTeacherByUser(user.get().getUsername());
+        if (student != null){
             System.out.println("USERNAME 3: " + user.get().getUsername());
-            Student student = studentRepository.findStudentByUser(user.get().getUsername());
             profileDto.setUsername(username);
             profileDto.setFullName(student.getFullName());
             profileDto.setEmail(student.getEmail());
             profileDto.setSchool(student.getSchool());
             profileDto.setUniId(student.getUniId());
             profileDto.setUrlGradingFile(student.getUrlGradingFile());
-        } else if (authorities.contains(new Authorities("ROLE_TEACHER", user.get()))) {
-            Teacher teacher = teacherRepository.findTeacherByUser(user.get().getUsername());
+        } else if (teacher != null) {
             profileDto.setUsername(username);
             profileDto.setFullName(teacher.getFullName());
             profileDto.setEmail(teacher.getEmail());
@@ -207,7 +205,7 @@ public class AuthController {
             }
 
         } else {
-            // Error!
+            System.out.println("ERROR!");
             return new ProfileDto();
         }
 

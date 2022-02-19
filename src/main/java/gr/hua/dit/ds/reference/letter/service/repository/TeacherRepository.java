@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(path="teachers")
 public interface TeacherRepository extends JpaRepository<Teacher, Integer>{
     @Query(
-            value = "SELECT * FROM teachers WHERE user = ?1",
+            value = "SELECT * FROM teachers WHERE users_username = ?1",
             nativeQuery = true)
     Teacher findTeacherByUser(String username);
 }

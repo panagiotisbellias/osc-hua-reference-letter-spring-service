@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(path="students")
 public interface StudentRepository extends JpaRepository<Student, Integer>{
     @Query(
-            value = "SELECT * FROM students WHERE user = ?1",
+            value = "SELECT * FROM students WHERE users_username = ?1",
             nativeQuery = true)
     Student findStudentByUser(String username);
 }

@@ -2,7 +2,7 @@ package gr.hua.dit.ds.reference.letter.service.payload;
 
 public class ReferenceLetterRequestDto {
 
-    private int teacherId;
+    private TeacherDto teacher;
     private String carrierName;
     private String carrierEmail;
 
@@ -10,18 +10,18 @@ public class ReferenceLetterRequestDto {
 
     }
 
-    public ReferenceLetterRequestDto(int teacherId, String carrierName, String carrierEmail) {
-        this.teacherId = teacherId;
+    public ReferenceLetterRequestDto(TeacherDto teacher, String carrierName, String carrierEmail) {
+        this.teacher = teacher;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public TeacherDto getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(TeacherDto teacher) {
+        this.teacher = teacher;
     }
 
     public String getCarrierName() {
@@ -43,7 +43,7 @@ public class ReferenceLetterRequestDto {
     @Override
     public String toString() {
         return "ReferenceLetterRequestDto{" +
-                "teacherId='" + teacherId + '\'' +
+                "teacher='" + teacher + '\'' +
                 ", carrierName='" + carrierName + '\'' +
                 ", carrierEmail='" + carrierEmail + '\'' +
                 '}';

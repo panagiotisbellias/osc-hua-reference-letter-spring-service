@@ -1,7 +1,7 @@
 package gr.hua.dit.ds.reference.letter.service.payload;
 
 // REST API
-public class SignUpStudentDto {
+public class StudentDto {
 
     private String username;
     private String password;
@@ -11,8 +11,8 @@ public class SignUpStudentDto {
     private String uniId;
     private String urlGradingFile;
 
-    public SignUpStudentDto(String username, String password, String fullName, String email, String school,
-                            String uniId, String urlGradingFile) {
+    public StudentDto(String username, String password, String fullName, String email, String school,
+                      String uniId, String urlGradingFile) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -22,7 +22,7 @@ public class SignUpStudentDto {
         this.urlGradingFile = urlGradingFile;
     }
 
-    public SignUpStudentDto() {
+    public StudentDto() {
     }
 
     public String getUsername() {

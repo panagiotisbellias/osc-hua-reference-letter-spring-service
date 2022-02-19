@@ -73,32 +73,32 @@ public class AuthController {
     /**
      * Register Student Method
      * With this method we are able to sign up as a student to the system, providing the parameter signUpStudentDto
-     * @param signUpStudentDto is an object which represents the JSON object passed through the api and
+     * @param studentDto is an object which represents the JSON object passed through the api and
      *                         includes all the student's details
      * @return a message that informs student that everything went good and he/she has signed up successfully
      * @todo test it with frontend
      */
     @PostMapping("/signup/student")
-    public ResponseEntity<?> registerStudent(@RequestBody SignUpStudentDto signUpStudentDto) {
+    public ResponseEntity<?> registerStudent(@RequestBody StudentDto studentDto) {
 
         // check for username's existence
-        if(userRepository.existsByUsername(signUpStudentDto.getUsername())){
+        if(userRepository.existsByUsername(studentDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST); // inform user
         }
 
         /* Create a user object setting its values according to the corresponding arguments */
         User user = new User();
-        user.setUsername(signUpStudentDto.getUsername());
-        user.setPassword(signUpStudentDto.getPassword());
+        user.setUsername(studentDto.getUsername());
+        user.setPassword(studentDto.getPassword());
         // call user service to register user with certain role
         userService.registerUser(user, "ROLE_STUDENT");
         /* Create a student object setting its values accordingly */
         Student student = new Student();
-        student.setFullName(signUpStudentDto.getFullName());
-        student.setEmail(signUpStudentDto.getEmail());
-        student.setSchool(signUpStudentDto.getSchool());
-        student.setUniId(signUpStudentDto.getUniId());
-        student.setUrlGradingFile(signUpStudentDto.getUrlGradingFile());
+        student.setFullName(studentDto.getFullName());
+        student.setEmail(studentDto.getEmail());
+        student.setSchool(studentDto.getSchool());
+        student.setUniId(studentDto.getUniId());
+        student.setUrlGradingFile(studentDto.getUrlGradingFile());
         student.setUser(user);
         userService.registerStudent(student); // call user service to register the student to the system
 
@@ -108,38 +108,38 @@ public class AuthController {
     /**
      * Register Teacher Method
      * With this method we are able to sign up as a teacher to the system, providing the parameter signUpTeacherDto
-     * @param signUpTeacherDto is an object which represents the JSON object passed through the api and
+     * @param teacherDto is an object which represents the JSON object passed through the api and
      *                         includes all the teacher's details
      * @return a message that informs teacher that everything went good and he/she has signed up successfully
      * @todo one-to-many, add also many-to-one to courses and certificates, test it with postman (or frontend)
      */
     @PostMapping("/signup/teacher")
-    public ResponseEntity<?> registerTeacher(@RequestBody SignUpTeacherDto signUpTeacherDto) {
+    public ResponseEntity<?> registerTeacher(@RequestBody TeacherDto teacherDto) {
 
         // check for username's existence
-        if(userRepository.existsByUsername(signUpTeacherDto.getUsername())){
+        if(userRepository.existsByUsername(teacherDto.getUsername())){
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST); // inform user
         }
 
         /* Create a user object setting its values according to the corresponding arguments */
         User user = new User();
-        user.setUsername(signUpTeacherDto.getUsername());
-        user.setPassword(signUpTeacherDto.getPassword());
+        user.setUsername(teacherDto.getUsername());
+        user.setPassword(teacherDto.getPassword());
         // call user service to register user with certain role
         userService.registerUser(user, "ROLE_TEACHER");
         /* Create a teacher object setting its values accordingly */
         Teacher teacher = new Teacher();
-        teacher.setFullName(signUpTeacherDto.getFullName());
-        teacher.setEmail(signUpTeacherDto.getEmail());
+        teacher.setFullName(teacherDto.getFullName());
+        teacher.setEmail(teacherDto.getEmail());
 
-        for (CourseDto courseDto : signUpTeacherDto.getCourses()) {
+        for (CourseDto courseDto : teacherDto.getCourses()) {
             Course course = new Course();
             course.setTitle(courseDto.getTitle());
             course.setUniversity(courseDto.getUniversity());
             course.setTeacher(teacher);
             teacher.addCourse(course);
         }
-        for (CertificateDto certificateDto : signUpTeacherDto.getCertificates()) {
+        for (CertificateDto certificateDto : teacherDto.getCertificates()) {
             Certificate certificate = new Certificate();
             certificate.setTitle(certificateDto.getTitle());
             certificate.setUniversity(certificateDto.getUniversity());

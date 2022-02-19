@@ -3,8 +3,9 @@ package gr.hua.dit.ds.reference.letter.service.payload;
 import java.util.List;
 
 // REST API
-public class SignUpTeacherDto {
+public class TeacherDto {
 
+    private int id;
     private String username;
     private String password;
     private String fullName;
@@ -12,8 +13,9 @@ public class SignUpTeacherDto {
     private List<CourseDto> courses;
     private List<CertificateDto> certificates;
 
-    public SignUpTeacherDto(String username, String password, String fullName, String email,
-                            List<CourseDto> courses, List<CertificateDto> certificates) {
+    public TeacherDto(int id, String username, String password, String fullName, String email,
+                      List<CourseDto> courses, List<CertificateDto> certificates) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -22,7 +24,15 @@ public class SignUpTeacherDto {
         this.certificates = certificates;
     }
 
-    public SignUpTeacherDto() {
+    public TeacherDto() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -75,8 +85,9 @@ public class SignUpTeacherDto {
 
     @Override
     public String toString() {
-        return "SignUpTeacherDto{" +
-                "username='" + username + '\'' +
+        return "TeacherDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +

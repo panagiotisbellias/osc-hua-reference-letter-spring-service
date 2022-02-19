@@ -1,13 +1,9 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
-import gr.hua.dit.ds.reference.letter.service.entity.ReferenceLetterRequest;
-import gr.hua.dit.ds.reference.letter.service.entity.Student;
-import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
-import gr.hua.dit.ds.reference.letter.service.payload.ProfileDto;
+import gr.hua.dit.ds.reference.letter.service.entity.*;
 import gr.hua.dit.ds.reference.letter.service.payload.ReferenceLetterRequestDto;
-import gr.hua.dit.ds.reference.letter.service.repository.ReferenceLetterRequestRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.TeacherRepository;
+import gr.hua.dit.ds.reference.letter.service.payload.TeacherDto;
+import gr.hua.dit.ds.reference.letter.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -46,7 +42,7 @@ public class ApiStudentController {
      * With this method students are able to create a new reference letter request
      * @param referenceLetterRequest, a dto object to represent the data student wants for its new request.
      * @param authentication, is an object to take information for the current session
-     *      *                       using the Authentication autowired bean
+     *                        using the Authentication autowired bean
      * @return the instance of this new reference letter request
      * @todo add the other attributes, possibly change the db schema and test it with postman and frontend
      */
@@ -57,21 +53,38 @@ public class ApiStudentController {
         String username = authentication.getName();
         Student student = studentRepository.findStudentByUser(username);
         rl.setStudent(student);
-        Teacher teacher = teacherRepository.getById(referenceLetterRequest.getTeacherId());
+        Teacher teacher = teacherRepository.getById(referenceLetterRequest.getTeacher().getId());
         rl.setTeacher(teacher);
         rl.setCarrierName(referenceLetterRequest.getCarrierName());
         rl.setCarrierEmail(referenceLetterRequest.getCarrierEmail());
         return referenceLetterRequestRepository.save(rl);
     }
 
+    /**
+     * Get Reference Letter Requests Method
+     * With this method students are able to view all the reference letter requests
+     * @param authentication, is an object to take information for the current session
+     *                        using the Authentication autowired bean
+     * @return all reference letter requests that exist in database as a list
+     * @todo add courses, certificates, test it with postman
+     */
     @GetMapping("/")
-    public ArrayList<ReferenceLetterRequestDto> getRLrequests() {
-        // TODO: view his own rl requests and find the rest info doing matches with students, teachers
-        ArrayList<ReferenceLetterRequest> list = (ArrayList<ReferenceLetterRequest>) referenceLetterRequestRepository.findAll();
+    public ArrayList<ReferenceLetterRequestDto> getRLrequests(Authentication authentication) {
+
+        String username = authentication.getName();
+        Student student = studentRepository.findStudentByUser(username);
+        ArrayList<ReferenceLetterRequest> list =
+                (ArrayList<ReferenceLetterRequest>) referenceLetterRequestRepository.findReferenceLetterRequestsByStudent(student.getId());
         ArrayList<ReferenceLetterRequestDto> result = new ArrayList<>();
 
         for (ReferenceLetterRequest rl : list) {
             ReferenceLetterRequestDto rl_dto = new ReferenceLetterRequestDto();
+            TeacherDto teacher = new TeacherDto();
+            teacher.setId(rl.getTeacher().getId());
+            teacher.setFullName(rl.getTeacher().getFullName());
+            teacher.setEmail(rl.getTeacher().getEmail());
+            // add courses - certificates as DTOs
+            rl_dto.setTeacher(teacher);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());
             result.add(rl_dto);

@@ -44,13 +44,13 @@ public class TeacherController {
     }
 
     @GetMapping("/teachers/edit/{id}")
-    public String editTeacherForm(@PathVariable Long id, Model model) {
+    public String editTeacherForm(@PathVariable int id, Model model) {
         model.addAttribute("teacher", teacherService.getTeacherById(id));
         return "edit_teacher";
     }
 
     @PostMapping("/teachers/{id}")
-    public String updateTeacher(@PathVariable Long id,
+    public String updateTeacher(@PathVariable int id,
                                 @ModelAttribute("teacher") Teacher teacher,
                                 Model model) {
 
@@ -71,7 +71,7 @@ public class TeacherController {
     // handler method to handle delete student request
 
     @GetMapping("/teachers/{id}")
-    public String deleteTeacher(@PathVariable Long id) {
+    public String deleteTeacher(@PathVariable int id) {
         teacherService.deleteTeacherById(id);
         return "redirect:/teachers";
     }

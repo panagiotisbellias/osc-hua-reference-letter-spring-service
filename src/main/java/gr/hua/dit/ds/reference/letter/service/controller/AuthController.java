@@ -130,12 +130,14 @@ public class AuthController {
             Course course = new Course();
             course.setTitle(courseDto.getTitle());
             course.setUniversity(courseDto.getUniversity());
+            course.setTeacher(teacher);
             teacher.addCourse(course);
         }
         for (CertificateDto certificateDto : signUpTeacherDto.getCertificates()) {
             Certificate certificate = new Certificate();
             certificate.setTitle(certificateDto.getTitle());
             certificate.setUniversity(certificateDto.getUniversity());
+            certificate.setTeacher(teacher);
             teacher.addCertificate(certificate);
         }
 

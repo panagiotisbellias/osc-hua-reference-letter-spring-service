@@ -9,6 +9,7 @@ import java.util.List;
 public class Teacher {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -18,12 +19,12 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
-    @JoinColumn(name="teacher_id")
+    @OneToMany(mappedBy="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JoinColumn(name="teacher_id")
     private List<Course> courses;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.MERGE)
-    @JoinColumn(name="teacher_id")
+    @OneToMany(mappedBy ="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    //@JoinColumn(name="teacher_id")
     private List<Certificate> certificates;
 
     @OneToOne(cascade=CascadeType.ALL)

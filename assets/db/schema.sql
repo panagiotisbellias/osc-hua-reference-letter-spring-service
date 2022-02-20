@@ -133,14 +133,14 @@ INSERT INTO students VALUES
 DROP TABLE IF EXISTS reference_letter_requests;
 
 CREATE TABLE reference_letter_requests (
-                                           id  SERIAL,
-                                           id_teacher int NOT NULL,
-                                           id_student int NOT NULL,
-                                           carrier_name varchar(45) NOT NULL,
-                                           carrier_email varchar(45) NOT NULL,
-                                           PRIMARY KEY (id),
-                                           CONSTRAINT fk_teacher FOREIGN KEY(id_teacher) REFERENCES teachers(id),
-                                           CONSTRAINT fk_student FOREIGN KEY(id_student) REFERENCES students(id)
+       id  SERIAL,
+       id_teacher int NOT NULL,
+       id_student int NOT NULL,
+       carrier_name varchar(45) NOT NULL,
+       carrier_email varchar(45) NOT NULL,
+       PRIMARY KEY (id),
+       CONSTRAINT fk_teacher FOREIGN KEY(id_teacher) REFERENCES teachers(id) ON DELETE CASCADE ON UPDATE CASCADE,
+       CONSTRAINT fk_student FOREIGN KEY(id_student) REFERENCES students(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

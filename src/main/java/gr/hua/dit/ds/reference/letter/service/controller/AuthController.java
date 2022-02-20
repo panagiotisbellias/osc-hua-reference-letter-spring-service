@@ -164,7 +164,14 @@ public class AuthController {
     public ProfileDto getUsersData(Authentication authentication){
 
         // take username from authentication bean
-        String username = authentication.getName();
+        String username;
+        try {
+            username = authentication.getName();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return new ProfileDto();
+        }
+
         System.out.println("USERNAME: " + username);
 
         // Create profile object

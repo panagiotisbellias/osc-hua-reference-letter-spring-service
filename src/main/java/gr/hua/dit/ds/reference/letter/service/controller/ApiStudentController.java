@@ -93,13 +93,25 @@ public class ApiStudentController {
         return result;
     }
 
+    /**
+     * Get More Info Method
+     * With this method students are able to view details about a reference letter request
+     * @param id, is the id of a certain reference letter request
+     * @return a reference letter request object
+     * @todo filter the information, test it with frontend
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ReferenceLetterRequestDto> getMoreInfo(@PathVariable(value = "id") Integer id) {
-        // TODO: view more about a rl request, fix it to see basic details for involved student and teacher
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
 
         if (referenceLetterRequest.isPresent()) {
             ReferenceLetterRequestDto referenceLetterRequestDto = new ReferenceLetterRequestDto();
+            TeacherDto teacherDto = new TeacherDto();
+            Teacher teacher = referenceLetterRequest.get().getTeacher();
+            teacherDto.setFullName(teacher.getFullName());
+            teacherDto.setEmail(teacher.getEmail());
+
+            referenceLetterRequestDto.setTeacher(teacherDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
             return ResponseEntity.ok().body(referenceLetterRequestDto);

@@ -13,4 +13,9 @@ public interface ReferenceLetterRequestRepository extends CrudRepository<Referen
             value = "SELECT * FROM reference_letter_requests WHERE id_student = ?1",
             nativeQuery = true)
     List<ReferenceLetterRequest> findReferenceLetterRequestsByStudent(int student);
+
+    @Query(
+            value = "SELECT * FROM reference_letter_requests WHERE is_pending AND id_teacher = ?1",
+            nativeQuery = true)
+    List<ReferenceLetterRequest> findPendingReferenceLetterRequestsByTeacher(int teacher);
 }

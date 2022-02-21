@@ -5,15 +5,17 @@ public class ReferenceLetterRequestDto {
     private TeacherDto teacher;
     private String carrierName;
     private String carrierEmail;
+    private String status;
 
     public ReferenceLetterRequestDto(){
-
+        this.status = "pending";
     }
 
-    public ReferenceLetterRequestDto(TeacherDto teacher, String carrierName, String carrierEmail) {
+    public ReferenceLetterRequestDto(TeacherDto teacher, String carrierName, String carrierEmail, String status) {
         this.teacher = teacher;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
+        this.status = status;
     }
 
     public TeacherDto getTeacher() {
@@ -40,12 +42,21 @@ public class ReferenceLetterRequestDto {
         this.carrierEmail = carrierEmail;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "ReferenceLetterRequestDto{" +
-                "teacher='" + teacher + '\'' +
+                "teacher=" + teacher +
                 ", carrierName='" + carrierName + '\'' +
                 ", carrierEmail='" + carrierEmail + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

@@ -138,6 +138,9 @@ CREATE TABLE reference_letter_requests (
        id_student int NOT NULL,
        carrier_name varchar(45) NOT NULL,
        carrier_email varchar(45) NOT NULL,
+       is_approved bool DEFAULT FALSE,
+       is_declined bool DEFAULT FALSE,
+       is_pending bool DEFAULT TRUE,
        PRIMARY KEY (id),
        CONSTRAINT fk_teacher FOREIGN KEY(id_teacher) REFERENCES teachers(id) ON DELETE CASCADE ON UPDATE CASCADE,
        CONSTRAINT fk_student FOREIGN KEY(id_student) REFERENCES students(id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -287,7 +287,8 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return a message to inform user about his/her requests
-     * @todo correct db issues, test it with postman or frontend
+     * @todo possible just set enabled to False, not the logic we have now,
+     * @todo test it with postman or frontend
      */
     @DeleteMapping("/profile")
     public ResponseEntity<?> deleteUserAccount(Authentication authentication){
@@ -296,6 +297,13 @@ public class AuthController {
         if (user.isEmpty())
             return new ResponseEntity<>("User Not Found!",
                     HttpStatus.NOT_FOUND); // inform user
+
+        /*
+        User user = user.get();
+        user.setEnabled(0);
+        userRepository.save(user);
+         */
+
         Student student = studentRepository.findStudentByUser(profile.getUsername());
         Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
         if (teacher != null){

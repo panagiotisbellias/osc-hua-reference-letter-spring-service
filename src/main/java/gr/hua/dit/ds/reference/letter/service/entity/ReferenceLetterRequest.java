@@ -25,13 +25,26 @@ public class ReferenceLetterRequest {
     @Column(name = "carrier_email")
     private String carrierEmail;
 
+    @Column(name = "is_approved")
+    private boolean isApproved;
+
+    @Column(name = "is_declined")
+    private boolean isDeclined;
+
+    @Column(name = "is_pending")
+    private boolean isPending;
+
     public ReferenceLetterRequest() {
     }
 
-    public ReferenceLetterRequest(int id, String carrierName, String carrierEmail) {
+    public ReferenceLetterRequest(int id, String carrierName, String carrierEmail, boolean isApproved,
+                                  boolean isDeclined, boolean isPending) {
         this.id = id;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
+        this.isApproved = isApproved;
+        this.isDeclined = isDeclined;
+        this.isPending = isPending;
     }
 
     public int getId() {
@@ -74,14 +87,41 @@ public class ReferenceLetterRequest {
         this.carrierEmail = carrierEmail;
     }
 
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public boolean isDeclined() {
+        return isDeclined;
+    }
+
+    public void setDeclined(boolean declined) {
+        isDeclined = declined;
+    }
+
+    public boolean isPending() {
+        return isPending;
+    }
+
+    public void setPending(boolean pending) {
+        isPending = pending;
+    }
+
     @Override
     public String toString() {
         return "ReferenceLetterRequest{" +
                 "id=" + id +
-                ", teacher=" + teacher + '\'' +
-                ", student=" + student + '\'' +
+                ", teacher=" + teacher +
+                ", student=" + student +
                 ", carrierName='" + carrierName + '\'' +
-                ", carrierEmail='" + carrierEmail +
+                ", carrierEmail='" + carrierEmail + '\'' +
+                ", isApproved=" + isApproved +
+                ", isDeclined=" + isDeclined +
+                ", isPending=" + isPending +
                 '}';
     }
 }

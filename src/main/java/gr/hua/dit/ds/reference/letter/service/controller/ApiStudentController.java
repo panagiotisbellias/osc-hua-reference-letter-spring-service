@@ -87,6 +87,8 @@ public class ApiStudentController {
             rl_dto.setTeacher(teacher);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());
+            if (rl.isApproved()) rl_dto.setStatus("approved");
+            else if (rl.isDeclined()) rl_dto.setStatus("declined");
             result.add(rl_dto);
         }
 
@@ -114,6 +116,10 @@ public class ApiStudentController {
             referenceLetterRequestDto.setTeacher(teacherDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
+
+            if (referenceLetterRequest.get().isApproved()) referenceLetterRequestDto.setStatus("approved");
+            else if (referenceLetterRequest.get().isDeclined()) referenceLetterRequestDto.setStatus("declined");
+
             return ResponseEntity.ok().body(referenceLetterRequestDto);
         } else {
             return ResponseEntity.notFound().build();

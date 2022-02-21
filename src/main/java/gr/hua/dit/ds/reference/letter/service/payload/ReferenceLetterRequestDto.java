@@ -3,6 +3,7 @@ package gr.hua.dit.ds.reference.letter.service.payload;
 public class ReferenceLetterRequestDto {
 
     private TeacherDto teacher;
+    private StudentDto student;
     private String carrierName;
     private String carrierEmail;
     private String status;
@@ -25,6 +26,10 @@ public class ReferenceLetterRequestDto {
     public void setTeacher(TeacherDto teacher) {
         this.teacher = teacher;
     }
+
+    public StudentDto getStudent() {return student;}
+
+    public void setStudent(StudentDto student) {this.student = student;}
 
     public String getCarrierName() {
         return carrierName;

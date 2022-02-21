@@ -85,7 +85,7 @@ public class ApiTeacherController {
             approvedRL.setApproved(true);
             approvedRL.setPending(false);
             approvedRL.setDeclined(false);
-            //referenceLetterRequestRepository.save(approvedRL);
+            referenceLetterRequestRepository.save(approvedRL);
         }
 
     }
@@ -99,7 +99,7 @@ public class ApiTeacherController {
             declinedRL.setApproved(false);
             declinedRL.setPending(false);
             declinedRL.setDeclined(true);
-            //referenceLetterRequestRepository.save(declinedRL);
+            referenceLetterRequestRepository.save(declinedRL);
         }
     }
 

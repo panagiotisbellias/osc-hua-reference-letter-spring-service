@@ -57,6 +57,7 @@ public class ApiStudentController {
         rl.setTeacher(teacher);
         rl.setCarrierName(referenceLetterRequest.getCarrierName());
         rl.setCarrierEmail(referenceLetterRequest.getCarrierEmail());
+        rl.setPending(true);
         return referenceLetterRequestRepository.save(rl);
     }
 
@@ -84,6 +85,7 @@ public class ApiStudentController {
             teacher.setFullName(rl.getTeacher().getFullName());
             teacher.setEmail(rl.getTeacher().getEmail());
             // add courses - certificates as DTOs
+            rl_dto.setId(rl.getId());
             rl_dto.setTeacher(teacher);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());

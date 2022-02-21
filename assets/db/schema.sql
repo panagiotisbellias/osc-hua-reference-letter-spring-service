@@ -106,16 +106,16 @@ INSERT INTO certificates VALUES
 DROP TABLE IF EXISTS students;
 
 CREATE TABLE students (
-                          id SERIAL,
-                          full_name varchar(45) NOT NULL,
-                          uni_id varchar(20) NOT NULL,
-                          email varchar(45) DEFAULT NULL,
-                          school varchar(90) DEFAULT NULL,
-                          url_grading_file varchar(45) DEFAULT NULL,
-                          users_username varchar(50) NOT NULL,
-                          PRIMARY KEY (id),
-                          CONSTRAINT fk_users FOREIGN KEY(users_username) REFERENCES users(username)
-                              ON DELETE NO ACTION ON UPDATE NO ACTION
+      id SERIAL,
+      full_name varchar(45) NOT NULL,
+      uni_id varchar(20) NOT NULL,
+      email varchar(45) DEFAULT NULL,
+      school varchar(90) DEFAULT NULL,
+      url_grading_file varchar(45) DEFAULT NULL,
+      users_username varchar(50) NOT NULL,
+      PRIMARY KEY (id),
+      CONSTRAINT fk_users FOREIGN KEY(users_username) REFERENCES users(username)
+          ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 --

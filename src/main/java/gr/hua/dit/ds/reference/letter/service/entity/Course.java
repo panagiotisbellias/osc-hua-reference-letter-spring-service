@@ -17,9 +17,11 @@ public class Course {
     @Column(name = "university")
     private String university;
 
+    /*
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
+    */
 
     public Course() {
     }
@@ -54,6 +56,7 @@ public class Course {
         this.university = university;
     }
 
+    /*
     public Teacher getTeacher() {
         return teacher;
     }
@@ -61,6 +64,7 @@ public class Course {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+    */
 
     @Override
     public String toString() {

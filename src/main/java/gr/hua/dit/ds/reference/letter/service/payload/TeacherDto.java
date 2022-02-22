@@ -10,8 +10,8 @@ public class TeacherDto {
     private String password;
     private String fullName;
     private String email;
-    private List<CourseDto> courses;
-    private List<CertificateDto> certificates;
+    //private List<CourseDto> courses;
+    //private List<CertificateDto> certificates;
 
     public TeacherDto(int id, String username, String password, String fullName, String email,
                       List<CourseDto> courses, List<CertificateDto> certificates) {
@@ -20,8 +20,8 @@ public class TeacherDto {
         this.password = password;
         this.fullName = fullName;
         this.email = email;
-        this.courses = courses;
-        this.certificates = certificates;
+        //this.courses = courses;
+        //this.certificates = certificates;
     }
 
     public TeacherDto() {
@@ -67,6 +67,7 @@ public class TeacherDto {
         this.email = email;
     }
 
+    /*
     public List<CourseDto> getCourses() {
         return courses;
     }
@@ -83,6 +84,8 @@ public class TeacherDto {
         this.certificates = certificates;
     }
 
+     */
+
     @Override
     public String toString() {
         return "TeacherDto{" +
@@ -90,9 +93,9 @@ public class TeacherDto {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", courses=" + courses +
-                ", certificates=" + certificates +
+                ", email='" + email + //'\'' +
+                //", courses=" + courses +
+                //", certificates=" + certificates +
                 '}';
     }
 }

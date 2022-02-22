@@ -132,6 +132,7 @@ public class AuthController {
         teacher.setFullName(teacherDto.getFullName());
         teacher.setEmail(teacherDto.getEmail());
 
+        /*
         for (CourseDto courseDto : teacherDto.getCourses()) {
             Course course = new Course();
             course.setTitle(courseDto.getTitle());
@@ -145,9 +146,11 @@ public class AuthController {
             certificate.setUniversity(certificateDto.getUniversity());
             certificate.setTeacher(teacher);
             teacher.addCertificate(certificate);
-        }
+        }*/
 
         teacher.setUser(user);
+        System.out.println(teacher);
+
         userService.registerTeacher(teacher); // call user service to register the teacher to the system
         return new ResponseEntity<>("Teacher registered successfully", HttpStatus.OK); // inform user
     }
@@ -198,6 +201,7 @@ public class AuthController {
             profileDto.setUsername(username);
             profileDto.setFullName(teacher.getFullName());
             profileDto.setEmail(teacher.getEmail());
+            /*
             for (Course course : teacher.getCourses()) {
                 CourseDto courseDto = new CourseDto();
                 courseDto.setTitle(course.getTitle());
@@ -209,7 +213,7 @@ public class AuthController {
                 certificateDto.setTitle(certificate.getTitle());
                 certificateDto.setUniversity(certificate.getUniversity());
                 profileDto.addCertificate(certificateDto);
-            }
+            }*/
 
         } else {
             System.out.println("ERROR!");
@@ -308,8 +312,8 @@ public class AuthController {
         Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
         if (teacher != null){
             // User is teacher
-            certificateRepository.deleteAll(teacher.getCertificates());
-            courseRepository.deleteAll(teacher.getCourses());
+            //certificateRepository.deleteAll(teacher.getCertificates());
+            //courseRepository.deleteAll(teacher.getCourses());
             teacherRepository.delete(teacher);
             userService.deleteUser(user.get());
             return new ResponseEntity<>("Your teacher account has been deleted!",

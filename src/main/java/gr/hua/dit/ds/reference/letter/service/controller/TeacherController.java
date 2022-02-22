@@ -59,8 +59,8 @@ public class TeacherController {
         existingTeacher.setId(id);
         existingTeacher.setFullName(teacher.getFullName());
         existingTeacher.setEmail(teacher.getEmail());
-        existingTeacher.setCourses(teacher.getCourses());
-        existingTeacher.setCertificates(teacher.getCertificates());
+        //existingTeacher.setCourses(teacher.getCourses());
+        //existingTeacher.setCertificates(teacher.getCertificates());
         existingTeacher.setUser(teacher.getUser());
 
         // save updated teacher object

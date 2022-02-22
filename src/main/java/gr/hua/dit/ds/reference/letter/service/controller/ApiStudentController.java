@@ -5,6 +5,7 @@ import gr.hua.dit.ds.reference.letter.service.payload.ReferenceLetterRequestDto;
 import gr.hua.dit.ds.reference.letter.service.payload.TeacherDto;
 import gr.hua.dit.ds.reference.letter.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -133,8 +134,22 @@ public class ApiStudentController {
         // TODO: update a rl request
     }
 
+    /**
+     * Delete Reference Letter Request Method
+     * With this method students are able to delete a reference letter request
+     * @todo test it with postman (and frontend)
+     */
     @DeleteMapping("/{id}")
-    public void deleteRLrequest() {
-        // TODO: delete a rl request
+    public ResponseEntity<?> deleteRLrequest(@PathVariable(value = "id") Integer id) {
+
+        Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
+        if (referenceLetterRequest.isEmpty())
+            return new ResponseEntity<>("Reference Letter Request Not Found!",
+                    HttpStatus.NOT_FOUND); // inform user
+
+        referenceLetterRequestRepository.delete(referenceLetterRequest.get());
+        return new ResponseEntity<>("Your reference letter request has been deleted!",
+                HttpStatus.OK); // inform user
+
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
@@ -19,6 +19,7 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
+    /*
     @OneToMany(mappedBy="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JoinColumn(name="teacher_id")
     private List<Course> courses;
@@ -26,7 +27,7 @@ public class Teacher {
     @OneToMany(mappedBy ="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     //@JoinColumn(name="teacher_id")
     private List<Certificate> certificates;
-
+    */
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="users_username")
     private User user;
@@ -65,6 +66,7 @@ public class Teacher {
         this.email = email;
     }
 
+    /*
     public List<Course> getCourses() {
         return courses;
     }
@@ -80,6 +82,7 @@ public class Teacher {
     public void setCertificates(List<Certificate> certificate) {
         this.certificates = certificate;
     }
+    */
 
     public User getUser() {
         return user;
@@ -94,10 +97,12 @@ public class Teacher {
         return "Teacher{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", email='" + email +
+                ", email='" + email + '\'' +
+                ", user='" + user.toString() +
                 '}';
     }
 
+    /*
     public void addCourse(Course acourse){
         if (courses == null) {
             courses = new ArrayList<>();
@@ -111,5 +116,6 @@ public class Teacher {
         }
         certificates.add(acertificate);
     }
+    */
 
 }

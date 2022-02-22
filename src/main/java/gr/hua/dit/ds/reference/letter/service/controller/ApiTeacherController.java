@@ -63,8 +63,8 @@ public class ApiTeacherController {
             Student student = referenceLetterRequest.get().getStudent();
             studentDto.setFullName(student.getFullName());
             studentDto.setEmail(student.getEmail());
-            student.setSchool(student.getSchool());
-            student.setUrlGradingFile(student.getUrlGradingFile());
+            studentDto.setSchool(student.getSchool());
+            studentDto.setUrlGradingFile(student.getUrlGradingFile());
 
             referenceLetterRequestDto.setStudent(studentDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());

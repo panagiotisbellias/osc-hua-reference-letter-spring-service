@@ -35,6 +35,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private CertificateRepository certificateRepository;
 
+    private TeacherService teacherService;
+
     public void registerUser(User user, String authority) {
 
         User newUser = new User();
@@ -76,14 +78,13 @@ public class UserService implements UserDetailsService {
         Teacher newTeacher = new Teacher();
         newTeacher.setFullName(teacher.getFullName());
         newTeacher.setEmail(teacher.getEmail());
-        newTeacher.setCourses(teacher.getCourses());
-        newTeacher.setCertificates(teacher.getCertificates());
+        //newTeacher.setCourses(teacher.getCourses());
+        //newTeacher.setCertificates(teacher.getCertificates());
 
-        newTeacher.setUser(teacher.getUser());
-
+        newTeacher.setUser(userRepository.findByUsername(teacher.getUser().getUsername()).get());
         teacherRepository.save(newTeacher);
-        courseRepository.saveAll(newTeacher.getCourses());
-        certificateRepository.saveAll(newTeacher.getCertificates());
+        //courseRepository.saveAll(newTeacher.getCourses());
+        //certificateRepository.saveAll(newTeacher.getCertificates());
 
     }
 

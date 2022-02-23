@@ -63,9 +63,9 @@ Create file application.properties in src/main/resources and follow this templat
 # JDBC URL of the database
 spring.datasource.url=jdbc:postgresql://localhost/ref_letters_db
 # Login username of the database
-spring.datasource.username=<DB-USER>
+spring.datasource.username=postgres
 # Login password of the database
-spring.datasource.password=<DB-PASSWORD>
+spring.datasource.password=pass123
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
@@ -73,9 +73,9 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL81Dialect
 
 # Default user name
-spring.security.user.name=<DEFAULT-USER>
-# Password for user
-spring.security.user.password=<DEFAULT-PASSWORD>
+spring.security.user.name=admin
+# Password for admin
+spring.security.user.password=pass123
 
 info.app.name=Reference Letter Service
 info.app.description=Backend service for reference letter management in the context of 'Distributed Systems' course at HUA DIT
@@ -104,6 +104,22 @@ logging.file.name=reference-letter-service.log
 spring.data.rest.base-path=/api
 
 spring.main.allow-circular-references=true
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=25
+spring.mail.username=<email-user>
+spring.mail.password=<email-password>
+
+# Other properties
+spring.mail.properties.mail.debug=true
+spring.mail.properties.mail.transport.protocol=smtp
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.writetimeout=5000
+
+# TLS , port 587
+spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
 ## Run Locally
@@ -113,3 +129,14 @@ mvn install
 mvnw package; java -jar target/reference-letter-service-0.0.1-SNAPSHOT.jar
 mvmw spring-boot:run
 ```
+
+## Test with postman tool
+We can test our REST API using Postman, sending requests getting and sending JSON objects
+
+## Technologies
+Spring Boot
+Postgres
+Thymeleaf
+
+Thank you!
+#DS

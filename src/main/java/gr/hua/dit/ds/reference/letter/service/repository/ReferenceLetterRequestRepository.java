@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource(path="requests")
 public interface ReferenceLetterRequestRepository extends CrudRepository<ReferenceLetterRequest, Integer> {
@@ -18,4 +19,9 @@ public interface ReferenceLetterRequestRepository extends CrudRepository<Referen
             value = "SELECT * FROM reference_letter_requests WHERE is_pending AND id_teacher = ?1",
             nativeQuery = true)
     List<ReferenceLetterRequest> findPendingReferenceLetterRequestsByTeacher(int teacher);
+
+    @Query(
+            value = "SELECT * FROM reference_letter_requests WHERE id=?1 AND id_student = ?2",
+            nativeQuery = true)
+    Optional<ReferenceLetterRequest> findReferenceLetterRequestByStudent(int rl_request, int student);
 }

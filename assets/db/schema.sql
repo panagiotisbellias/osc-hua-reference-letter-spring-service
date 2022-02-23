@@ -6,10 +6,10 @@ CREATE DATABASE ref_letters_db;
 --
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE users ( -- possible issue
+CREATE TABLE users (
    username varchar(50) NOT NULL,
    password varchar(100) NOT NULL,
-   enabled smallint NOT NULL, -- possible issue
+   enabled smallint NOT NULL,
    PRIMARY KEY (username)
 );
 
@@ -51,6 +51,7 @@ CREATE TABLE teachers (
       id SERIAL,
       full_name varchar(45) NOT NULL,
       email varchar(45) DEFAULT NULL,
+      description varchar(255) NOT NULL,
       users_username varchar(50) NOT NULL,
       PRIMARY KEY (id),
       CONSTRAINT fk_users FOREIGN KEY(users_username) REFERENCES users(username)
@@ -61,43 +62,7 @@ CREATE TABLE teachers (
 -- Initial values for testing
 --
 INSERT INTO teachers VALUES
-    (1,'panagiotis','it21871@hua.gr','panagiotis');
-
---
--- Table structure for table `courses` and `certificates`
---
-
-DROP TABLE IF EXISTS courses;
-DROP TABLE IF EXISTS certificates;
-
-CREATE TABLE courses (
-     id  SERIAL,
-     title varchar(45) DEFAULT NULL,
-     university varchar(45) DEFAULT NULL,
-     teacher_id int DEFAULT NULL,
-     PRIMARY KEY (id) --,
-     -- CONSTRAINT fk_teachers FOREIGN KEY(teacher_id) REFERENCES teachers(id)
-     --    ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE TABLE certificates (
-      id SERIAL,
-      title varchar(45) DEFAULT NULL,
-      university varchar(45) DEFAULT NULL,
-      teacher_id int DEFAULT NULL,
-      PRIMARY KEY (id) --,
-      -- CONSTRAINT fk_teachers FOREIGN KEY(teacher_id) REFERENCES teachers(id)
-      --    ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
---
--- Initial values for testing
---
-INSERT INTO courses VALUES
-    (1,'devops','HUA', 1);
-
-INSERT INTO certificates VALUES
-    (1,'devops-master','HUA', 1);
+    (1,'panagiotis','it21871@hua.gr','test-description','panagiotis');
 
 --
 -- Table structure for table `students`

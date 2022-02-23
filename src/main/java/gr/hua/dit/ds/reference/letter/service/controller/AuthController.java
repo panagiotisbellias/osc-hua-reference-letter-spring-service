@@ -43,12 +43,6 @@ public class AuthController {
     private TeacherRepository teacherRepository;
 
     @Autowired
-    private CertificateRepository certificateRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
     private UserService userService;
 
     /**
@@ -57,11 +51,11 @@ public class AuthController {
      * @param loginDto is an object which represents the JSON object passed through the api and
      *                 includes user's username and password
      * @return a message that informs user that everything went good and user is logged in the system successfully
-     * @todo test it with frontend
      */
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         // create authentication object passing username and password
+        System.out.println(loginDto.toString());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
 
@@ -76,7 +70,6 @@ public class AuthController {
      * @param studentDto is an object which represents the JSON object passed through the api and
      *                         includes all the student's details
      * @return a message that informs student that everything went good and he/she has signed up successfully
-     * @todo test it with frontend
      */
     @PostMapping("/signup/student")
     public ResponseEntity<?> registerStudent(@RequestBody StudentDto studentDto) {
@@ -111,7 +104,6 @@ public class AuthController {
      * @param teacherDto is an object which represents the JSON object passed through the api and
      *                         includes all the teacher's details
      * @return a message that informs teacher that everything went good and he/she has signed up successfully
-     * @todo one-to-many, add also many-to-one to courses and certificates, test it with postman (or frontend)
      */
     @PostMapping("/signup/teacher")
     public ResponseEntity<?> registerTeacher(@RequestBody TeacherDto teacherDto) {
@@ -131,23 +123,7 @@ public class AuthController {
         Teacher teacher = new Teacher();
         teacher.setFullName(teacherDto.getFullName());
         teacher.setEmail(teacherDto.getEmail());
-
-        /*
-        for (CourseDto courseDto : teacherDto.getCourses()) {
-            Course course = new Course();
-            course.setTitle(courseDto.getTitle());
-            course.setUniversity(courseDto.getUniversity());
-            course.setTeacher(teacher);
-            teacher.addCourse(course);
-        }
-        for (CertificateDto certificateDto : teacherDto.getCertificates()) {
-            Certificate certificate = new Certificate();
-            certificate.setTitle(certificateDto.getTitle());
-            certificate.setUniversity(certificateDto.getUniversity());
-            certificate.setTeacher(teacher);
-            teacher.addCertificate(certificate);
-        }*/
-
+        teacher.setDescription(teacherDto.getDescription());
         teacher.setUser(user);
         System.out.println(teacher);
 
@@ -155,16 +131,7 @@ public class AuthController {
         return new ResponseEntity<>("Teacher registered successfully", HttpStatus.OK); // inform user
     }
 
-    /**
-     * Get User's Data Method
-     * With this method we are able to retrieve user's information, calling the Authentication bean
-     * @param authentication is an object to take information for the current session
-     *                       using the Authentication autowired bean
-     * @return an object, which can contain either student's information or teacher's information
-     * @todo test it with frontend
-     */
-    @GetMapping("/profile")
-    public ProfileDto getUsersData(Authentication authentication){
+    public ProfileDto getProfileDTO(Authentication authentication){
 
         // take username from authentication bean
         String username;
@@ -183,45 +150,48 @@ public class AuthController {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
             System.out.println("USERNAME 404: " + username);
-            return new ProfileDto();
-        }
-
-        /* Check HERE, if turns False. We could leave authorities and do check for null directly to students*/
-        Student student = studentRepository.findStudentByUser(user.get().getUsername());
-        Teacher teacher = teacherRepository.findTeacherByUser(user.get().getUsername());
-        if (student != null){
-            System.out.println("USERNAME 3: " + user.get().getUsername());
-            profileDto.setUsername(username);
-            profileDto.setFullName(student.getFullName());
-            profileDto.setEmail(student.getEmail());
-            profileDto.setSchool(student.getSchool());
-            profileDto.setUniId(student.getUniId());
-            profileDto.setUrlGradingFile(student.getUrlGradingFile());
-            profileDto.setType("student");
-        } else if (teacher != null) {
-            profileDto.setUsername(username);
-            profileDto.setFullName(teacher.getFullName());
-            profileDto.setEmail(teacher.getEmail());
-            /*
-            for (Course course : teacher.getCourses()) {
-                CourseDto courseDto = new CourseDto();
-                courseDto.setTitle(course.getTitle());
-                courseDto.setUniversity(course.getUniversity());
-                profileDto.addCourse(courseDto);
-            }
-            for (Certificate certificate : teacher.getCertificates()) {
-                CertificateDto certificateDto = new CertificateDto();
-                certificateDto.setTitle(certificate.getTitle());
-                certificateDto.setUniversity(certificate.getUniversity());
-                profileDto.addCertificate(certificateDto);
-            }*/
-            profileDto.setType("teacher");
+            profileDto = new ProfileDto();
         } else {
-            System.out.println("ERROR!");
-            return new ProfileDto();
+
+            /* Check HERE, if turns False. We could leave authorities and do check for null directly to students*/
+            Student student = studentRepository.findStudentByUser(user.get().getUsername());
+            Teacher teacher = teacherRepository.findTeacherByUser(user.get().getUsername());
+            if (student != null) {
+                System.out.println("USERNAME 3: " + user.get().getUsername());
+                profileDto.setUsername(username);
+                profileDto.setFullName(student.getFullName());
+                profileDto.setEmail(student.getEmail());
+                profileDto.setSchool(student.getSchool());
+                profileDto.setUniId(student.getUniId());
+                profileDto.setUrlGradingFile(student.getUrlGradingFile());
+                profileDto.setType("student");
+            } else if (teacher != null) {
+                profileDto.setUsername(username);
+                profileDto.setFullName(teacher.getFullName());
+                profileDto.setEmail(teacher.getEmail());
+                profileDto.setDescription(teacher.getDescription());
+                profileDto.setType("teacher");
+            } else {
+                System.out.println("ERROR!");
+                profileDto = new ProfileDto();
+
+            }
         }
 
         return profileDto;
+
+    }
+
+    /**
+     * Get User's Data Method
+     * With this method we are able to retrieve user's information, calling the Authentication bean
+     * @param authentication is an object to take information for the current session
+     *                       using the Authentication autowired bean
+     * @return an object, which can contain either student's information or teacher's information
+     */
+    @GetMapping("/profile")
+    public ProfileDto getUsersData(Authentication authentication){
+        return getProfileDTO(authentication);
     }
 
     /**
@@ -231,11 +201,11 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return a message to inform user about his/her requests
-     * @todo update teacher's courses/certificates, test it with frontend, possible issue with db
      */
     @PutMapping("/profile")
     public ResponseEntity<?> updateUsersData(@RequestBody ProfileDto profileDto, Authentication authentication){
-        ProfileDto profile = getUsersData(authentication);
+
+        ProfileDto profile = getProfileDTO(authentication);
         if (profile.equals(profileDto))
             return new ResponseEntity<>("No changes! All Set!",
                     HttpStatus.OK); // inform user
@@ -272,14 +242,7 @@ public class AuthController {
             teacher.setUser(user);
             teacher.setFullName(profileDto.getFullName());
             teacher.setEmail(profileDto.getEmail());
-            /* TODO: Update courses and certificates at once
-            List<Course> courses = new ArrayList<>();
-            for (CourseDto courseDto: profileDto.getCourses()){
-                Course course = new Course();
-
-            }
-            teacher.setCourses(profileDto.getCourses());
-            */
+            teacher.setDescription(profileDto.getDescription());
             teacherRepository.save(teacher);
             return new ResponseEntity<>("Teacher profile updated",
                     HttpStatus.OK); // inform user
@@ -294,44 +257,19 @@ public class AuthController {
      * @param authentication is an object to take information for the current session
      *                       using the Authentication autowired bean
      * @return a message to inform user about his/her requests
-     * @todo possible just set enabled to False, not the logic we have now,
-     * @todo test it with postman or frontend
      */
     @DeleteMapping("/profile")
     public ResponseEntity<?> deleteUserAccount(Authentication authentication){
-        ProfileDto profile = getUsersData(authentication);
+        ProfileDto profile = getProfileDTO(authentication);
         Optional<User> user = userRepository.findByUsername(profile.getUsername());
         if (user.isEmpty())
             return new ResponseEntity<>("User Not Found!",
                     HttpStatus.NOT_FOUND); // inform user
 
-        /*
-        User user = user.get();
-        user.setEnabled(0);
-        userRepository.save(user);
-         */
-
-        Student student = studentRepository.findStudentByUser(profile.getUsername());
-        Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
-        if (teacher != null){
-            // User is teacher
-            //certificateRepository.deleteAll(teacher.getCertificates());
-            //courseRepository.deleteAll(teacher.getCourses());
-            teacherRepository.delete(teacher);
-            userService.deleteUser(user.get());
-            return new ResponseEntity<>("Your teacher account has been deleted!",
-                    HttpStatus.OK); // inform user
-        } else if (student != null) {
-            // User is student
-            studentRepository.delete(student);
-            userService.deleteUser(user.get());
-            return new ResponseEntity<>("Your student account has been deleted!",
-                    HttpStatus.OK); // inform user
-        } else {
-            // ERROR!
-            return new ResponseEntity<>("No user details found! Admin?",
-                    HttpStatus.BAD_REQUEST); // inform user
-        }
+        User thisUser = user.get();
+        thisUser.setEnabled(0);
+        userRepository.save(thisUser);
+        return new ResponseEntity<>("User Account is Disabled!", HttpStatus.OK); // inform user
 
     }
 

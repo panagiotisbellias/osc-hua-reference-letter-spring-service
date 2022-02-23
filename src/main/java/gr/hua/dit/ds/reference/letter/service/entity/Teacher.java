@@ -1,15 +1,13 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "teachers")
 public class Teacher {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
@@ -19,15 +17,9 @@ public class Teacher {
     @Column(name = "email")
     private String email;
 
-    /*
-    @OneToMany(mappedBy="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    //@JoinColumn(name="teacher_id")
-    private List<Course> courses;
+    @Column(name = "description")
+    private String description;
 
-    @OneToMany(mappedBy ="teacher",fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    //@JoinColumn(name="teacher_id")
-    private List<Certificate> certificates;
-    */
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="users_username")
     private User user;
@@ -35,10 +27,11 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String fullName, String email, User user) {
+    public Teacher(int id, String fullName, String email, String description, User user) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
+        this.description = description;
         this.user = user;
     }
 
@@ -66,23 +59,13 @@ public class Teacher {
         this.email = email;
     }
 
-    /*
-    public List<Course> getCourses() {
-        return courses;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-    public List<Certificate> getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(List<Certificate> certificate) {
-        this.certificates = certificate;
-    }
-    */
 
     public User getUser() {
         return user;
@@ -98,24 +81,9 @@ public class Teacher {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
+                ", description='" + description + '\'' +
                 ", user='" + user.toString() +
                 '}';
     }
-
-    /*
-    public void addCourse(Course acourse){
-        if (courses == null) {
-            courses = new ArrayList<>();
-        }
-        courses.add(acourse);
-    }
-
-    public void addCertificate(Certificate acertificate){
-        if (certificates == null) {
-            certificates = new ArrayList<>();
-        }
-        certificates.add(acertificate);
-    }
-    */
 
 }

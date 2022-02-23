@@ -12,15 +12,11 @@ public class ProfileDto {
     private String uniId;
     private String urlGradingFile;
 
-    private List<CourseDto> courses;
-    private List<CertificateDto> certificates;
-
+    private String description;
     private String type;
 
     public ProfileDto() {
         this.school = this.uniId = this.urlGradingFile = "";
-        this.courses = null;
-        this.certificates = null;
     }
 
     public ProfileDto(String username, String fullName, String email,
@@ -31,19 +27,16 @@ public class ProfileDto {
         this.school = school;
         this.uniId = uniId;
         this.urlGradingFile = urlGradingFile;
-        this.courses = null;
-        this.certificates = null;
+        this.description = "";
         this.type = "student";
     }
 
-    public ProfileDto(String username, String fullName, String email,
-                      List<CourseDto> courses, List<CertificateDto> certificates) {
+    public ProfileDto(String username, String fullName, String email, String description) {
         this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.school = this.uniId = this.urlGradingFile = "";
-        this.courses = courses;
-        this.certificates = certificates;
+        this.description = description;
         this.type = "teacher";
     }
 
@@ -95,20 +88,12 @@ public class ProfileDto {
         this.urlGradingFile = urlGradingFile;
     }
 
-    public List<CourseDto> getCourses() {
-        return courses;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCourses(List<CourseDto> courses) {
-        this.courses = courses;
-    }
-
-    public List<CertificateDto> getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(List<CertificateDto> certificates) {
-        this.certificates = certificates;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {
@@ -128,24 +113,9 @@ public class ProfileDto {
                 ", school='" + school + '\'' +
                 ", uniId='" + uniId + '\'' +
                 ", urlGradingFile='" + urlGradingFile + '\'' +
-                ", courses=" + courses +
-                ", certificates=" + certificates +
+                ", description=" + description +
                 ", type='" + type +
                 '}';
-    }
-
-    public void addCourse(CourseDto acourse){
-        if (courses == null) {
-            courses = new ArrayList<>();
-        }
-        courses.add(acourse);
-    }
-
-    public void addCertificate(CertificateDto acertificate){
-        if (certificates == null) {
-            certificates = new ArrayList<>();
-        }
-        certificates.add(acertificate);
     }
 
 }

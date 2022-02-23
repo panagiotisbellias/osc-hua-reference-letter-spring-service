@@ -42,6 +42,7 @@ public class ApiTeacherController {
             StudentDto student = new StudentDto();
             student.setFullName(rl.getStudent().getFullName());
             student.setEmail(rl.getStudent().getEmail());
+            rl_dto.setId(rl.getId());
             rl_dto.setStudent(student);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());
@@ -59,11 +60,14 @@ public class ApiTeacherController {
             ReferenceLetterRequestDto referenceLetterRequestDto = new ReferenceLetterRequestDto();
             StudentDto studentDto = new StudentDto();
             Student student = referenceLetterRequest.get().getStudent();
+            studentDto.setUsername(student.getUser().getUsername());
             studentDto.setFullName(student.getFullName());
             studentDto.setEmail(student.getEmail());
             studentDto.setSchool(student.getSchool());
+            studentDto.setUniId(student.getUniId());
             studentDto.setUrlGradingFile(student.getUrlGradingFile());
 
+            referenceLetterRequestDto.setId(id);
             referenceLetterRequestDto.setStudent(studentDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
@@ -75,7 +79,7 @@ public class ApiTeacherController {
     }
 
     @PostMapping("/pending/{id}")
-    public void approveRLrequest(@PathVariable(value = "id") Integer id){
+    public void approveRLrequest(@PathVariable(value = "id") Integer id, String text){
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
 
         if (referenceLetterRequest.isPresent()) {
@@ -84,7 +88,9 @@ public class ApiTeacherController {
             approvedRL.setPending(false);
             approvedRL.setDeclined(false);
             referenceLetterRequestRepository.save(approvedRL);
-            emailService.sendMail(approvedRL.getCarrierEmail(),"Reference Letter","Test Body");
+            emailService.sendMail(approvedRL.getCarrierEmail(),"New Reference Letter",
+                    "Info: " + approvedRL.toString() + "\n" +
+                            "The text: " + text);
         }
 
     }
@@ -99,8 +105,11 @@ public class ApiTeacherController {
             declinedRL.setPending(false);
             declinedRL.setDeclined(true);
             referenceLetterRequestRepository.save(declinedRL);
-            // --> take student's email and inform him for declining
-            //emailService.sendMail(approvedRL.getCarrierEmail(),"Reference Letter","Test Body");
+            // take student's email and inform him for declining
+            emailService.sendMail(declinedRL.getStudent().getEmail(),
+                    "Your reference letter request with id " + declinedRL.getId() + " is declined",
+                    "Your reference letter request with id " + declinedRL.getId() + " is declined." +
+                            "\nSee more: " + declinedRL.toString());
         }
     }
 

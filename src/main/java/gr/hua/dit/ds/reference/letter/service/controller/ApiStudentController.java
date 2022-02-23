@@ -45,10 +45,9 @@ public class ApiStudentController {
      * @param authentication, is an object to take information for the current session
      *                        using the Authentication autowired bean
      * @return the instance of this new reference letter request
-     * @todo add the other attributes, possibly change the db schema and test it with postman and frontend
      */
     @PostMapping("/")
-    public ReferenceLetterRequest createRLrequest(@Validated
+    public ResponseEntity<?> createRLrequest(@Validated
             @RequestBody ReferenceLetterRequestDto referenceLetterRequest, Authentication authentication) {
         ReferenceLetterRequest rl = new ReferenceLetterRequest();
         String username = authentication.getName();
@@ -59,7 +58,8 @@ public class ApiStudentController {
         rl.setCarrierName(referenceLetterRequest.getCarrierName());
         rl.setCarrierEmail(referenceLetterRequest.getCarrierEmail());
         rl.setPending(true);
-        return referenceLetterRequestRepository.save(rl);
+        referenceLetterRequestRepository.save(rl);
+        return new ResponseEntity<>("Reference Letter Request is created!", HttpStatus.OK); // inform user
     }
 
     /**
@@ -68,10 +68,9 @@ public class ApiStudentController {
      * @param authentication, is an object to take information for the current session
      *                        using the Authentication autowired bean
      * @return all reference letter requests that exist in database as a list
-     * @todo add courses, certificates, test it with postman
      */
     @GetMapping("/")
-    public ArrayList<ReferenceLetterRequestDto> getRLrequests(Authentication authentication) {
+    public ResponseEntity<ArrayList<ReferenceLetterRequestDto>> getRLrequests(Authentication authentication) {
 
         String username = authentication.getName();
         Student student = studentRepository.findStudentByUser(username);
@@ -85,18 +84,18 @@ public class ApiStudentController {
             teacher.setId(rl.getTeacher().getId());
             teacher.setFullName(rl.getTeacher().getFullName());
             teacher.setEmail(rl.getTeacher().getEmail());
-            // add courses - certificates as DTOs
+            teacher.setDescription(rl.getTeacher().getDescription());
             rl_dto.setId(rl.getId());
             rl_dto.setTeacher(teacher);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());
-            if (!rl.getText().equals("")) rl_dto.setText(rl.getText());
+            if (rl.getText() != null) rl_dto.setText(rl.getText());
             if (rl.isApproved()) rl_dto.setStatus("approved");
             else if (rl.isDeclined()) rl_dto.setStatus("declined");
             result.add(rl_dto);
         }
 
-        return result;
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -104,7 +103,6 @@ public class ApiStudentController {
      * With this method students are able to view details about a reference letter request
      * @param id, is the id of a certain reference letter request
      * @return a reference letter request object
-     * @todo filter the information, test it with frontend
      */
     @GetMapping("/{id}")
     public ResponseEntity<ReferenceLetterRequestDto> getMoreInfo(@PathVariable(value = "id") Integer id) {
@@ -116,11 +114,13 @@ public class ApiStudentController {
             Teacher teacher = referenceLetterRequest.get().getTeacher();
             teacherDto.setFullName(teacher.getFullName());
             teacherDto.setEmail(teacher.getEmail());
+            teacherDto.setDescription(teacher.getDescription());
 
+            referenceLetterRequestDto.setId(referenceLetterRequest.get().getId());
             referenceLetterRequestDto.setTeacher(teacherDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
-            if (!referenceLetterRequest.get().getText().equals(""))
+            if (referenceLetterRequest.get().getText() != null)
                 referenceLetterRequestDto.setText(referenceLetterRequest.get().getText());
             if (referenceLetterRequest.get().isApproved()) referenceLetterRequestDto.setStatus("approved");
             else if (referenceLetterRequest.get().isDeclined()) referenceLetterRequestDto.setStatus("declined");
@@ -133,7 +133,6 @@ public class ApiStudentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRLrequest(@RequestBody ReferenceLetterRequestDto referenceLetterRequestDto,@PathVariable(value = "id") Integer id) {
-        // TODO: update a rl request
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
         if(referenceLetterRequest.isEmpty()){
             return new ResponseEntity<>("Reference Letter Not Found",
@@ -155,14 +154,14 @@ public class ApiStudentController {
     /**
      * Delete Reference Letter Request Method
      * With this method students are able to delete a reference letter request
-     * @todo test it with postman (and frontend)
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRLrequest(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<?> deleteRLrequest(@PathVariable(value = "id") Integer id, Authentication authentication) {
 
-        // maybe here we have to find it only in case its his request
-        // I mean to implement a query in repository by student
-        Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
+        String username = authentication.getName();
+        Student student = studentRepository.findStudentByUser(username);
+        Optional<ReferenceLetterRequest> referenceLetterRequest =
+                referenceLetterRequestRepository.findReferenceLetterRequestByStudent(id, student.getId());
         if (referenceLetterRequest.isEmpty())
             return new ResponseEntity<>("Reference Letter Request Not Found!",
                     HttpStatus.NOT_FOUND); // inform user

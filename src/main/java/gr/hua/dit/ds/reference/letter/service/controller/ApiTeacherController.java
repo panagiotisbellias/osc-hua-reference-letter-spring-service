@@ -9,6 +9,7 @@ import gr.hua.dit.ds.reference.letter.service.payload.TeacherDto;
 import gr.hua.dit.ds.reference.letter.service.repository.ReferenceLetterRequestRepository;
 import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
 import gr.hua.dit.ds.reference.letter.service.repository.TeacherRepository;
+import gr.hua.dit.ds.reference.letter.service.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -30,6 +31,9 @@ public class ApiTeacherController {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/pending")
     public ArrayList<ReferenceLetterRequestDto> viewPendingRLrequests(Authentication authentication){
@@ -86,6 +90,7 @@ public class ApiTeacherController {
             approvedRL.setPending(false);
             approvedRL.setDeclined(false);
             referenceLetterRequestRepository.save(approvedRL);
+            emailService.sendMail(approvedRL.getCarrierEmail(),"Reference Letter","Test Body");
         }
 
     }

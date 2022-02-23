@@ -197,6 +197,7 @@ public class AuthController {
             profileDto.setSchool(student.getSchool());
             profileDto.setUniId(student.getUniId());
             profileDto.setUrlGradingFile(student.getUrlGradingFile());
+            profileDto.setType("student");
         } else if (teacher != null) {
             profileDto.setUsername(username);
             profileDto.setFullName(teacher.getFullName());
@@ -214,7 +215,7 @@ public class AuthController {
                 certificateDto.setUniversity(certificate.getUniversity());
                 profileDto.addCertificate(certificateDto);
             }*/
-
+            profileDto.setType("teacher");
         } else {
             System.out.println("ERROR!");
             return new ProfileDto();
@@ -251,9 +252,9 @@ public class AuthController {
             userRepository.save(user);
         }
 
-        Student student = studentRepository.findStudentByUser(profile.getUsername());
-        Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
-        if (student != null) {
+
+        if (profileDto.getType().equals("student")) {
+            Student student = studentRepository.findStudentByUser(profile.getUsername());
             // student area
             student.setUser(user);
             student.setFullName(profileDto.getFullName());
@@ -265,8 +266,9 @@ public class AuthController {
 
             return new ResponseEntity<>("Student profile updated",
                     HttpStatus.OK); // inform user
-        } else {
+        } else if (profileDto.getType().equals("teacher")) {
             // teacher area
+            Teacher teacher = teacherRepository.findTeacherByUser(profile.getUsername());
             teacher.setUser(user);
             teacher.setFullName(profileDto.getFullName());
             teacher.setEmail(profileDto.getEmail());
@@ -281,7 +283,8 @@ public class AuthController {
             teacherRepository.save(teacher);
             return new ResponseEntity<>("Teacher profile updated",
                     HttpStatus.OK); // inform user
-        }
+        } else return new ResponseEntity<>("User type not found",
+                HttpStatus.NOT_FOUND);
 
     }
 

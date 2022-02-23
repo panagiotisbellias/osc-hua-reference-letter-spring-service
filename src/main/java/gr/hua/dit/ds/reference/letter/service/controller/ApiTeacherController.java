@@ -99,6 +99,8 @@ public class ApiTeacherController {
             declinedRL.setPending(false);
             declinedRL.setDeclined(true);
             referenceLetterRequestRepository.save(declinedRL);
+            // --> take student's email and inform him for declining
+            //emailService.sendMail(approvedRL.getCarrierEmail(),"Reference Letter","Test Body");
         }
     }
 

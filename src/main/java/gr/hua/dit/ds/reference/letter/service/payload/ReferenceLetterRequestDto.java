@@ -7,6 +7,7 @@ public class ReferenceLetterRequestDto {
     private StudentDto student;
     private String carrierName;
     private String carrierEmail;
+    private String text;
     private String status;
 
     public ReferenceLetterRequestDto(){
@@ -14,11 +15,12 @@ public class ReferenceLetterRequestDto {
     }
 
     public ReferenceLetterRequestDto(int id, TeacherDto teacher, String carrierName, String carrierEmail,
-                                     String status) {
+                                     String text, String status) {
         this.id = id;
         this.teacher = teacher;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
+        this.text = text;
         this.status = status;
     }
 
@@ -58,6 +60,14 @@ public class ReferenceLetterRequestDto {
         this.carrierEmail = carrierEmail;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -74,6 +84,7 @@ public class ReferenceLetterRequestDto {
                 ", student=" + student +
                 ", carrierName='" + carrierName + '\'' +
                 ", carrierEmail='" + carrierEmail + '\'' +
+                ", text='" + text + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }

@@ -90,6 +90,7 @@ public class ApiStudentController {
             rl_dto.setTeacher(teacher);
             rl_dto.setCarrierName(rl.getCarrierName());
             rl_dto.setCarrierEmail(rl.getCarrierEmail());
+            if (!rl.getText().equals("")) rl_dto.setText(rl.getText());
             if (rl.isApproved()) rl_dto.setStatus("approved");
             else if (rl.isDeclined()) rl_dto.setStatus("declined");
             result.add(rl_dto);
@@ -119,7 +120,8 @@ public class ApiStudentController {
             referenceLetterRequestDto.setTeacher(teacherDto);
             referenceLetterRequestDto.setCarrierName(referenceLetterRequest.get().getCarrierName());
             referenceLetterRequestDto.setCarrierEmail(referenceLetterRequest.get().getCarrierEmail());
-
+            if (!referenceLetterRequest.get().getText().equals(""))
+                referenceLetterRequestDto.setText(referenceLetterRequest.get().getText());
             if (referenceLetterRequest.get().isApproved()) referenceLetterRequestDto.setStatus("approved");
             else if (referenceLetterRequest.get().isDeclined()) referenceLetterRequestDto.setStatus("declined");
 
@@ -158,6 +160,8 @@ public class ApiStudentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRLrequest(@PathVariable(value = "id") Integer id) {
 
+        // maybe here we have to find it only in case its his request
+        // I mean to implement a query in repository by student
         Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
         if (referenceLetterRequest.isEmpty())
             return new ResponseEntity<>("Reference Letter Request Not Found!",

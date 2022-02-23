@@ -141,6 +141,7 @@ CREATE TABLE reference_letter_requests (
        is_approved bool DEFAULT FALSE,
        is_declined bool DEFAULT FALSE,
        is_pending bool DEFAULT TRUE,
+       reference_letter_text varchar(512) NULL,
        PRIMARY KEY (id),
        CONSTRAINT fk_teacher FOREIGN KEY(id_teacher) REFERENCES teachers(id) ON DELETE CASCADE ON UPDATE CASCADE,
        CONSTRAINT fk_student FOREIGN KEY(id_student) REFERENCES students(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -150,5 +151,5 @@ CREATE TABLE reference_letter_requests (
 -- Initial values for testing
 --
 INSERT INTO reference_letter_requests VALUES
-      (1,1,1,'carrier1','carrier1@gmail.com', FALSE, FALSE, TRUE),
-      (2,1,2,'carrier2','carrier2@gmail.com', FALSE, FALSE, TRUE);
+      (1,1,1,'carrier1','carrier1@gmail.com', FALSE, FALSE, TRUE, ''),
+      (2,1,2,'carrier2','carrier2@gmail.com', FALSE, FALSE, TRUE, '');

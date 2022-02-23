@@ -34,17 +34,21 @@ public class ReferenceLetterRequest {
     @Column(name = "is_pending")
     private boolean isPending;
 
+    @Column(name = "reference_letter_text")
+    private String text;
+
     public ReferenceLetterRequest() {
     }
 
     public ReferenceLetterRequest(int id, String carrierName, String carrierEmail, boolean isApproved,
-                                  boolean isDeclined, boolean isPending) {
+                                  boolean isDeclined, boolean isPending, String text) {
         this.id = id;
         this.carrierName = carrierName;
         this.carrierEmail = carrierEmail;
         this.isApproved = isApproved;
         this.isDeclined = isDeclined;
         this.isPending = isPending;
+        this.text = text;
     }
 
     public int getId() {
@@ -111,6 +115,14 @@ public class ReferenceLetterRequest {
         isPending = pending;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Override
     public String toString() {
         return "ReferenceLetterRequest{" +
@@ -122,6 +134,7 @@ public class ReferenceLetterRequest {
                 ", isApproved=" + isApproved +
                 ", isDeclined=" + isDeclined +
                 ", isPending=" + isPending +
+                ", text=" + text +
                 '}';
     }
 }

@@ -15,6 +15,8 @@ public class ProfileDto {
     private List<CourseDto> courses;
     private List<CertificateDto> certificates;
 
+    private String type;
+
     public ProfileDto() {
         this.school = this.uniId = this.urlGradingFile = "";
         this.courses = null;
@@ -31,6 +33,7 @@ public class ProfileDto {
         this.urlGradingFile = urlGradingFile;
         this.courses = null;
         this.certificates = null;
+        this.type = "student";
     }
 
     public ProfileDto(String username, String fullName, String email,
@@ -41,6 +44,7 @@ public class ProfileDto {
         this.school = this.uniId = this.urlGradingFile = "";
         this.courses = courses;
         this.certificates = certificates;
+        this.type = "teacher";
     }
 
     public String getUsername() {
@@ -107,6 +111,14 @@ public class ProfileDto {
         this.certificates = certificates;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "ProfileDto{" +
@@ -118,6 +130,7 @@ public class ProfileDto {
                 ", urlGradingFile='" + urlGradingFile + '\'' +
                 ", courses=" + courses +
                 ", certificates=" + certificates +
+                ", type='" + type +
                 '}';
     }
 

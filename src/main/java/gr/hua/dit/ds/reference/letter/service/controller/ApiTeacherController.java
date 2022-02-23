@@ -1,14 +1,8 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
-import gr.hua.dit.ds.reference.letter.service.entity.ReferenceLetterRequest;
-import gr.hua.dit.ds.reference.letter.service.entity.Student;
-import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
-import gr.hua.dit.ds.reference.letter.service.payload.ReferenceLetterRequestDto;
-import gr.hua.dit.ds.reference.letter.service.payload.StudentDto;
-import gr.hua.dit.ds.reference.letter.service.payload.TeacherDto;
-import gr.hua.dit.ds.reference.letter.service.repository.ReferenceLetterRequestRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.StudentRepository;
-import gr.hua.dit.ds.reference.letter.service.repository.TeacherRepository;
+import gr.hua.dit.ds.reference.letter.service.entity.*;
+import gr.hua.dit.ds.reference.letter.service.payload.*;
+import gr.hua.dit.ds.reference.letter.service.repository.*;
 import gr.hua.dit.ds.reference.letter.service.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

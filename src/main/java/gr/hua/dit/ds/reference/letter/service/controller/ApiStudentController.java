@@ -130,8 +130,24 @@ public class ApiStudentController {
     }
 
     @PutMapping("/{id}")
-    public void updateRLrequest(@RequestBody ReferenceLetterRequest referenceLetterRequest) {
+    public ResponseEntity<?> updateRLrequest(@RequestBody ReferenceLetterRequestDto referenceLetterRequestDto,@PathVariable(value = "id") Integer id) {
         // TODO: update a rl request
+        Optional<ReferenceLetterRequest> referenceLetterRequest = referenceLetterRequestRepository.findById(id);
+        if(referenceLetterRequest.isEmpty()){
+            return new ResponseEntity<>("Reference Letter Not Found",
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        ReferenceLetterRequest rl = referenceLetterRequest.get();
+
+        TeacherDto teacherDto = referenceLetterRequestDto.getTeacher();
+        Teacher teacher = teacherRepository.getById(teacherDto.getId());
+
+        rl.setTeacher(teacher);
+        rl.setCarrierName(referenceLetterRequestDto.getCarrierName());
+        rl.setCarrierEmail(referenceLetterRequestDto.getCarrierEmail());
+        referenceLetterRequestRepository.save(rl);
+        return new ResponseEntity<>("Reference Letter Updates", HttpStatus.OK);
     }
 
     /**

@@ -107,26 +107,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<executable>ng</executable>
-					<workingDirectory>src/main/resources/frontend/ReferenceLetterAppAdmin2</workingDirectory>
-					<arguments>
-						<argument>build</argument>
-					</arguments>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 

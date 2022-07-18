@@ -123,11 +123,9 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
 ## Run Locally
-Use some IDE like IntelliJ or Eclipse. Otherwise, generate and run the .jar file using these commands
+Use some IDE like IntelliJ or Eclipse. Otherwise, use these commands after you have installed and configured maven.
 ```bash
-mvn install
-mvnw package; java -jar target/reference-letter-service-0.0.1-SNAPSHOT.jar
-mvmw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## Test with postman tool

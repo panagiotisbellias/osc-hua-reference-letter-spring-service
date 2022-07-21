@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/signup")
+    @GetMapping("/") // Endpoint changed
     public String showSignUpForm(User user) {
         return "add-user";
     }
@@ -31,7 +31,7 @@ public class UserController {
         return "redirect:/index";
     }
 
-    @GetMapping("/signup/teacher")
+    @GetMapping("/addteacher") // Endpoint changed
     public String showTeacherSignUpForm(Teacher teacher) {
         return "add-teacher";
     }

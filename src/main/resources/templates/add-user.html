@@ -17,7 +17,7 @@
             <form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="username" class="col-form-label">username</label>
+                        <label for="username" class="col-form-label">Username</label>
                         <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="username">
                         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
                     </div>

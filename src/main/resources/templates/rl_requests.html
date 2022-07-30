@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>View Teachers</title>
+    <title>View Reference Letter Requests</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -36,35 +36,39 @@
 
 <div class ="container">
     <div class = "row">
-        <h1> List Teachers </h1>
+        <h1> List Reference Letter Requests </h1>
     </div>
 
     <div class = "row">
         <div class = "col-lg-3">
-            <a th:href = "@{/teachers/new}" class = "btn btn-primary btn-sm mb-3"> Add Teacher</a>
+            <a th:href = "@{/rl_requests/new}" class = "btn btn-primary btn-sm mb-3"> Add Teacher</a>
         </div>
     </div>
 
     <table class = "table table-striped table-bordered">
         <thead class = "table-dark">
         <tr>
-            <th> Teacher Full Name</th>
-            <th> Teacher Email</th>
-            <th> Teacher Description </th>
+            <th> Student </th>
+            <th> Carrier Name </th>
+            <th> Teacher  </th>
+            <th> Status </th>
+            <th> Text </th>
             <th>Actions</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each = "teacher: ${teachers}">
-            <td th:text = "${teacher.fullName}"></td>
-            <td th:text = "${teacher.email}"></td>
-            <td th:text = "${teacher.description}"></td>
+        <tr th:each = "rl_request: ${rl_requests}">
+            <td th:text = "${rl_request.student}"></td>
+            <td th:text = "${rl_request.carrierName}"></td>
+            <td th:text = "${rl_request.teacher}"></td>
+            <td th:text = "${rl_request.status}"></td>
+            <td th:text = "${rl_request.text}"></td>
             <td>
-                <a th:href = "@{/teachers/edit/{id}(id=${teacher.id})}"
+                <a th:href = "@{/rl_requests/edit/{id}(id=${rl_request.id})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/teachers/{id}(id=${teacher.id})}"
+                <a th:href = "@{/rl_requests/{id}(id=${rl_request.id})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

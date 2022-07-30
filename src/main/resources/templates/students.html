@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>User Management System</title>
+<title>View Students</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand" href="@{/}">User Management System</a>
+  <a class="navbar-brand" th:href="@{/}">Administration Panel</a>
 
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -27,6 +27,9 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
       </li>
+	  <li class="nav-item">
+		<a class="nav-link" th:href="@{/rl_requests}">Reference Letters Management</a>
+	  </li>
     </ul>
   </div>
 </nav>

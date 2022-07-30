@@ -16,20 +16,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/") // Endpoint changed
-    public String showSignUpForm(User user) {
-        return "add-user";
-    }
-
-    @PostMapping("/adduser")
-    public String addUser(@Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-user";
-        }
-
-        userService.registerUser(user, "ROLE_USER");
-        return "redirect:/index";
-    }
+    /*
+    @GetMapping("/")
+    public String listUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        
+    }*/
 
     @GetMapping("/addteacher") // Endpoint changed
     public String showTeacherSignUpForm(Teacher teacher) {

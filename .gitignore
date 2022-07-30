@@ -34,7 +34,7 @@ hs_err_pid*
 .idea
 
 # application properties file
-application.properties
+/src/main/resources/application.properties
 
 # angular dependencies
 src/main/resources/frontend/node_modules/

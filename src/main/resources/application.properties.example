@@ -20,7 +20,7 @@ info.app.description=Backend service for reference letter management in the cont
 info.app.version=1.0.0
 
 # HTTP server port
-server.port=8080
+server.port=9000
 # Context path of the application
 server.servlet.context-path=/reference-letters
 # Default HTTP session time out

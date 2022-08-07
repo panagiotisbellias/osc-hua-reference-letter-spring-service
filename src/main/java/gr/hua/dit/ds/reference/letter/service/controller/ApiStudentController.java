@@ -74,6 +74,7 @@ public class ApiStudentController {
 
         String username = authentication.getName();
         Student student = studentRepository.findStudentByUser(username);
+        System.out.println("!!! Student = " + student);
         ArrayList<ReferenceLetterRequest> list =
                 (ArrayList<ReferenceLetterRequest>) referenceLetterRequestRepository.findReferenceLetterRequestsByStudent(student.getId());
         ArrayList<ReferenceLetterRequestDto> result = new ArrayList<>();

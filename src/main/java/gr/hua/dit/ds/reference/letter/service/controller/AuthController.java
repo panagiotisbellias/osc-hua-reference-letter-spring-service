@@ -55,7 +55,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         // create authentication object passing username and password
-        System.out.println(loginDto.toString());
+        System.out.println("CREDENTIALS:"  + loginDto.toString());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()));
 

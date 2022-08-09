@@ -1,7 +1,5 @@
 package gr.hua.dit.ds.reference.letter.service.payload;
 
-import java.util.List;
-
 // REST API
 public class TeacherDto {
 

@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.reference.letter.service.entity;
 
 import org.springframework.security.core.GrantedAuthority;
-import gr.hua.dit.ds.reference.letter.service.entity.User;
 
 import javax.persistence.*;
 

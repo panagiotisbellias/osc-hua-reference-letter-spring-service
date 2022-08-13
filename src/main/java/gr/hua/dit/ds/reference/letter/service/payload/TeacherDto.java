@@ -10,9 +10,10 @@ public class TeacherDto {
     private String email;
     private String description;
 
-    public TeacherDto(int id, String username, String password, String fullName, String email,
+    public TeacherDto(//int id, 
+    String username, String password, String fullName, String email,
                       String descrtiption) {
-        this.id = id;
+        //this.id = id;
         this.username = username;
         this.password = password;
         this.fullName = fullName;

@@ -8,9 +8,8 @@ import gr.hua.dit.ds.reference.letter.service.service.UserService;
 
 import java.util.List;
 
-/*
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends UserService {
     
     private UserRepository userRepository;
 
@@ -46,4 +45,3 @@ public class UserServiceImpl implements UserService {
         }
 
 }
-*/

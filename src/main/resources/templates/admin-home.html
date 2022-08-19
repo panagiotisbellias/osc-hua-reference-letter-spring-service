@@ -62,14 +62,14 @@
 
         <tbody>
         <tr th:each = "user: ${users}">
-            <td th:text = "${user.fullName}"></td>
-            <td th:text = "${user.email}"></td>
-            <td th:text = "${user.description}"></td>
+            <td th:text = "${user.username}"></td>
+            <!-- <td th:text = "${user.email}"></td>
+            <td th:text = "${user.description}"></td> -->
             <td>
-                <a th:href = "@{/users/edit/{id}(id=${user.id})}"
+                <a th:href = "@{/users/edit/{username}(id=${user.username})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/users/{id}(id=${user.id})}"
+                <a th:href = "@{/users/{id}(username=${user.username})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

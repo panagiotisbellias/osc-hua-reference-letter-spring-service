@@ -10,8 +10,6 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-
-
     private TeacherRepository teacherRepository;
 
     public TeacherServiceImpl(TeacherRepository teacherRepository) {

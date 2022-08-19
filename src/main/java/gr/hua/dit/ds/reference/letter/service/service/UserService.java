@@ -1,5 +1,6 @@
 package gr.hua.dit.ds.reference.letter.service.service;
 
+import gr.hua.dit.ds.reference.letter.service.entity.User;
 import gr.hua.dit.ds.reference.letter.service.entity.*;
 import gr.hua.dit.ds.reference.letter.service.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public abstract class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
+    
     @Autowired
     private AuthRepository authRepository;
 
@@ -28,6 +30,10 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    public abstract List<User> getAllUsers();
+
+    public abstract User saveUser(User user);
 
     public void registerUser(User user, String authority) {
 
@@ -76,6 +82,12 @@ public class UserService implements UserDetailsService {
         teacherRepository.save(newTeacher);
 
     }
+
+    public abstract User getUserById(int id);
+
+    public abstract User updateUser(User user);
+
+    public abstract void deleteUserById(int id);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

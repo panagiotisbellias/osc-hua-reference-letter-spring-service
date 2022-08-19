@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>View Reference Letter Requests</title>
+    <title>Admin Panel - View Reference Letter Requests</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" th:href="@{/}">Administration Panel</a>
+    <a class="navbar-brand" th:href="@{/admin/}">Administration Panel</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -22,13 +22,13 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/students}">Student Management</a>
+                <a class="nav-link" th:href="@{/admin/students}">Student Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+                <a class="nav-link" th:href="@{/admin/teachers}">Teacher Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/rl_requests}">Reference Letters Management</a>
+                <a class="nav-link" th:href="@{/admin/rl_requests}">Reference Letters Management</a>
               </li>
         </ul>
     </div>
@@ -41,7 +41,7 @@
 
     <div class = "row">
         <div class = "col-lg-3">
-            <a th:href = "@{/rl_requests/new}" class = "btn btn-primary btn-sm mb-3"> Add Teacher</a>
+            <a th:href = "@{/admin/rl_requests/new}" class = "btn btn-primary btn-sm mb-3"> Add Teacher</a>
         </div>
     </div>
 
@@ -58,17 +58,17 @@
         </thead>
 
         <tbody>
-        <tr th:each = "rl_request: ${rl_requests}">
+        <tr th:each = "rl_request: ${rl_requests}"> <!-- 
             <td th:text = "${rl_request.student}"></td>
             <td th:text = "${rl_request.carrierName}"></td>
             <td th:text = "${rl_request.teacher}"></td>
             <td th:text = "${rl_request.status}"></td>
-            <td th:text = "${rl_request.text}"></td>
+            <td th:text = "${rl_request.text}"></td> -->
             <td>
-                <a th:href = "@{/rl_requests/edit/{id}(id=${rl_request.id})}"
+                <a th:href = "@{/admin/rl_requests/edit/{id}(id=${rl_request.id})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/rl_requests/{id}(id=${rl_request.id})}"
+                <a th:href = "@{/admin/rl_requests/{id}(id=${rl_request.id})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

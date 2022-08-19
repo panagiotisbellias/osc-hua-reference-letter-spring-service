@@ -2,15 +2,13 @@ package gr.hua.dit.ds.reference.letter.service.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
 import gr.hua.dit.ds.reference.letter.service.service.TeacherService;
 
 @Controller
+@RequestMapping("/admin")
 public class TeacherController {
 
     private TeacherService teacherService;

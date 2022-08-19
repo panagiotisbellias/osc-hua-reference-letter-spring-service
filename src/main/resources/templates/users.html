@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>View Teachers</title>
+    <title>Admin Panel - View Teachers</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -11,7 +11,8 @@
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" th:href="@{/}">Administration Panel</a>
+    <!-- Brand -->
+    <a class="navbar-brand" th:href="@{/admin}">Administration Panel</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -22,13 +23,13 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/students}">Student Management</a>
+                <a class="nav-link" th:href="@{/admin/students}">Student Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+                <a class="nav-link" th:href="@{/admin/teachers}">Teacher Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/rl_requests}">Reference Letters Management</a>
+                <a class="nav-link" th:href="@{/admin/rl_requests}">Reference Letters Management</a>
               </li>
         </ul>
     </div>
@@ -56,10 +57,10 @@
             <td th:text = "${user.email}"></td>
             <td th:text = "${user.description}"></td>
             <td>
-                <a th:href = "@{/users/edit/{id}(id=${user.id})}"
+                <a th:href = "@{/admin/users/edit/{id}(id=${user.id})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/users/{id}(id=${user.id})}"
+                <a th:href = "@{/admin/users/{id}(id=${user.id})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

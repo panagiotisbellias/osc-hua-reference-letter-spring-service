@@ -2,22 +2,24 @@ package gr.hua.dit.ds.reference.letter.service.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import gr.hua.dit.ds.reference.letter.service.service.ReferenceLetterService;
+import gr.hua.dit.ds.reference.letter.service.entity.ReferenceLetterRequest;
 import gr.hua.dit.ds.reference.letter.service.entity.Student;
 import gr.hua.dit.ds.reference.letter.service.service.StudentService;
 
 @Controller
+@RequestMapping("/admin")
 public class StudentController {
 
     private StudentService studentService;
+    private ReferenceLetterService referenceLetterService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, ReferenceLetterService referenceLetterService) {
         super();
         this.studentService = studentService;
+        this.referenceLetterService = referenceLetterService;
     }
 
     // handler method to handle list students and return mode and view
@@ -75,6 +77,63 @@ public class StudentController {
     public String deleteStudent(@PathVariable int id) {
         studentService.deleteStudentById(id);
         return "redirect:/students";
+    }
+
+    // handler method to handle list rl requests and return mode and view
+    @GetMapping("/rl_requests")
+    public String listRLrequests(Model model) {
+        model.addAttribute("rl_requests", referenceLetterService.getAllRLrequests());
+        return "rl_requests";
+    }
+
+    @GetMapping("/rl_requests/new")
+    public String createRLrequestForm(Model model) {
+
+        // create student object to hold student form data
+        ReferenceLetterRequest referenceLetterRequest = new ReferenceLetterRequest();
+        model.addAttribute("rl_request", referenceLetterRequest);
+        return "create_rl_request";
+
+    }
+
+    @PostMapping("/rl_requests")
+    public String saveRLrequest(@ModelAttribute("rl_request") ReferenceLetterRequest referenceLetterRequest) {
+        referenceLetterService.saveRLrequest(referenceLetterRequest);
+        return "redirect:/rl_requests";
+    }
+
+    @GetMapping("/rl_requests/edit/{id}")
+    public String editRLrequestForm(@PathVariable int id, Model model) {
+        model.addAttribute("rl_request", referenceLetterService.getRLrequestById(id));
+        return "edit_rl_request";
+    }
+
+    @PostMapping("/rl_requests/{id}")
+    public String updateRLrequest(@PathVariable int id,
+                                @ModelAttribute("rl_request") ReferenceLetterRequest referenceLetterRequest,
+                                Model model) {
+
+        // get rl request from database by id
+        ReferenceLetterRequest existingRLrequest = referenceLetterService.getRLrequestById(id);
+        existingRLrequest.setId(id); /*
+        existingRLrequest.setFullName(referenceLetterRequest.getFullName());
+        existingRLrequest.setEmail(referenceLetterRequest.getEmail());
+        existingRLrequest.setSchool(referenceLetterRequest.getSchool());
+        existingRLrequest.setUniId(referenceLetterRequest.getUniId());
+        existingRLrequest.setUrlGradingFile(referenceLetterRequest.getUrlGradingFile());
+        existingRLrequest.setUser(referenceLetterRequest.getUser()); */
+
+        // save updated student object
+        referenceLetterService.updateRLrequest(existingRLrequest);
+        return "redirect:/admin/rl_requests/";
+    }
+
+    // handler method to handle delete student request
+
+    @GetMapping("/rl_requests/{id}")
+    public String deleteRLrequest(@PathVariable int id) {
+        referenceLetterService.deleteRLrequestById(id);
+        return "redirect:/rl_requests";
     }
 
 }

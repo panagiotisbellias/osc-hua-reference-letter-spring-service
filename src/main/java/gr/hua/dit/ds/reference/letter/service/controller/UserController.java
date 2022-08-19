@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/admin")
 public class UserController {
 
     @Autowired
@@ -22,6 +23,11 @@ public class UserController {
         model.addAttribute("users", userService.getAllUsers());
         
     }*/
+
+    @GetMapping("/")
+    public String adminHome() {
+        return "admin-home";
+    }
 
     @GetMapping("/addteacher") // Endpoint changed
     public String showTeacherSignUpForm(Teacher teacher) {

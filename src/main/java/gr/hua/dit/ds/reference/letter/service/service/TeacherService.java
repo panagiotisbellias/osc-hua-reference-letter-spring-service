@@ -11,6 +11,8 @@ public interface TeacherService {
 
     Teacher getTeacherById(int id);
 
+    Teacher getTeacherByUsername(String username);
+
     Teacher updateTeacher(Teacher teacher);
 
     void deleteTeacherById(int id);

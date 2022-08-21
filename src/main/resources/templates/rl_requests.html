@@ -58,12 +58,13 @@
         </thead>
 
         <tbody>
-        <tr th:each = "rl_request: ${rl_requests}"> <!-- 
-            <td th:text = "${rl_request.student}"></td>
+        <tr th:each = "rl_request: ${rl_requests}">
+            <td th:text = "${rl_request.student.fullName}"></td>
             <td th:text = "${rl_request.carrierName}"></td>
-            <td th:text = "${rl_request.teacher}"></td>
-            <td th:text = "${rl_request.status}"></td>
-            <td th:text = "${rl_request.text}"></td> -->
+            <td th:text = "${rl_request.teacher.fullName}"></td>
+            <td th:text = "pending"></td>
+            <!-- <td th:text = "${rl_request.status}"></td> -->
+            <td th:text = "${rl_request.text}"></td>
             <td>
                 <a th:href = "@{/admin/rl_requests/edit/{id}(id=${rl_request.id})}"
                    class = "btn btn-primary">Update</a>

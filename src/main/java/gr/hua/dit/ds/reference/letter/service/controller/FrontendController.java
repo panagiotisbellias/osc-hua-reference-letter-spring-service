@@ -6,6 +6,7 @@ import gr.hua.dit.ds.reference.letter.service.repository.UserRepository;
 import gr.hua.dit.ds.reference.letter.service.service.StudentService;
 import gr.hua.dit.ds.reference.letter.service.service.TeacherService;
 import gr.hua.dit.ds.reference.letter.service.service.UserService;
+import gr.hua.dit.ds.reference.letter.service.service.ReferenceLetterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +30,15 @@ public class FrontendController {
     TeacherService teacherService;
 
     @Autowired
+    ReferenceLetterService referenceLetterService;
+
+    @Autowired
     UserRepository userRepository;
 
     @GetMapping("/")
     public String listUsers(Model model) {
-
+        List<ReferenceLetterRequest> rl_requests = referenceLetterService.getAllRLrequests();
+        model.addAttribute("rl_requests", rl_requests);
         return "home";
     }
 

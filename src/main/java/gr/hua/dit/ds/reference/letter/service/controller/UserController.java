@@ -55,18 +55,18 @@ public class UserController {
             userDetails.add(userInfo);
         }
         model.addAttribute("userDetails", userDetails);
-        return "admin-home";
+        return "admin_home";
     }
 
-    @GetMapping("/addteacher") // Endpoint changed
+    @GetMapping("/addteacher")
     public String showTeacherSignUpForm(Teacher teacher) {
-        return "add-teacher";
+        return "add_teacher";
     }
 
     @PostMapping("/addteacher")
     public String addTeacher(@Valid Teacher teacher, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-teacher";
+            return "add_teacher";
         }
 
         User user = teacher.getUser();
@@ -74,7 +74,5 @@ public class UserController {
         userService.registerTeacher(teacher);
         return "redirect:/index";
     }
-
-    // TODO: Finish testing template for teacher
 
 }

@@ -9,10 +9,8 @@ import gr.hua.dit.ds.reference.letter.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -58,23 +56,31 @@ public class UserController {
         return "admin-home";
     }
 
-    @GetMapping("/addteacher") // Endpoint changed
-    public String showTeacherSignUpForm(Teacher teacher) {
-        return "add-teacher";
+    @GetMapping("/users/edit/{username}")
+    public String editUserForm(@PathVariable String username, Model model) {
+        model.addAttribute("user", userRepository.findByUsername(username).get());
+        return "edit_user";
     }
 
-    @PostMapping("/addteacher")
-    public String addTeacher(@Valid Teacher teacher, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-teacher";
-        }
+    @PostMapping("/users/{username}")
+    public String updateUser(@PathVariable String username,
+                                @ModelAttribute("user") User updatedUser,
+                                Model model) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user == null) return "redirect:/admin/";
+        User existingUser = user.get();
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setPassword(updatedUser.getPassword());
 
-        User user = teacher.getUser();
-        userService.registerUser(user, "ROLE_TEACHER");
-        userService.registerTeacher(teacher);
-        return "redirect:/index";
+        // save updated teacher object
+        userService.updateUser(existingUser);
+        return "redirect:/admin/";
     }
 
-    // TODO: Finish testing template for teacher
+    @GetMapping("/users/{username}")
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteUser(userRepository.findByUsername(username).get());
+        return "redirect:/admin/";
+    }
 
 }

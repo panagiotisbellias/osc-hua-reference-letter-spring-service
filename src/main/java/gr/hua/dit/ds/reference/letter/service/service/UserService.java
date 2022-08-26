@@ -83,11 +83,11 @@ public abstract class UserService implements UserDetailsService {
 
     }
 
-    public abstract User getUserById(int id);
+    //public abstract User getUserById(int id);
 
     public abstract User updateUser(User user);
 
-    public abstract void deleteUserById(int id);
+    //public abstract void deleteUserById(int id);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

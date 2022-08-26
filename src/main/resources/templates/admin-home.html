@@ -33,7 +33,8 @@
         </ul>
     </div>
 </nav>
-
+<br>
+<br>
 <div class ="container">
 
     <div class = "row">
@@ -67,10 +68,10 @@
             <td th:text = "${user.email}"></td>
             <td th:text = "${user.type}"></td>
             <td>
-                <a th:href = "@{/users/edit/{username}(id=${user.username})}"
+                <a th:href = "@{/admin/users/edit/{username}(username=${user.username})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/users/{id}(username=${user.username})}"
+                <a th:href = "@{/admin/users/{username}(username=${user.username})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

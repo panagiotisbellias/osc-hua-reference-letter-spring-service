@@ -130,7 +130,7 @@ public class StudentController {
 
     // handler method to handle delete student request
 
-    @GetMapping("/rl_requests/{id}")
+    @DeleteMapping("/rl_requests/{id}")
     public String deleteRLrequest(@PathVariable int id) {
         referenceLetterService.deleteRLrequestById(id);
         return "redirect:/rl_requests";

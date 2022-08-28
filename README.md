@@ -1,10 +1,24 @@
 # reference-letter-service
-Reference-Letter Service, a Spring Boot project in the context of HUA DIT course 'Distributed Systems'
+A back end web application about reference letter handling in the context of DIT HUA course 'Distributed Systems'
 
 <h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="nginx" width="40" height="40"/> </a> <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> <a href="https://spring.io/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="spring" width="40" height="40"/> </a> </p>
+<p align="left"> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> 
+<a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a><a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a><a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a>  <a href="https://spring.io/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="spring" width="40" height="40"/> </a>  <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> 
+<a href="https://www.nginx.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg" alt="nginx" width="40" height="40"/> </a></p>
 
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=panagiotis-bellias-it21871&label=Profile%20views&color=0e75b6&style=flat" alt="panagiotis-bellias-it21871" /> </p>
+
+<a name="contents"></a>
+## Table Of Contents
+1. [Table Of Contents](#contents)  
+2. [Prerequisites](#pre)   
+2.1 [Clone Project](#clone)   
+2.2 [SetUp Database](#database)
+2.3 [Run application server](#run_server)
+
+<a name="pre"></a>
 ## Prerequisites
+<a name="clone"></a>
 ### Clone Project
 
 Go to a directory of your choice and do
@@ -12,6 +26,7 @@ Go to a directory of your choice and do
 git clone https://github.com/panagiotisbellias/reference-letter-service.git
 ```
 
+<a name="database"></a>
 ### Database
 
 #### 1. Using Docker
@@ -27,12 +42,12 @@ Below details can be different
  finally we specify the image name. It is postgres (the latest version will be used this way)
 
 ```bash
-docker run --name db-postgres -p 5432:5432 -e POSTGRES_PASSWORD=pass123 -d postgres
+docker run --name postgres_db -p 5432:5432 -e POSTGRES_PASSWORD=pass123 -d postgres
 ```
 Check connectivity to postgresql database.  
--h is for the host, -U is for the username of user and -p is for the port database is accessible
+-h is for the host, -U is for the username of user and -p is for the port database is accessible and import the sql file which is located [here](https://raw.githubusercontent.com/panagiotisbellias/reference-letters-app-system/main/assets/db/schema.sql)
 ```bash
-psql -h localhost -U postgres -p 5432
+psql -h localhost -U postgres -p 5432 < schema.sql
 ```
 
 #### 2. Using docker-compose
@@ -52,8 +67,6 @@ When you want to stop the postgresql container you can do
 ```bash
 docker-compose down
 ```
-
-Simple, hah?
 
 ## Application Properties
 
@@ -132,9 +145,86 @@ mvn spring-boot:run
 We can test our REST API using Postman, sending requests getting and sending JSON objects
 
 ## Technologies
-Spring Boot
-Postgres
+Spring Boot  
+Postgres  
 Thymeleaf
 
 Thank you!
-#DSsth added
+#DS
+
+
+
+<a name="locally"></a>
+## Run Project Locally (Installation)
+
+<a name="clone"></a>
+### Clone and initialize project
+```bash
+git clone https://github.com/panagiotis-bellias-it21871/reference-letters-fastapi-server.git
+virtualenv fvenv -p python3.X
+source fvenv/bin/activate
+pip install -r requirements.txt
+```
+and
+```bash
+cp ref_letters/.env.example ref_letters/.env
+```
+editting .env file to define
+```vim
+DATABASE_URL=sqlite:///./dev.db
+ORIGINS = "http://127.0.0.1:8000" # client's ip and port
+KC_SERVER_URL="https://auth.some-domain.com/auth"
+KC_CLIENT_ID="test-client"
+KC_REALM="Test"
+KC_CLIENT_SECRET="GzgACcJzhzQ4j8kWhmhazt7WSdxDVUyE"
+```
+or
+```bash
+cp ref_letters/.env.docker.example ref_letters/.env
+```
+```vim
+DATABASE_URL=postgresql://<DB-USERNAME>:<DB-PASSWORD>@localhost:5432/<DB-NAME>
+ORIGINS = "http://vuejs/" # client's ip and port
+KC_SERVER_URL="http://keycloak_auth:8085/auth/"
+KC_CLIENT_ID="fastapi-service"
+KC_REALM="Clients"
+KC_CLIENT_SECRET="GzgACcJzhzQ4j8kWhmhazt7WSdxDVUyE"
+```
+in case you want to use postgresql either you are in a docker environment or not. First you should have created a database using [pgAdmin](https://www.youtube.com/watch?v=1wvDVBjNDys) or command line.
+The other variables are referred in keycloak usage where you should suit them according to the environment where keycloak service is running.
+
+<a name="run_server"></a>
+### Run application server
+```bash
+uvicorn ref_letters.main:app --reload
+```
+
+[See what you have done](http://127.0.0.1:8080/)
+
+<a name="deployment"></a>
+## Deploy fastapi project to a VM (Virtual Machine)
+For deployment see [here](https://github.com/panagiotis-bellias-it21871/reference-letters-system#deploy-fastapi-and-vuejs-projects-to-a-vm-virtual-machine) 
+
+<a name="jenkins"></a>
+### CI/CD tool configuration (Jenkins Server)
+For jenkins configuration see [here](https://github.com/panagiotis-bellias-it21871/reference-letters-system#cicd-tool-configuration-jenkins-server) 
+
+<a name="docker"></a>
+### Deployment with Docker and docker-compose using Ansible
+
+The fastapi container is built according
+to the [nonroot.Dockerfile](nonroot.Dockerfile) as a nonroot process for safety reasons.
+
+More about deployment with Docker see [here](https://github.com/panagiotis-bellias-it21871/reference-letters-system#deployment-with-docker-and-docker-compose-using-ansible) and [here](https://github.com/panagiotis-bellias-it21871/ansible-reference-letter-code#docker)
+
+
+#### Docker Images - GitHub Container Registry
+
+* [Link for Info](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+
+```bash
+# build image
+docker build . -t ghcr.io/panagiotis-bellias-it21871/ref-letters-fastapi-server:latest -f nonroot.Dockerfile
+# push image
+docker push ghcr.io/panagiotis-bellias-it21871/ref-letters-fastapi-server:latest
+```  

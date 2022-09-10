@@ -39,17 +39,18 @@ public class UserController {
             Optional<User> opt_user = userRepository.findByUsername(u.getUsername());
             if (opt_user == null) break;
             User user = opt_user.get();
+            if (user.getEnabled() == 0) continue;
             UserInfo userInfo = new UserInfo();
-                Student student = studentService.getStudentByUsername(user.getUsername());
-                if (student != null) {
-                    userInfo = new UserInfo(user.getUsername(), student.getFullName(), student.getEmail(), "Student");
-                }
-                else {
-                    Teacher teacher = teacherService.getTeacherByUsername(user.getUsername());
-                    if (teacher != null) {
-                        userInfo = new UserInfo(user.getUsername(), teacher.getFullName(), teacher.getEmail(), "Teacher");
-                    } else continue;
-                }
+            Student student = studentService.getStudentByUsername(user.getUsername());
+            if (student != null) {
+                userInfo = new UserInfo(user.getUsername(), student.getFullName(), student.getEmail(), "Student");
+            }
+            else {
+                Teacher teacher = teacherService.getTeacherByUsername(user.getUsername());
+                if (teacher != null) {
+                    userInfo = new UserInfo(user.getUsername(), teacher.getFullName(), teacher.getEmail(), "Teacher");
+                } else continue;
+            }
             userDetails.add(userInfo);
         }
         model.addAttribute("userDetails", userDetails);

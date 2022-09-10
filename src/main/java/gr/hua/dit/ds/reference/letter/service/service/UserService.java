@@ -52,8 +52,9 @@ public abstract class UserService implements UserDetailsService {
 
     public void deleteUser(User user) {
 
-        authRepository.deleteAll(user.getAuthorities());
-        userRepository.delete(user);
+        user.setEnabled(0);
+        //authRepository.deleteAll(user.getAuthorities());
+        userRepository.save(user);
 
     }
 

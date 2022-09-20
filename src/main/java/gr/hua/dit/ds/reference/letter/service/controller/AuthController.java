@@ -273,10 +273,4 @@ public class AuthController {
 
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<String> logoutUser() {
-	//... TODO implementation
-	return new ResponseEntity<>("User logged out successfully!.", HttpStatus.OK);
-    }
-
 }

@@ -2,12 +2,12 @@ package gr.hua.dit.ds.reference.letter.service.config;
 
 import gr.hua.dit.ds.reference.letter.service.filter.CustomAuthenticationFilter;
 import gr.hua.dit.ds.reference.letter.service.filter.CustomAuthorizationFilter;
-import gr.hua.dit.ds.reference.letter.service.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+//import gr.hua.dit.ds.reference.letter.service.service.UserService;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.*;
@@ -15,13 +15,13 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+//import org.springframework.web.cors.CorsConfiguration;
+//import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+//import org.springframework.web.filter.CorsFilter;
 
-import java.util.*;
+//import java.util.*;
 
 @Configuration
 @EnableWebSecurity

@@ -1,12 +1,12 @@
 package gr.hua.dit.ds.reference.letter.service.filter;
 
 import java.io.IOException;
-import java.rmi.ServerException;
+//import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
+//import java.util.stream.Stream;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

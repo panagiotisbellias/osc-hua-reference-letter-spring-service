@@ -1,12 +1,8 @@
 package gr.hua.dit.ds.reference.letter.service.filter;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

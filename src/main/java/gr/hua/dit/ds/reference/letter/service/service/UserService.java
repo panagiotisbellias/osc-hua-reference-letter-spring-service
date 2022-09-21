@@ -101,4 +101,6 @@ public abstract class UserService implements UserDetailsService {
 
     }
 
+    public abstract Optional<User> getUser(String username);
+
 }

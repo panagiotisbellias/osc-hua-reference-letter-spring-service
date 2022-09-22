@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-// REST API
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @Secured("ROLE_TEACHER")
 @RequestMapping("/api/app/reference_letter_requests")

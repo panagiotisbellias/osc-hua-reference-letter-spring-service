@@ -25,7 +25,6 @@ import java.util.*;
  * @since 2022-02-09
  * @version 1.0
  */
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

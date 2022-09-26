@@ -51,8 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and().
-                formLogin().loginPage("/login").permitAll().and().logout().permitAll();
+                formLogin().loginPage("/login")
+                .successHandler(loginSuccessHandler)
+                .permitAll().and().logout().permitAll();
     }
+
+    @Autowired private LoginSuccessHandler loginSuccessHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {

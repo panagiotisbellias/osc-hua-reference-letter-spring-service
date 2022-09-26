@@ -54,6 +54,18 @@ public class User {
         this.authorities.add(authority);
     }
 
+    public boolean hasRole(String roleName) {
+        Iterator<Authorities> iterator = this.authorities.iterator();
+        while (iterator.hasNext()) {
+            Authorities role = iterator.next();
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+         
+        return false;
+    }
+
     @Override
     public String toString() {
         return "User{" +

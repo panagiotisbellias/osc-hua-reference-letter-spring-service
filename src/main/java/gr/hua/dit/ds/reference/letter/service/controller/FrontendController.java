@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
 import gr.hua.dit.ds.reference.letter.service.entity.*;
-import gr.hua.dit.ds.reference.letter.service.payload.UserInfo;
 import gr.hua.dit.ds.reference.letter.service.repository.UserRepository;
 import gr.hua.dit.ds.reference.letter.service.service.StudentService;
 import gr.hua.dit.ds.reference.letter.service.service.TeacherService;

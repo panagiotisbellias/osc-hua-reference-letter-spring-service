@@ -1,0 +1,38 @@
+version: "2.2"
+
+services:
+  postgres_db:
+    container_name: ds_database
+    image: postgres:14
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass123
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 30s
+      interval: 30s
+      retries: 3
+    volumes:
+      - dj_postgres_data:/var/lib/postgresql/data/
+      - ./assets/db:/docker-entrypoint-initdb.d/
+    restart:
+      always
+
+  spring:
+    container_name: ds_spring_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres_db
+
+  # nginx
+
+volumes:
+  dj_postgres_data:

@@ -1,0 +1,246 @@
+---
+- name: Install reference-letters-system using Docker & docker-compose
+  hosts: all
+  vars:
+    system_dir: "{{reference_letter_system_service.user_dir}}/reference-letters-system"
+    git_repo_url: "https://github.com/panagiotis-bellias-it21871/reference-letters-system.git"
+    git_repo_branch: "main"
+  become: yes
+  become_user: root
+  tasks:
+    - name: Install Docker packages
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+      tags:
+        - docker
+    - name: Add Docker s official GPG key
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      tags:
+        - docker
+    - name: Verify that we have the key with the fingerprint
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt_key:
+        id: 0EBFCD88
+        state: present
+      tags:
+        - docker
+    - name: Set up the stable repository
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+        update_cache: yes
+      tags:
+        - docker
+    - name: Update apt packages
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt:
+        update_cache: yes
+      tags:
+        - docker
+    - name: Install docker
+      remote_user: "{{reference_letter_system_service.group}}"
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+      #notify: Start docker on boot
+      tags:
+        - docker
+    - name: Add remote "{{reference_letter_system_service.group}}" user to "docker" group
+      remote_user: "{{reference_letter_system_service.group}}"
+      user:
+        name: "{{reference_letter_system_service.group}}"
+        group: "docker"
+        append: yes
+      tags:
+        - docker
+    - name: Install docker-compose
+      remote_user: "{{reference_letter_system_service.group}}"
+      get_url: 
+        url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+
+    - name: ensure github.com is a known host
+      lineinfile:
+          dest: "{{reference_letter_system_service.user_dir}}/.ssh/known_hosts"
+          create: yes
+          state: present
+          line: "{{lookup('pipe', 'ssh-keyscan -t rsa github.com')}}"
+          regexp: "^github\\.com"
+
+    - name: clone reference letters project
+      git:
+          repo: "{{git_repo_url}}"
+          version: "{{git_repo_branch}}"
+          clone: yes
+          force: yes
+          dest: "{{system_dir}}"
+      changed_when: true
+
+    - name: clone submodules
+      shell: "cd {{system_dir}} && git submodule update --init --recursive"
+    
+    - name: copy backend env file
+      shell: "cp {{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env.docker.example {{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+
+    - name: populate backend ~/.env url
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^DATABASE_URL="
+          line: "DATABASE_URL={{DATABASE_URL}}"
+
+    - name: populate backend ~/.env origins
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^ORIGINS="
+          line: "ORIGINS={{ORIGINS}}"
+    
+    - name: populate backend ~/.env secret
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^SECRET="
+          line: "SECRET={{SECRET}}"
+    
+    - name: populate backend ~/.env mail_username
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_USERNAME="
+          line: "MAIL_USERNAME={{MAIL_USERNAME}}"
+    
+    - name: populate backend ~/.env mail_password
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_PASSWORD="
+          line: "MAIL_PASSWORD={{MAIL_PASSWORD}}"
+    
+    - name: populate backend ~/.env mail_from
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_FROM="
+          line: "MAIL_FROM={{MAIL_FROM}}"
+    
+    - name: populate backend ~/.env mail_port
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_PORT="
+          line: "MAIL_PORT={{MAIL_PORT}}"
+    
+    - name: populate backend ~/.env mail_server
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_SERVER="
+          line: "MAIL_SERVER={{MAIL_SERVER}}"
+    
+    - name: populate backend ~/.env mail_from_name
+      lineinfile:
+          dest: "{{system_dir}}/{{BACKEND_DIR}}/ref_letters/.env"
+          state: present
+          regexp: "^MAIL_FROM_NAME="
+          line: "MAIL_FROM_NAME={{MAIL_FROM_NAME}}"
+
+    - name: copy vuejs env file
+      shell: "cp {{system_dir}}/{{FRONTEND_DIR}}/.env.example {{system_dir}}/'{{FRONTEND_DIR}}'/.env"
+
+    - name: populate vuejs ~/.env backend url value
+      lineinfile:
+          dest: "{{system_dir}}/{{FRONTEND_DIR}}/.env"
+          state: present
+          regexp: "^VUE_APP_BACKEND_URL="
+          line: "VUE_APP_BACKEND_URL={{VUE_APP_BACKEND_URL}}"
+
+    - name: populate vuejs ~/.env base endpoint prefix value
+      lineinfile:
+          dest: "{{system_dir}}/{{FRONTEND_DIR}}/.env"
+          state: present
+          regexp: "^VUE_APP_BASE_ENDPOINT_PREFIX="
+          line: "VUE_APP_BASE_ENDPOINT_PREFIX={{VUE_APP_BASE_ENDPOINT_PREFIX}}"
+
+    - name: populate vuejs ~/.env rl letters endpoint value
+      lineinfile:
+          dest: "{{system_dir}}/{{FRONTEND_DIR}}/.env"
+          state: present
+          regexp: "^VUE_APP_RL_LETTERS_ENDPOINT="
+          line: "VUE_APP_RL_LETTERS_ENDPOINT={{VUE_APP_RL_LETTERS_ENDPOINT}}"
+
+    - name: populate vuejs ~/.env auth endpoint prefix value
+      lineinfile:
+          dest: "{{system_dir}}/{{FRONTEND_DIR}}/.env"
+          state: present
+          regexp: "^VUE_APP_AUTH_ENDPOINT_PREFIX="
+          line: "VUE_APP_AUTH_ENDPOINT_PREFIX={{VUE_APP_AUTH_ENDPOINT_PREFIX}}"
+
+    - name: populate vuejs ~/.env auth login endpoint value
+      lineinfile:
+          dest: "{{system_dir}}/{{FRONTEND_DIR}}/.env"
+          state: present
+          regexp: "^VUE_APP_AUTH_LOGIN_ENDPOINT="
+          line: "VUE_APP_AUTH_LOGIN_ENDPOINT={{VUE_APP_AUTH_LOGIN_ENDPOINT}}"
+
+    - name: install pip3
+      apt:
+        name: "python3-pip"
+        state: present
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: "docker<5" 
+      become: yes
+
+    - name: Install docker-compose with pip
+      pip:
+        name: "docker-compose" 
+      become: yes
+
+    - name: populate docker-compose.yaml host value
+      lineinfile:
+          dest: "{{system_dir}}/docker-compose.yml"
+          state: present
+          regexp: "        - wget -S --spider"
+          line: "        - wget -S --spider http://{{HOST}}:8000/docs"
+
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: "{{system_dir}}"
+        state: absent
+      become: true
+      vars:
+        ansible_python_interpreter: /bin/python3
+
+    # issue here?
+    - name: Create and start services
+      community.docker.docker_compose:
+        project_src: "{{system_dir}}"
+      register: output
+
+    - ansible.builtin.debug:
+        var: output
+
+    - name: Run `docker-compose up`
+      community.docker.docker_compose:
+        project_src: "{{system_dir}}"
+        build: no
+      register: output
+    
+    - ansible.builtin.debug:
+        var: output

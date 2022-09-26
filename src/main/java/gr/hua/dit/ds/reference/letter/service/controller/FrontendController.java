@@ -34,6 +34,11 @@ public class FrontendController {
     @Autowired
     UserRepository userRepository;
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/")
     public String listUsers(Model model) {
         List<ReferenceLetterRequest> rl_requests = referenceLetterService.getAllRLrequests();

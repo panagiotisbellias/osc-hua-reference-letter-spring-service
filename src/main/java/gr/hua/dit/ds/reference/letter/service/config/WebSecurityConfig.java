@@ -42,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
 
         http.csrf().disable()
-                .authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests().antMatchers("/login").permitAll()
                 //.antMatchers("/api/users").hasRole("ADMIN")
                 //.antMatchers("/api/students").hasAnyRole("ADMIN","USER")
                 .antMatchers("/api/auth/**").permitAll() // REST API
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and().
-                formLogin().permitAll().and().logout().permitAll();
+                formLogin().loginPage("/login").permitAll().and().logout().permitAll();
     }
 
     @Override

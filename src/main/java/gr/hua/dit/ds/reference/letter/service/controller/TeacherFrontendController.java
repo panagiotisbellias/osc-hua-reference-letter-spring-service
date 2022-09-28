@@ -1,10 +1,12 @@
 package gr.hua.dit.ds.reference.letter.service.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import gr.hua.dit.ds.reference.letter.service.entity.Teacher;
+import gr.hua.dit.ds.reference.letter.service.service.ReferenceLetterService;
 import gr.hua.dit.ds.reference.letter.service.service.TeacherService;
 
 @Controller
@@ -12,6 +14,7 @@ import gr.hua.dit.ds.reference.letter.service.service.TeacherService;
 public class TeacherFrontendController {
 
     private TeacherService teacherService;
+    private ReferenceLetterService referenceLetterService;
 
     public TeacherFrontendController(TeacherService teacherService) {
         super();
@@ -20,9 +23,11 @@ public class TeacherFrontendController {
 
     // handler method to handle list teachers and return mode and view
     @GetMapping("/teachers")
-    public String listTeachers(Model model) {
-        model.addAttribute("teachers", teacherService.getAllTeachers());
-        return "teachers";
+    public String listTeachers(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        int id = teacherService.getTeacherByUsername(username).getId();
+        model.addAttribute("rl_requests", referenceLetterService.getPendingRLrequestsByTeacher(id));
+        return "teachers_rl_requests";
     }
 
     @GetMapping("/teacher/new")

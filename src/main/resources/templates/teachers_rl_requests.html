@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Admin Panel - View Users</title>
+    <title>Admin Panel - View Teachers</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -10,6 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
     <!-- Brand -->
     <a class="navbar-brand" th:href="@{/admin/}">Administration Panel</a>
 
@@ -32,47 +33,50 @@
               </li>
         </ul>
     </div>
-    <a th:href = "@{/logout}"
-                   class = "btn btn-primary">Logout</a>
 </nav>
 
 <div class ="container">
-
     <div class = "row">
-        <h1> Welcome to the admin panel! </h1>
+        <h1> List Teachers </h1>
     </div>
 
     <div class = "row">
-        <h3> You can manage registered users and reference letter requests from the navigation bar. </h3>
-        <h4> If you just want to manage some user use this panel! </h4>
-    </div>
-
-    <div class = "row">
-        <h1> List Users </h1>
+        <div class = "col-lg-3">
+            <a th:href = "@{/admin/teachers/new}" class = "btn btn-primary btn-sm mb-3"> Add Teacher</a>
+        </div>
     </div>
 
     <table class = "table table-striped table-bordered">
         <thead class = "table-dark">
         <tr>
-            <th> Username</th>
-            <th> Full Name</th>
-            <th> Email Address </th>
-            <th> User Type </th>
-            <th>Actions</th>
+            <th> ID </th>
+            <th> Teacher </th>
+            <th> Student </th>
+            <th> Carrier Name </th>
+            <th> Carrier Email </th>
+            <th> Approved? </th>
+            <th> Declined? </th>
+            <th> Pending? </th>
+            <th> Text </th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each = "user: ${userDetails}">
-            <td th:text = "${user.username}"></td>
-            <td th:text = "${user.fullName}"></td>
-            <td th:text = "${user.email}"></td>
-            <td th:text = "${user.type}"></td>
+        <tr th:each = "rl_request: ${rl_requests}">
+            <td th:text = "${rl_request.id}"></td>
+            <td th:text = "${rl_request.teacher.fullName}"></td>
+            <td th:text = "${rl_request.student.fullName}"></td>
+            <td th:text = "${rl_request.carrierName}"></td>
+            <td th:text = "${rl_request.carrierEmail}"></td>
+            <td th:text = "${rl_request.isApproved}"></td>
+            <td th:text = "${rl_request.isDeclined}"></td>
+            <td th:text = "${rl_request.isPending}"></td>
+            <td th:text = "${rl_request.text}"></td>
             <td>
-                <a th:href = "@{/users/edit/{username}(id=${user.username})}"
+                <a th:href = "@{/rl_requests/edit/{id}(id=${teacher.id})}"
                    class = "btn btn-primary">Update</a>
 
-                <a th:href = "@{/users/{id}(username=${user.username})}"
+                <a th:href = "@{/rl_requests/{id}(id=${rl_request.id})}"
                    class = "btn btn-danger">Delete</a>
 
             </td>

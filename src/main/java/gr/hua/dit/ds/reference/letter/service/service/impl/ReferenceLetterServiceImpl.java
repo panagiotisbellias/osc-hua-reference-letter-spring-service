@@ -25,6 +25,16 @@ public class ReferenceLetterServiceImpl implements ReferenceLetterService {
     }
 
     @Override
+    public List<ReferenceLetterRequest> getRLrequestsByStudent(int id) {
+        return referenceLetterRequestRepository.findReferenceLetterRequestsByStudent(id);
+    }
+
+    @Override
+    public List<ReferenceLetterRequest> getPendingRLrequestsByTeacher(int id) {
+        return referenceLetterRequestRepository.findPendingReferenceLetterRequestsByTeacher(id);
+    }
+
+    @Override
     public ReferenceLetterRequest saveRLrequest(ReferenceLetterRequest rlRequest) {
         return referenceLetterRequestRepository.save(rlRequest);
     }

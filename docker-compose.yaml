@@ -22,7 +22,14 @@ services:
     restart:
       always
 
-    # Spring Boot Container
+  spring-service:
+    container_name: reference-letter-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reference-letter-service:latest
+    ports:
+      - 9000:9000
 
 volumes:
   dj_postgres_data:

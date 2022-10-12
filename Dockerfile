@@ -1,6 +1,3 @@
-FROM openjdk
-# COPY . .
-# RUN java -jar target/*.jar
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:11
+COPY target/reference-letter-service-0.0.1-SNAPSHOT.jar reference-letter-service-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/reference-letter-service-0.0.1-SNAPSHOT.jar"]

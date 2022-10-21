@@ -30,6 +30,8 @@ services:
     image: reference-letter-service:latest
     ports:
       - 9000:9000
+    restart:
+      always
 
 volumes:
   dj_postgres_data:
